@@ -1,1 +1,27 @@
-﻿
+﻿@model List<minipossystem.Models.SalesOrder>
+
+<h2>Sales Orders</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Employee ID</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.SalesOrderId</td>
+                <td>@order.CostumerId</td>
+                <td>@order.EmployeeId</td>
+                <td>@order.OrderDate.ToShortDateString()</td>
+                <td>@order.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

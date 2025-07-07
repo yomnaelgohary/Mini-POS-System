@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using minipossystem.Models;
 
 namespace minipossystem.Controllers
 {
@@ -6,7 +7,9 @@ namespace minipossystem.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            MiniPosSystemContext context = new MiniPosSystemContext();
+            List<SalesOrder> sales = context.SalesOrders.ToList();
+            return View(sales);
         }
     }
 }
