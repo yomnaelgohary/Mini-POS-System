@@ -3,16 +3,36 @@
   "WorkspaceRootPath": "D:\\My project\\Mini-POS-System\\minipossystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\models\\minipossystemcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\models\\minipossystemcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\minipossystem.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\minipossystem.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\controllers\\salescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,14 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -59,35 +71,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": ".gitignore",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\.gitignore",
-              "RelativeDocumentMoniker": "minipossystem\\.gitignore",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\.gitignore",
-              "RelativeToolTip": "minipossystem\\.gitignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG/SURBVDhPrZRNTgIxFMerDIaEhHgU97JxwUKGGaNeQJdyCY0XUBDWGhg4AB\u002BuvQk7OQCRFTP1fXWmMxUMCT94ee177eu/LVQdFK31kTSJ0WgEIa0SMJ2A6QTHcF9iicQqlYpa/6zv2\u002B2HD5nuEkWR/l4udRzHZBtjGzFor1YrPR6P9WKx0MNhpN96vTuZThyLJ1AJLK/iJFFxjBanBsXIozqkWq2qev1c1Wq19063e0ZBwBNP4JaQ6WRC/i8ajQb5wWBAvnxyghpOqQPkC8L5IEEQKjgxaqOTFsCd65tb6nmlkur1\u002BxwXCgX58KfT7QptwvCK52wrSLcJvtUKOABkQ6HFXwbGsmMRBkchzpjNphLZDSrEn5G1qnsp\u002BPEtheloXouRnXDTTjhb5tXmeyg0IgzuliHp\u002By0OANbiOCDXp1IYo3mMUxBT8/mMA/8QhGH6ZzC4Zwi5ZqoQB9M3h62I/\u002B/SAQpniBmtPvdQyGeYUdgyX8pl05eIBSxmTzQYEYbc42AuJQWLGJNQEcrJG4A4BTHneSW2sqfKOyybkxXMPbAvrx3IsyLzkPJFmUcWYtDntjG6lIvnp8cvKXNIlPoFvstpJRlQPIAAAAAASUVORK5CYII=",
-              "WhenOpened": "2025-07-07T06:55:32.568Z",
+              "Title": "MiniPosSystemContext.cs",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\MiniPosSystemContext.cs",
+              "RelativeDocumentMoniker": "minipossystem\\Models\\MiniPosSystemContext.cs",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\MiniPosSystemContext.cs",
+              "RelativeToolTip": "minipossystem\\Models\\MiniPosSystemContext.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAowBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-07T08:45:34.661Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Program.cs",
-              "RelativeDocumentMoniker": "minipossystem\\Program.cs",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Program.cs",
-              "RelativeToolTip": "minipossystem\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-06T11:48:49.559Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "minipossystem\\Controllers\\HomeController.cs",
@@ -99,31 +95,91 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Program.cs",
+              "RelativeDocumentMoniker": "minipossystem\\Program.cs",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Program.cs",
+              "RelativeToolTip": "minipossystem\\Program.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-06T11:48:49.559Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\appsettings.json",
+              "RelativeDocumentMoniker": "minipossystem\\appsettings.json",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\appsettings.json",
+              "RelativeToolTip": "minipossystem\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-07T08:29:47.211Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "minipossystem\\Views\\Home\\Index.cshtml",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "minipossystem\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-07-06T11:49:45.41Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": ".gitignore",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\.gitignore",
+              "RelativeDocumentMoniker": "minipossystem\\.gitignore",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\.gitignore",
+              "RelativeToolTip": "minipossystem\\.gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG/SURBVDhPrZRNTgIxFMerDIaEhHgU97JxwUKGGaNeQJdyCY0XUBDWGhg4AB\u002BuvQk7OQCRFTP1fXWmMxUMCT94ee177eu/LVQdFK31kTSJ0WgEIa0SMJ2A6QTHcF9iicQqlYpa/6zv2\u002B2HD5nuEkWR/l4udRzHZBtjGzFor1YrPR6P9WKx0MNhpN96vTuZThyLJ1AJLK/iJFFxjBanBsXIozqkWq2qev1c1Wq19063e0ZBwBNP4JaQ6WRC/i8ajQb5wWBAvnxyghpOqQPkC8L5IEEQKjgxaqOTFsCd65tb6nmlkur1\u002BxwXCgX58KfT7QptwvCK52wrSLcJvtUKOABkQ6HFXwbGsmMRBkchzpjNphLZDSrEn5G1qnsp\u002BPEtheloXouRnXDTTjhb5tXmeyg0IgzuliHp\u002By0OANbiOCDXp1IYo3mMUxBT8/mMA/8QhGH6ZzC4Zwi5ZqoQB9M3h62I/\u002B/SAQpniBmtPvdQyGeYUdgyX8pl05eIBSxmTzQYEYbc42AuJQWLGJNQEcrJG4A4BTHneSW2sqfKOyybkxXMPbAvrx3IsyLzkPJFmUcWYtDntjG6lIvnp8cvKXNIlPoFvstpJRlQPIAAAAAASUVORK5CYII=",
+              "WhenOpened": "2025-07-07T06:55:32.568Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "minipossystem\\Models\\ErrorViewModel.cs",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "minipossystem\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-06T11:49:13.098Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "minipossystem.csproj",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\minipossystem.csproj",
+              "RelativeDocumentMoniker": "minipossystem\\minipossystem.csproj",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\minipossystem.csproj",
+              "RelativeToolTip": "minipossystem\\minipossystem.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-07T08:16:01.146Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "minipossystem\\Properties\\launchSettings.json",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Properties\\launchSettings.json",
               "RelativeToolTip": "minipossystem\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-07-07T06:05:29.243Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\sales\\Index.cshtml",
               "RelativeDocumentMoniker": "minipossystem\\Views\\sales\\Index.cshtml",
@@ -135,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "salesController.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\salesController.cs",
               "RelativeDocumentMoniker": "minipossystem\\Controllers\\salesController.cs",
@@ -144,18 +200,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-06T11:51:15.025Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ErrorViewModel.cs",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\ErrorViewModel.cs",
-              "RelativeDocumentMoniker": "minipossystem\\Models\\ErrorViewModel.cs",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\ErrorViewModel.cs",
-              "RelativeToolTip": "minipossystem\\Models\\ErrorViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-06T11:49:13.098Z"
             }
           ]
         }
