@@ -1,4 +1,5 @@
-﻿function searchCustomer() {
+﻿
+function searchCustomer() {
     var name = $("#searchName").val();
     var mobile = $("#searchMobile").val();
 
@@ -44,3 +45,25 @@ function addCustomer() {
         }
     });
 }
+function searchProduct() {
+    //var id from html
+    var id = $("#searchProduct").val();
+    $.post("/SalesOrder/SearchProduct", { id: id }, function (productresponse) {
+        if (productresponse) {
+            currentProduct = productresponse;
+            $("#modalProductName").text(productresponse.description);
+            $("#modalProductPrice").text(productresponse.sellingPrice);
+            $("#modalProductCode").text(productresponse.productCode);
+            $("#modalProductQty").val(1);
+            var modal = new bootstrap.Modal(document.getElementById('productModal'));
+            modal.show();
+        } else {
+            alert("Product not found.");
+        }
+    });
+}
+    
+        
+        
+
+

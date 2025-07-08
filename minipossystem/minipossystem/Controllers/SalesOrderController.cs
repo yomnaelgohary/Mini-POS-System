@@ -112,6 +112,42 @@ namespace minipossystem.Controllers
             return Json(null);
         }
 
+        [HttpPost]
+        [HttpPost]
+        public JsonResult SearchProduct(string id)
+        {
+     
+            if (!int.TryParse(id, out int productId))
+            {
+                return Json(null); 
+            }
+
+            Product productfound = null;
+
+            foreach (Product product in context.Products)
+            {
+                if (product.ProductId == productId)
+                {
+                    productfound = product;
+                    break;
+                }
+            }
+
+            if (productfound != null)
+            {
+                return Json(new
+                {
+                    productId = productfound.ProductId,
+                    description = productfound.Description,
+                    sellingPrice = productfound.SellingPrice,
+                    productCode = productfound.ProductCode
+                });
+            }
+
+            return Json(null);
+        }
+
+
 
 
     }

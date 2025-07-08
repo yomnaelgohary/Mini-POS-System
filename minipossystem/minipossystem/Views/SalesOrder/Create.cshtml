@@ -55,3 +55,59 @@
     </div>
 </div>
 
+<!-- Step 2: Search for Products -->
+
+<div class="mb-3">
+    <label>Product ID</label>
+    <input type="text" id="searchProduct" class="form-control" placeholder="Enter Product ID" />
+</div>
+<button class="btn btn-primary" onclick="searchProduct()">Search Product</button>
+<div id="productResult" class="mt-3 d-none">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" id="productName"></h5>
+            <p class="card-text">
+                <strong>Price:</strong> <span id="productPrice"></span><br />
+                <strong>Code:</strong> <span id="productCode"></span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Description:</strong> <span id="modalProductName"></span></p>
+                <p><strong>Price:</strong> <span id="modalProductPrice"></span></p>
+                <p><strong>Code:</strong> <span id="modalProductCode"></span></p>
+                <p>
+                    <strong>Quantity:</strong>
+                    <input type="number" id="modalProductQty" class="form-control" value="1" min="1" />
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="addProductToOrder()">Add to Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
