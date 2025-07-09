@@ -9,7 +9,7 @@ namespace minipossystem.Controllers
         //database conection 
         private readonly MiniPosSystemContext context = new MiniPosSystemContext();
 
-    
+
         public IActionResult Index()
         {
             return View();
@@ -100,14 +100,15 @@ namespace minipossystem.Controllers
 
             if (foundCustomer != null)
             {
-               Console.WriteLine("Customer Found: ID = " + foundCustomer.CostumerId + ", Name = " + foundCustomer.CostumerName);
+                Console.WriteLine("Customer Found: ID = " + foundCustomer.CostumerId + ", Name = " + foundCustomer.CostumerName);
                 return Json(new
                 {
                     costumerId = foundCustomer.CostumerId,
-                    costumerName = foundCustomer.CostumerName
+                    costumerName = foundCustomer.CostumerName,
+                    costumerContactInfo = foundCustomer.CostumerContactInfo
                 });
             }
-            
+
 
             return Json(null);
         }
@@ -116,10 +117,10 @@ namespace minipossystem.Controllers
         [HttpPost]
         public JsonResult SearchProduct(string id)
         {
-     
+
             if (!int.TryParse(id, out int productId))
             {
-                return Json(null); 
+                return Json(null);
             }
 
             Product productfound = null;

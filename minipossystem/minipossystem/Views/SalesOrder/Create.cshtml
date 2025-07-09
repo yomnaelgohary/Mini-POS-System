@@ -1,112 +1,320 @@
 ﻿@{
     ViewBag.Title = "Create Sales Order";
 }
-<script src="~/js/salesorder.js"></script>
+
+<!-- Bootstrap & jQuery -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Your custom JS -->
+<script src="~/js/salesorder.js"></script>
+
+<style>
+    .card {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .alert-success-custom {
+        background-color: #f0f9f0;
+        border-color: #c3e6c3;
+        color: #0f5132;
+    }
+
+    .alert-warning-custom {
+        background-color: #fff3cd;
+        border-color: #ffecb5;
+        color: #664d03;
+    }
+
+    .table-container {
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+        overflow: hidden;
+    }
+
+    .grand-total-section {
+        background-color: #f8f9fa;
+        border-radius: 0.375rem;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .modal-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .search-result-card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+        padding: 1rem;
+    }
+</style>
+
 <div class="container mt-4">
-    <h2>Create Sales Order</h2>
-
-    <!-- Step 1: Search for customer -->
-
-    <div class="mb-3">
-        <label>Customer Name</label>
-        <input type="text" id="searchName" class="form-control" placeholder="Enter customer name" />
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h1 class="display-6 fw-bold text-dark mb-2">Create Sales Order</h1>
+        <p class="text-muted">Create a new sales order by selecting customer and adding products</p>
     </div>
-    <div class="mb-3">
-        <label>Customer Mobile</label>
-        <input type="text" id="searchMobile" class="form-control" placeholder="Enter mobile number" />
-    </div>
-    <button class="btn btn-primary" onclick="searchCustomer()">Search Customer</button>
-    <button class="btn btn-outline-success mt-3" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
-        Add New Customer
-    </button>
 
-
-    <div id="customerResult" class="mt-3 d-none alert alert-info"></div>
-</div>
-<!-- Add Customer Modal -->
-<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label>Name</label>
-                    <input type="text" id="newCustomerName" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <label>Mobile</label>
-                    <input type="text" id="newCustomerMobile" class="form-control" />
-                </div>
-                <div id="addCustomerResult" class="alert d-none"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="addCustomer()">Add Customer</button>
-            
-            </div>
+    <!-- Step 1: Customer Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0 btn-icon">
+                <i class="bi bi-person-fill"></i>
+                Customer Information
+            </h5>
         </div>
-    </div>
-</div>
-
-<!-- Step 2: Search for Products -->
-
-<div class="mb-3">
-    <label>Product ID</label>
-    <input type="text" id="searchProduct" class="form-control" placeholder="Enter Product ID" />
-</div>
-<button class="btn btn-primary" onclick="searchProduct()">Search Product</button>
-<div id="productResult" class="mt-3 d-none">
-    <div class="card">
         <div class="card-body">
-            <h5 class="card-title" id="productName"></h5>
-            <p class="card-text">
-                <strong>Price:</strong> <span id="productPrice"></span><br />
-                <strong>Code:</strong> <span id="productCode"></span>
-            </p>
+            <!-- Customer Search Form -->
+            <div class="row mb-3">
+                <div class="col-md-5">
+                    <label class="form-label fw-semibold">Customer Name</label>
+                    <input type="text" id="searchName" class="form-control" placeholder="Enter customer name" />
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label fw-semibold">Customer Mobile</label>
+                    <input type="text" id="searchMobile" class="form-control" placeholder="Enter mobile number" />
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="button" class="btn btn-primary w-100 btn-icon" onclick="searchCustomer1()">
+                        <i class="bi bi-search"></i>
+                        Search
+                    </button>
+                </div>
+            </div>
+
+            <!-- Selected Customer Info (appears after selection) -->
+            <div id="selectedCustomerInfo" class="alert alert-success-custom d-none mt-3">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <div>
+                        <div class="fw-bold">Selected Customer</div>
+                        <div class="small mt-1">Customer information will appear here</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Results Modal (opens after clicking search) -->
+    <div class="modal fade" id="searchCustomerModal" tabindex="-1" aria-labelledby="searchCustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title btn-icon" id="searchCustomerModalLabel">
+                        <i class="bi bi-search"></i>
+                        Customer Search Results
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Search Results Area -->
+                    <div id="searchResultArea">
+                        <div class="search-result-card mb-4">
+                            <div id="searchResultMessage" class="mb-3">
+
+                                <div class="alert alert-success-custom mb-3" style="display: none;" id="customerFoundAlert">
+                                    <div class="d-flex align-items-start">
+                                        <i class="bi bi-check-circle-fill me-2 mt-1"></i>
+                                        <div>
+                                            <div class="fw-bold">Customer Found!</div>
+                                            <div class="mt-2 small">
+                                                <p class="mb-1"><strong>Name:</strong> <span id="foundCustomerName"></span></p>
+                                                <p class="mb-1"><strong>Mobile:</strong> <span id="foundCustomerMobile"></span></p>
+                                                <p class="mb-0"><strong>Customer ID:</strong> <span id="foundCustomerId"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="alert alert-warning-custom mb-3" style="display: none;" id="customerNotFoundAlert">
+                                    <div class="d-flex align-items-start">
+                                        <i class="bi bi-exclamation-triangle-fill me-2 mt-1"></i>
+                                        <div>
+                                            <div class="fw-bold">No Customer Found</div>
+                                            <div class="mt-1 small">No customer matches your search criteria.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-success w-100 btn-icon d-none" id="selectCustomerBtn" onclick="selectCustomer()">
+                                <i class="bi bi-check-circle"></i>
+                                Select This Customer
+                            </button>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+
+                    <div class="mb-4 d-none" d-none id="addCustomerSection">
+                        <h6 class="fw-bold btn-icon mb-3">
+                            <i class="bi bi-person-plus-fill"></i>
+                            Add New Customer
+                        </h6>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Customer Name</label>
+                                <input type="text" id="newCustomerName" class="form-control" placeholder="Enter customer name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Mobile Number</label>
+                                <input type="text" id="newCustomerMobile" class="form-control" placeholder="Enter mobile number" />
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-outline-success w-100 btn-icon" onclick="addCustomer()">
+                            <i class="bi bi-plus-circle"></i>
+                            Add New Customer
+                        </button>
+
+                        <div id="addCustomerResult" class="alert d-none mt-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0 btn-icon">
+                <i class="bi bi-cart-fill"></i>
+                Add Products
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-10">
+                    <input type="text" id="searchProduct" class="form-control" placeholder="Enter Product ID or scan barcode" />
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100 btn-icon" onclick="searchProduct()">
+                        <i class="bi bi-search"></i>
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Order Table -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0 btn-icon">
+                <i class="bi bi-cart-check-fill"></i>
+                Order Summary
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table table-hover mb-0" id="orderTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="fw-semibold">Description</th>
+                            <th class="fw-semibold">Code</th>
+                            <th class="fw-semibold">Price</th>
+                            <th class="fw-semibold">Quantity</th>
+                            <th class="fw-semibold">Total</th>
+                            <th class="fw-semibold text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Default empty state -->
+                        <tr id="emptyOrderRow">
+                            <td colspan="6" class="text-center text-muted py-5">
+                                <i class="bi bi-cart-x display-6 d-block mb-2 text-muted"></i>
+                                No products added yet. Search and add products to create your order.
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grand-total-section text-end">
+                <div class="display-6 fw-bold text-dark">
+                    Grand Total:
+                    <span id="orderTotal" class="text-success">0</span>
+                    <span class="text-success">EGP</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4: Submit Buttons -->
+    <div class="text-center mb-5">
+        <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-success btn-lg px-5 btn-icon" onclick="submitOrder()">
+                <i class="bi bi-check-circle-fill"></i>
+                Submit Order
+            </button>
+            <button class="btn btn-danger btn-lg px-5 btn-icon" onclick="resetOrder()">
+                <i class="bi bi-trash-fill"></i>
+                Cancel Order
+            </button>
         </div>
     </div>
 </div>
+
+<!-- Product Modal -->
 <div class="modal fade" id="productModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Product Details</h5>
+                <h5 class="modal-title btn-icon">
+                    <i class="bi bi-box-seam"></i>
+                    Product Details
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <p><strong>Description:</strong> <span id="modalProductName"></span></p>
-                <p><strong>Price:</strong> <span id="modalProductPrice"></span></p>
-                <p><strong>Code:</strong> <span id="modalProductCode"></span></p>
-                <p>
-                    <strong>Quantity:</strong>
-                    <input type="number" id="modalProductQty" class="form-control" value="1" min="1" />
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success" onclick="addProductToOrder()">Add to Order</button>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Description:</label>
+                        <p id="modalProductName" class="mb-0">Product name will appear here</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Code:</label>
+                        <p id="modalProductCode" class="mb-0">Product code will appear here</p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Price:</label>
+                    <p id="modalProductPrice" class="fs-4 fw-bold text-success mb-0">0 EGP</p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="modalProductQty" class="form-label fw-semibold">Quantity:</label>
+                    <input type="number" id="modalProductQty" class="form-control" />
+                </div>
+
+                <button class="btn btn-success w-100 btn-icon" onclick="addProductToOrder($('#modalProductQty').val())">
+                    <i class="bi bi-plus-circle"></i>
+                    Add to Order
+                </button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
