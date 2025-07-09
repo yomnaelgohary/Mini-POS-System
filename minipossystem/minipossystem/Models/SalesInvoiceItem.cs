@@ -5,6 +5,8 @@ namespace minipossystem.Models;
 
 public partial class SalesInvoiceItem
 {
+    internal int CreditedQuantity;
+
     public int SalesInvoiceItmeId { get; set; }
 
     public int SalesInvoiceId { get; set; }

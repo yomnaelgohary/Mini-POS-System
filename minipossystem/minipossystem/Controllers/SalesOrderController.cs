@@ -397,5 +397,416 @@ namespace minipossystem.Controllers
 
             return Json(orderDetails);
         }
+
+        // New method to get sales order details for invoice creation
+        [HttpPost]
+        public JsonResult GetSalesOrderForInvoice(int orderId)
+        {
+            SalesOrder salesOrder = null;
+            foreach (SalesOrder order in context.SalesOrders)
+            {
+                if (order.SalesOrderId == orderId)
+                {
+                    salesOrder = order;
+                    break;
+                }
+            }
+
+            if (salesOrder == null)
+            {
+                return Json(null);
+            }
+
+            // Get customer details
+            Costumer customer = null;
+            foreach (Costumer c in context.Costumers)
+            {
+                if (c.CostumerId == salesOrder.CostumerId)
+                {
+                    customer = c;
+                    break;
+                }
+            }
+
+            List<SalesOrderItem> orderItems = new List<SalesOrderItem>();
+            foreach (SalesOrderItem item in context.SalesOrderItems)
+            {
+                if (item.SalesOrderId == orderId)
+                {
+                    orderItems.Add(item);
+                }
+            }
+
+            var orderDetails = new
+            {
+                salesOrderId = salesOrder.SalesOrderId,
+                costumerId = salesOrder.CostumerId,
+                customerName = customer?.CostumerName ?? "Unknown Customer",
+                customerContact = customer?.CostumerContactInfo ?? "N/A",
+                employeeId = salesOrder.EmployeeId,
+                orderDate = salesOrder.OrderDate.ToString(),
+                status = salesOrder.Status,
+                items = orderItems.Select(item => {
+                    Product product = null;
+                    foreach (Product p in context.Products)
+                    {
+                        if (p.ProductId == item.ProductId)
+                        {
+                            product = p;
+                            break;
+                        }
+                    }
+                    return new
+                    {
+                        salesOrderItemId = item.SalesOrderItemId,
+                        productId = item.ProductId,
+                        productDescription = product?.Description ?? "Unknown Product",
+                        productCode = product?.ProductCode ?? "N/A",
+                        unitPrice = product?.SellingPrice ?? 0,
+                        quantity = item.Quantity,
+                        totalPrice = item.Price
+                    };
+                }).ToList()
+            };
+
+            return Json(orderDetails);
+        }
+
+        // New method to create sales invoice - FIXED to match your database structure
+        [HttpPost]
+        public JsonResult CreateSalesInvoice(int salesOrderId, decimal totalAmount)
+        {
+            try
+            {
+                SalesInvoice newInvoice = new SalesInvoice();
+                newInvoice.SalesOrderId = salesOrderId;
+                newInvoice.InvoiveDate = DateOnly.FromDateTime(DateTime.Now); // Note: using your typo "InvoiveDate"
+                newInvoice.Price = totalAmount; // Note: using "Price" not "TotalPrice"
+
+                context.SalesInvoices.Add(newInvoice);
+                context.SaveChanges();
+
+                return Json(new { success = true, invoiceId = newInvoice.SalesInvoiceId });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // New method to add items to sales invoice - FIXED to match your database structure
+        [HttpPost]
+        public JsonResult AddToSalesInvoiceItem(int invoiceId, int orderItemId, int quantity, decimal totalPrice)
+        {
+            try
+            {
+                SalesInvoiceItem newInvoiceItem = new SalesInvoiceItem();
+                newInvoiceItem.SalesInvoiceId = invoiceId;
+                newInvoiceItem.SalesOrderItemId = orderItemId;
+                // Note: Your SalesInvoiceItem model doesn't have Quantity and Price properties
+                // You might need to add them to your database model
+
+                context.SalesInvoiceItems.Add(newInvoiceItem);
+                context.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // New method to get all invoices - FIXED to match your database structure
+        [HttpPost]
+        public JsonResult GetAllInvoices()
+        {
+            List<SalesInvoice> allInvoices = context.SalesInvoices
+                .OrderByDescending(si => si.SalesInvoiceId)
+                .ToList();
+
+            var invoiceData = allInvoices.Select(invoice => {
+                // Get sales order details
+                SalesOrder salesOrder = null;
+                foreach (SalesOrder order in context.SalesOrders)
+                {
+                    if (order.SalesOrderId == invoice.SalesOrderId)
+                    {
+                        salesOrder = order;
+                        break;
+                    }
+                }
+
+                // Get customer details
+                Costumer customer = null;
+                if (salesOrder != null)
+                {
+                    foreach (Costumer c in context.Costumers)
+                    {
+                        if (c.CostumerId == salesOrder.CostumerId)
+                        {
+                            customer = c;
+                            break;
+                        }
+                    }
+                }
+
+                return new
+                {
+                    invoiceId = invoice.SalesInvoiceId,
+                    salesOrderId = invoice.SalesOrderId,
+                    customerName = customer?.CostumerName ?? "Unknown Customer",
+                    customerContact = customer?.CostumerContactInfo ?? "N/A",
+                    date = invoice.InvoiveDate.ToString(), // Note: using your typo "InvoiveDate"
+                    totalPrice = invoice.Price, // Note: using "Price" not "TotalPrice"
+                    employeeId = salesOrder?.EmployeeId ?? 0
+                };
+            }).ToList();
+
+            return Json(invoiceData);
+        }
+
+        // New method to get invoice details for credit note creation - FIXED
+        [HttpPost]
+        public JsonResult GetInvoiceDetails(int invoiceId)
+        {
+            SalesInvoice invoice = null;
+            foreach (SalesInvoice inv in context.SalesInvoices)
+            {
+                if (inv.SalesInvoiceId == invoiceId)
+                {
+                    invoice = inv;
+                    break;
+                }
+            }
+
+            if (invoice == null)
+            {
+                return Json(null);
+            }
+
+            // Get sales order details
+            SalesOrder salesOrder = null;
+            foreach (SalesOrder order in context.SalesOrders)
+            {
+                if (order.SalesOrderId == invoice.SalesOrderId)
+                {
+                    salesOrder = order;
+                    break;
+                }
+            }
+
+            // Get customer details
+            Costumer customer = null;
+            if (salesOrder != null)
+            {
+                foreach (Costumer c in context.Costumers)
+                {
+                    if (c.CostumerId == salesOrder.CostumerId)
+                    {
+                        customer = c;
+                        break;
+                    }
+                }
+            }
+
+            // Get invoice items
+            List<SalesInvoiceItem> invoiceItems = new List<SalesInvoiceItem>();
+            foreach (SalesInvoiceItem item in context.SalesInvoiceItems)
+            {
+                if (item.SalesInvoiceId == invoiceId)
+                {
+                    invoiceItems.Add(item);
+                }
+            }
+
+            var invoiceDetails = new
+            {
+                invoiceId = invoice.SalesInvoiceId,
+                salesOrderId = invoice.SalesOrderId,
+                customerName = customer?.CostumerName ?? "Unknown Customer",
+                customerContact = customer?.CostumerContactInfo ?? "N/A",
+                date = invoice.InvoiveDate.ToString(), // Note: using your typo "InvoiveDate"
+                totalPrice = invoice.Price, // Note: using "Price" not "TotalPrice"
+                employeeId = salesOrder?.EmployeeId ?? 0,
+                items = invoiceItems.Select(item => {
+                    // Get order item details
+                    SalesOrderItem orderItem = null;
+                    foreach (SalesOrderItem oi in context.SalesOrderItems)
+                    {
+                        if (oi.SalesOrderItemId == item.SalesOrderItemId)
+                        {
+                            orderItem = oi;
+                            break;
+                        }
+                    }
+
+                    Product product = null;
+                    if (orderItem != null)
+                    {
+                        foreach (Product p in context.Products)
+                        {
+                            if (p.ProductId == orderItem.ProductId)
+                            {
+                                product = p;
+                                break;
+                            }
+                        }
+                    }
+
+                    return new
+                    {
+                        invoiceItemId = item.SalesInvoiceItmeId, // Note: using your typo "SalesInvoiceItmeId"
+                        orderItemId = item.SalesOrderItemId,
+                        productId = orderItem?.ProductId ?? 0,
+                        productDescription = product?.Description ?? "Unknown Product",
+                        productCode = product?.ProductCode ?? "N/A",
+                        unitPrice = product?.SellingPrice ?? 0,
+                        quantity = orderItem?.Quantity ?? 0, // Getting quantity from order item since invoice item doesn't have it
+                        totalPrice = orderItem?.Price ?? 0 // Getting price from order item
+                    };
+                }).ToList()
+            };
+
+            return Json(invoiceDetails);
+        }
+
+        // New method to create credit note
+        [HttpPost]
+        [HttpPost]
+        public JsonResult CreateCreditNote(int invoiceId, decimal totalAmount)
+        {
+            try
+            {
+                CreditNote newCreditNote = new CreditNote
+                {
+                    SalesInvoiceId = invoiceId,
+                    Date = DateOnly.FromDateTime(DateTime.Now),
+                    EmployeeId = 1,
+                    Price = totalAmount
+                };
+
+                context.CreditNotes.Add(newCreditNote);
+
+                // Reduce total from invoice
+                SalesInvoice invoice = context.SalesInvoices.FirstOrDefault(i => i.SalesInvoiceId == invoiceId);
+                if (invoice != null)
+                {
+                    invoice.Price -= totalAmount;
+                }
+
+                context.SaveChanges();
+
+                return Json(new { success = true, creditNoteId = newCreditNote.CreditNoteId });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+        // New method to add items to credit note - FIXED to match your database structure
+        [HttpPost]
+        [HttpPost]
+        public JsonResult AddToCreditNoteItem(int creditNoteId, int invoiceItemId, int quantity, decimal totalPrice)
+        {
+            try
+            {
+                // Add credit note item
+                CreditNoteItem newCreditNoteItem = new CreditNoteItem
+                {
+                    CreditNoteId = creditNoteId,
+                    InvoiceItemId = invoiceItemId,
+                    Quantity = quantity,
+                    Price = totalPrice
+                };
+                context.CreditNoteItems.Add(newCreditNoteItem);
+
+                // Update CreditedQuantity in SalesInvoiceItem
+                SalesInvoiceItem invoiceItem = context.SalesInvoiceItems
+                    .FirstOrDefault(i => i.SalesInvoiceItmeId == invoiceItemId);
+
+                if (invoiceItem != null)
+                {
+                    invoiceItem.CreditedQuantity += quantity;
+
+                    // Find related product via SalesOrderItem
+                    SalesOrderItem orderItem = context.SalesOrderItems.FirstOrDefault(soi => soi.SalesOrderItemId == invoiceItem.SalesOrderItemId);
+
+                    if (orderItem != null)
+                    {
+                        Product product = context.Products
+                            .FirstOrDefault(p => p.ProductId == orderItem.ProductId);
+
+                        if (product != null)
+                        {
+                            product.Stock += quantity; // return quantity to stock
+                        }
+                    }
+                }
+
+                context.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+        // New action for viewing all invoices
+        public IActionResult ViewAllInvoices()
+        {
+            return View();
+        }
+
+        // New action for viewing all credit notes
+        public IActionResult ViewAllCreditNotes()
+        {
+            List<CreditNote> creditNotes = context.CreditNotes
+                .OrderByDescending(cn => cn.CreditNoteId)
+                .ToList();
+            return View(creditNotes);
+        }
+        [HttpPost]
+        public JsonResult GetAllInvoicesWithStatus()
+        {
+            List<SalesInvoice> allInvoices = context.SalesInvoices
+                .OrderByDescending(si => si.SalesInvoiceId)
+                .ToList();
+
+            var invoiceData = allInvoices.Select(invoice =>
+            {
+                // Get related sales order
+                var salesOrder = context.SalesOrders.FirstOrDefault(so => so.SalesOrderId == invoice.SalesOrderId);
+
+                // Get related customer
+                Costumer customer = null;
+                if (salesOrder != null)
+                {
+                    customer = context.Costumers.FirstOrDefault(c => c.CostumerId == salesOrder.CostumerId);
+                }
+
+                // Check if credit note exists
+                bool hasCreditNote = context.CreditNotes.Any(cn => cn.SalesInvoiceId == invoice.SalesInvoiceId);
+
+                return new
+                {
+                    invoiceId = invoice.SalesInvoiceId,
+                    salesOrderId = invoice.SalesOrderId,
+                    customerName = customer?.CostumerName ?? "Unknown Customer",
+                    customerContact = customer?.CostumerContactInfo ?? "N/A",
+                    date = invoice.InvoiveDate.ToString(), // Note: typo is preserved
+                    totalPrice = invoice.Price,
+                    hasCreditNote = hasCreditNote
+                };
+            }).ToList();
+
+            return Json(invoiceData);
+        }
+
     }
 }

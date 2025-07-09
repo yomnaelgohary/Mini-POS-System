@@ -5,6 +5,8 @@ namespace minipossystem.Models;
 
 public partial class Product
 {
+    internal int Stock;
+
     public int ProductId { get; set; }
 
     public string Description { get; set; } = null!;
