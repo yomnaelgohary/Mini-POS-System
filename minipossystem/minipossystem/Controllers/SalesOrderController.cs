@@ -104,8 +104,7 @@ namespace minipossystem.Controllers
                 return Json(new
                 {
                     costumerId = foundCustomer.CostumerId,
-                    costumerName = foundCustomer.CostumerName,
-                    costumerContactInfo = foundCustomer.CostumerContactInfo
+                    costumerName = foundCustomer.CostumerName
                 });
             }
             
