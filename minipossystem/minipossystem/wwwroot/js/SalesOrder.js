@@ -96,7 +96,7 @@ function addCustomer() {
 
     });
 }
-function searchProduct1() {
+function searchProduct() {
     //var id from html
     var id = $("#searchProduct").val();
     $.post("/SalesOrder/SearchProduct", { id: id }, function (productresponse) {
