@@ -153,7 +153,7 @@ function showintable() {
                     </button>
                 </td>
             </tr>
-        `;
+        
         tbody.append(row);
         i++;
 
