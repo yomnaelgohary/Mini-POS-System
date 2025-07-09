@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
@@ -75,28 +75,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SalesOrder.js",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\SalesOrder.js",
-              "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\SalesOrder.js",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\SalesOrder.js",
-              "RelativeToolTip": "minipossystem\\wwwroot\\js\\SalesOrder.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJkAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-08T07:43:44.21Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\Create.cshtml",
               "RelativeDocumentMoniker": "minipossystem\\Views\\SalesOrder\\Create.cshtml",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\Create.cshtml",
               "RelativeToolTip": "minipossystem\\Views\\SalesOrder\\Create.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-07-08T07:20:33.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SalesOrder.js",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\SalesOrder.js",
+              "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\SalesOrder.js",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\SalesOrder.js",
+              "RelativeToolTip": "minipossystem\\wwwroot\\js\\SalesOrder.js",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAIwKMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-08T07:43:44.21Z",
               "EditorCaption": ""
             },
             {
