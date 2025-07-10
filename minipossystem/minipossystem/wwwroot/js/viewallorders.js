@@ -1,7 +1,6 @@
 ﻿// Import jQuery and Bootstrap
 var $ = window.jQuery
 var bootstrap = window.bootstrap
-
 var currentOrderId = null
 var orderItemsToUpdate = []
 var currentInvoiceOrderId = null
@@ -22,7 +21,6 @@ function searchOrderById() {
         alert("Please enter a Sales Order ID to search.")
         return
     }
-
     $.post("/SalesOrder/SearchSalesOrder", { orderId: Number.parseInt(orderId) }, (orders) => {
         if (orders && orders.length > 0) {
             displayOrders(orders)
@@ -38,7 +36,6 @@ function searchOrderById() {
 function displayOrders(orders) {
     const tbody = $("#ordersTable tbody")
     tbody.empty()
-
     if (!orders || orders.length === 0) {
         tbody.append(`
             <tr>
@@ -50,7 +47,6 @@ function displayOrders(orders) {
         `)
         return
     }
-
     orders.forEach((order) => {
         const statusClass = order.status.toLowerCase() === "pending" ? "status-pending" : "status-completed"
         const row = `
@@ -79,7 +75,7 @@ function displayOrders(orders) {
 
 function editOrder(orderId) {
     currentOrderId = orderId
-    $.post("/SalesOrder/GetSalesOrderDetails", { orderId: orderId }, (orderDetails) => {
+    $.post("/SalesOrder/GetSalesOrderDetailsWithInvoiceStatus", { orderId: orderId }, (orderDetails) => {
         if (orderDetails) {
             // Populate order information
             $("#editOrderId").text(orderDetails.salesOrderId)
@@ -87,30 +83,48 @@ function editOrder(orderId) {
             $("#editOrderDate").text(orderDetails.orderDate)
             $("#editOrderStatus").text(orderDetails.status)
 
-            // Populate order items
+            // Populate order items with invoice status
             const tbody = $("#editOrderItemsTable tbody")
             tbody.empty()
             orderItemsToUpdate = []
 
             if (orderDetails.items && orderDetails.items.length > 0) {
                 orderDetails.items.forEach((item) => {
+                    let statusBadge = ""
+                    let creditButton = ""
+
+                    if (item.isInvoiced) {
+                        if (item.availableForCredit > 0) {
+                            statusBadge = `<span class="badge bg-warning">Invoiced (${item.availableForCredit} available for credit)</span>`
+                            creditButton = `<button class="btn btn-sm btn-warning ms-1" onclick="creditItem(${item.salesOrderItemId}, ${item.availableForCredit})" title="Credit Item">
+                                              <i class="bi bi-arrow-return-left"></i>
+                                            </button>`
+                        } else {
+                            statusBadge = `<span class="badge bg-success">Fully Credited</span>`
+                        }
+                    } else {
+                        statusBadge = `<span class="badge bg-secondary">Not Invoiced</span>`
+                    }
+
                     const row = `
                         <tr data-item-id="${item.salesOrderItemId}">
                             <td>${item.productDescription}</td>
                             <td>${item.productCode}</td>
                             <td>${item.unitPrice.toFixed(2)} EGP</td>
                             <td>
-                                <input type="number" class="form-control quantity-input" 
-                                       value="${item.quantity}" min="1" 
-                                       data-item-id="${item.salesOrderItemId}"
+                                <input type="number" class="form-control quantity-input"
+                                        value="${item.quantity}" min="1"
+                                        data-item-id="${item.salesOrderItemId}"
                                        data-unit-price="${item.unitPrice}"
                                        onchange="updateItemTotal(this)">
                             </td>
                             <td class="item-total">${item.totalPrice.toFixed(2)} EGP</td>
+                            <td>${statusBadge}</td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-success" onclick="updateQuantity(${item.salesOrderItemId})" title="Update Quantity">
                                     <i class="bi bi-check"></i>
                                 </button>
+                                ${creditButton}
                             </td>
                         </tr>
                     `
@@ -119,7 +133,7 @@ function editOrder(orderId) {
             } else {
                 tbody.append(`
                     <tr>
-                        <td colspan="6" class="text-center text-muted py-3">
+                        <td colspan="7" class="text-center text-muted py-3">
                             No items found for this order.
                         </td>
                     </tr>
@@ -138,11 +152,55 @@ function editOrder(orderId) {
     })
 }
 
+// Add new function to handle crediting items
+function creditItem(orderItemId, availableQuantity) {
+    const quantity = prompt(`Enter quantity to credit (max ${availableQuantity}):`, availableQuantity.toString())
+
+    if (quantity === null) return // User cancelled
+
+    const creditQuantity = Number.parseInt(quantity)
+
+    if (isNaN(creditQuantity) || creditQuantity <= 0 || creditQuantity > availableQuantity) {
+        alert(`Please enter a valid quantity between 1 and ${availableQuantity}`)
+        return
+    }
+
+    const reason = prompt("Enter reason for credit (optional):", "Customer return")
+
+    if (
+        !confirm(
+            `Are you sure you want to credit ${creditQuantity} items? This will return them to stock and create a credit note.`,
+        )
+    ) {
+        return
+    }
+
+    $.post(
+        "/SalesOrder/CreditInvoicedItem",
+        {
+            orderItemId: orderItemId,
+            creditQuantity: creditQuantity,
+            reason: reason || "No reason provided",
+        },
+        (response) => {
+            if (response.success) {
+                alert(response.message)
+                // Refresh the order details
+                editOrder(currentOrderId)
+            } else {
+                alert("Error crediting item: " + response.message)
+            }
+        },
+    ).fail((xhr, status, error) => {
+        console.error("Error crediting item:", error)
+        alert("Error crediting item: " + error)
+    })
+}
+
 function updateItemTotal(input) {
     const quantity = Number.parseInt(input.value)
     const unitPrice = Number.parseFloat(input.getAttribute("data-unit-price"))
     const totalPrice = quantity * unitPrice
-
     const row = input.closest("tr")
     const totalCell = row.querySelector(".item-total")
     totalCell.textContent = totalPrice.toFixed(2) + " EGP"
@@ -171,7 +229,6 @@ function updateQuantity(itemId) {
                 // Update the total price display
                 const totalPrice = newQuantity * unitPrice
                 row.find(".item-total").text(totalPrice.toFixed(2) + " EGP")
-
                 // Show success message
                 alert("Quantity updated successfully!")
             } else {
@@ -221,8 +278,12 @@ function confirmDeleteOrder() {
 }
 
 function createInvoice(orderId) {
+    console.log("createInvoice called with orderId:", orderId)
     currentInvoiceOrderId = orderId
+
     $.post("/SalesOrder/GetSalesOrderForInvoice", { orderId: orderId }, (orderDetails) => {
+        console.log("Order details received:", orderDetails)
+
         if (orderDetails) {
             // Populate order information
             $("#invoiceOrderId").text(orderDetails.salesOrderId)
@@ -240,8 +301,8 @@ function createInvoice(orderId) {
                     const row = `
                         <tr data-item-id="${item.salesOrderItemId}">
                             <td>
-                                <input type="checkbox" class="invoice-item-checkbox" 
-                                       data-item-id="${item.salesOrderItemId}"
+                                <input type="checkbox" class="invoice-item-checkbox"
+                                        data-item-id="${item.salesOrderItemId}"
                                        data-unit-price="${item.unitPrice}"
                                        data-max-qty="${item.quantity}"
                                        onchange="updateInvoiceItemSelection(this)">
@@ -251,8 +312,8 @@ function createInvoice(orderId) {
                             <td>${item.unitPrice.toFixed(2)} EGP</td>
                             <td>${item.quantity}</td>
                             <td>
-                                <input type="number" class="form-control invoice-qty-input" 
-                                       value="0" min="0" max="${item.quantity}"
+                                <input type="number" class="form-control invoice-qty-input"
+                                        value="0" min="0" max="${item.quantity}"
                                        data-item-id="${item.salesOrderItemId}"
                                        onchange="updateInvoiceQuantity(this)" disabled>
                             </td>
@@ -271,14 +332,22 @@ function createInvoice(orderId) {
                 `)
             }
 
+            // Reset invoice total
+            $("#invoiceTotal").text("0.00 EGP")
+
             // Show the modal
+            console.log("Attempting to show modal")
             var modal = new bootstrap.Modal(document.getElementById("createInvoiceModal"))
             modal.show()
+            console.log("Modal show() called")
         } else {
+            console.log("No order details received")
             alert("Order not found.")
         }
     }).fail((xhr, status, error) => {
         console.error("Error loading order details:", error)
+        console.error("XHR:", xhr)
+        console.error("Status:", status)
         alert("Error loading order details: " + error)
     })
 }
@@ -295,7 +364,6 @@ function updateInvoiceItemSelection(checkbox) {
     const itemId = $(checkbox).data("item-id")
     const maxQty = $(checkbox).data("max-qty")
     const qtyInput = $(`.invoice-qty-input[data-item-id="${itemId}"]`)
-
     if ($(checkbox).is(":checked")) {
         qtyInput.prop("disabled", false)
         qtyInput.val(maxQty)
@@ -313,11 +381,9 @@ function updateInvoiceQuantity(input) {
     const checkbox = $(`.invoice-item-checkbox[data-item-id="${itemId}"]`)
     const unitPrice = Number.parseFloat(checkbox.data("unit-price"))
     const totalPrice = quantity * unitPrice
-
     const row = $(input).closest("tr")
     const totalCell = row.find(".invoice-item-total")
     totalCell.text(totalPrice.toFixed(2) + " EGP")
-
     updateInvoiceTotal()
 }
 
@@ -332,7 +398,6 @@ function updateInvoiceTotal() {
 }
 
 function submitInvoice() {
-    // Collect selected items
     const selectedItems = []
     let totalAmount = 0
 
@@ -343,13 +408,12 @@ function submitInvoice() {
         const quantity = Number.parseInt(qtyInput.val()) || 0
 
         if (quantity > 0) {
-            const itemTotal = unitPrice * quantity
             selectedItems.push({
                 orderItemId: itemId,
                 quantity: quantity,
-                totalPrice: itemTotal,
+                totalPrice: unitPrice * quantity,
             })
-            totalAmount += itemTotal
+            totalAmount += unitPrice * quantity
         }
     })
 
@@ -368,8 +432,6 @@ function submitInvoice() {
         (response) => {
             if (response.success) {
                 const invoiceId = response.invoiceId
-
-                // Add items to invoice
                 let itemIndex = 0
                 function addNextItem() {
                     if (itemIndex < selectedItems.length) {
@@ -382,18 +444,21 @@ function submitInvoice() {
                                 quantity: item.quantity,
                                 totalPrice: item.totalPrice,
                             },
-                            () => {
-                                itemIndex++
-                                addNextItem()
+                            (res) => {
+                                if (res.success) {
+                                    itemIndex++
+                                    addNextItem()
+                                } else {
+                                    alert("Error: " + res.message)
+                                }
                             },
-                        )
+                        ).fail((xhr, status, error) => {
+                            alert("Server error while adding item to invoice: " + error)
+                        })
                     } else {
                         alert("Invoice created successfully! Invoice ID: " + invoiceId)
-                        var modal = bootstrap.Modal.getInstance(document.getElementById("createInvoiceModal"))
-                        if (modal) {
-                            modal.hide()
-                        }
-                        // Refresh the orders list
+                        const modal = bootstrap.Modal.getInstance(document.getElementById("createInvoiceModal"))
+                        if (modal) modal.hide()
                         loadAllOrders()
                     }
                 }
@@ -403,7 +468,6 @@ function submitInvoice() {
             }
         },
     ).fail((xhr, status, error) => {
-        console.error("Error creating invoice:", error)
         alert("Error creating invoice: " + error)
     })
 }

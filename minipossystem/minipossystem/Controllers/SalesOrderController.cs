@@ -498,24 +498,27 @@ namespace minipossystem.Controllers
         [HttpPost]
         public JsonResult AddToSalesInvoiceItem(int invoiceId, int orderItemId, int quantity, decimal totalPrice)
         {
-            try
-            {
-                SalesInvoiceItem newInvoiceItem = new SalesInvoiceItem();
-                newInvoiceItem.SalesInvoiceId = invoiceId;
-                newInvoiceItem.SalesOrderItemId = orderItemId;
-                // Note: Your SalesInvoiceItem model doesn't have Quantity and Price properties
-                // You might need to add them to your database model
+            bool alreadyInvoiced = context.SalesInvoiceItems.Any(x => x.SalesOrderItemId == orderItemId);
 
-                context.SalesInvoiceItems.Add(newInvoiceItem);
-                context.SaveChanges();
-
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
+            if (alreadyInvoiced)
             {
-                return Json(new { success = false, message = ex.Message });
+                return Json(new { success = false, message = "This Sales Order Item has already been invoiced." });
             }
+
+            var invoiceItem = new SalesInvoiceItem
+            {
+                SalesInvoiceId = invoiceId,
+                SalesOrderItemId = orderItemId,
+                // Add Quantity and TotalPrice if they exist in your model
+            };
+
+            context.SalesInvoiceItems.Add(invoiceItem);
+            context.SaveChanges();
+
+            return Json(new { success = true });
         }
+
+
 
         // New method to get all invoices - FIXED to match your database structure
         [HttpPost]
@@ -772,6 +775,7 @@ namespace minipossystem.Controllers
             return View(creditNotes);
         }
         [HttpPost]
+
         public JsonResult GetAllInvoicesWithStatus()
         {
             List<SalesInvoice> allInvoices = context.SalesInvoices
@@ -807,6 +811,299 @@ namespace minipossystem.Controllers
 
             return Json(invoiceData);
         }
+        // REPLACE THE PREVIOUS NEW METHODS WITH THESE FIXED VERSIONS
+
+        // Enhanced method to get sales order details with invoice status
+        [HttpPost]
+        public JsonResult GetSalesOrderDetailsWithInvoiceStatus(int orderId)
+        {
+            try
+            {
+                Console.WriteLine($"DEBUG: Getting order details for orderId: {orderId}");
+
+                SalesOrder salesOrder = null;
+                foreach (SalesOrder order in context.SalesOrders)
+                {
+                    if (order.SalesOrderId == orderId)
+                    {
+                        salesOrder = order;
+                        break;
+                    }
+                }
+
+                if (salesOrder == null)
+                {
+                    Console.WriteLine("DEBUG: Sales order not found");
+                    return Json(null);
+                }
+
+                Console.WriteLine($"DEBUG: Found sales order: {salesOrder.SalesOrderId}");
+
+                List<SalesOrderItem> orderItems = new List<SalesOrderItem>();
+                foreach (SalesOrderItem item in context.SalesOrderItems)
+                {
+                    if (item.SalesOrderId == orderId)
+                    {
+                        orderItems.Add(item);
+                    }
+                }
+
+                Console.WriteLine($"DEBUG: Found {orderItems.Count} order items");
+
+                var orderDetails = new
+                {
+                    salesOrderId = salesOrder.SalesOrderId,
+                    costumerId = salesOrder.CostumerId,
+                    employeeId = salesOrder.EmployeeId,
+                    orderDate = salesOrder.OrderDate.ToString(),
+                    status = salesOrder.Status,
+                    items = orderItems.Select(item => {
+                        Product product = null;
+                        foreach (Product p in context.Products)
+                        {
+                            if (p.ProductId == item.ProductId)
+                            {
+                                product = p;
+                                break;
+                            }
+                        }
+
+                        // Check if item is invoiced
+                        bool isInvoiced = false;
+                        int invoicedQuantity = 0;
+                        int creditedQuantity = 0;
+                        List<int> invoiceIds = new List<int>();
+
+                        try
+                        {
+                            foreach (SalesInvoiceItem invoiceItem in context.SalesInvoiceItems)
+                            {
+                                if (invoiceItem.SalesOrderItemId == item.SalesOrderItemId)
+                                {
+                                    isInvoiced = true;
+                                    invoicedQuantity = item.Quantity; // Use the original order quantity
+
+                                    // Calculate credited quantity from credit note items
+                                    foreach (CreditNoteItem creditItem in context.CreditNoteItems)
+                                    {
+                                        if (creditItem.InvoiceItemId == invoiceItem.SalesInvoiceItmeId)
+                                        {
+                                            creditedQuantity += creditItem.Quantity;
+                                        }
+                                    }
+
+                                    // Get invoice ID
+                                    SalesInvoice invoice = null;
+                                    foreach (SalesInvoice inv in context.SalesInvoices)
+                                    {
+                                        if (inv.SalesInvoiceId == invoiceItem.SalesInvoiceId)
+                                        {
+                                            invoice = inv;
+                                            break;
+                                        }
+                                    }
+                                    if (invoice != null)
+                                    {
+                                        invoiceIds.Add(invoice.SalesInvoiceId);
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"DEBUG: Error checking invoice status: {ex.Message}");
+                            // Continue with default values
+                        }
+
+                        return new
+                        {
+                            salesOrderItemId = item.SalesOrderItemId,
+                            productId = item.ProductId,
+                            productDescription = product?.Description ?? "Unknown Product",
+                            productCode = product?.ProductCode ?? "N/A",
+                            unitPrice = product?.SellingPrice ?? 0,
+                            quantity = item.Quantity,
+                            totalPrice = item.Price,
+                            isInvoiced = isInvoiced,
+                            invoicedQuantity = invoicedQuantity,
+                            creditedQuantity = creditedQuantity,
+                            availableForCredit = invoicedQuantity - creditedQuantity,
+                            invoiceIds = invoiceIds
+                        };
+                    }).ToList()
+                };
+
+                Console.WriteLine($"DEBUG: Returning order details with {orderDetails.items.Count} items");
+                return Json(orderDetails);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DEBUG: Exception in GetSalesOrderDetailsWithInvoiceStatus: {ex.Message}");
+                return Json(new { error = ex.Message });
+            }
+        }
+
+        // Fixed method to credit an invoiced item
+        [HttpPost]
+        public JsonResult CreditInvoicedItem(int orderItemId, int creditQuantity, string reason)
+        {
+            try
+            {
+                Console.WriteLine($"DEBUG: Crediting item {orderItemId}, quantity {creditQuantity}");
+
+                // Find the invoice item related to this order item
+                SalesInvoiceItem invoiceItemToCredit = null;
+                foreach (SalesInvoiceItem invoiceItem in context.SalesInvoiceItems)
+                {
+                    if (invoiceItem.SalesOrderItemId == orderItemId)
+                    {
+                        invoiceItemToCredit = invoiceItem;
+                        break;
+                    }
+                }
+
+                if (invoiceItemToCredit == null)
+                {
+                    return Json(new { success = false, message = "Invoice item not found." });
+                }
+
+                // Get the order item
+                SalesOrderItem orderItem = null;
+                foreach (SalesOrderItem oi in context.SalesOrderItems)
+                {
+                    if (oi.SalesOrderItemId == orderItemId)
+                    {
+                        orderItem = oi;
+                        break;
+                    }
+                }
+
+                if (orderItem == null)
+                {
+                    return Json(new { success = false, message = "Order item not found." });
+                }
+
+                // Calculate current credited quantity from existing credit note items
+                int currentCreditedQuantity = 0;
+                foreach (CreditNoteItem creditItem in context.CreditNoteItems)
+                {
+                    if (creditItem.InvoiceItemId == invoiceItemToCredit.SalesInvoiceItmeId)
+                    {
+                        currentCreditedQuantity += creditItem.Quantity;
+                    }
+                }
+
+                // Check if credit quantity is valid
+                int availableForCredit = orderItem.Quantity - currentCreditedQuantity;
+                if (creditQuantity > availableForCredit)
+                {
+                    return Json(new { success = false, message = $"Cannot credit {creditQuantity} items. Only {availableForCredit} available for credit." });
+                }
+
+                // Return quantity to stock
+                Product product = null;
+                foreach (Product p in context.Products)
+                {
+                    if (p.ProductId == orderItem.ProductId)
+                    {
+                        product = p;
+                        break;
+                    }
+                }
+
+                if (product != null)
+                {
+                    product.Stock += creditQuantity;
+                }
+
+                // Find the invoice
+                SalesInvoice invoice = null;
+                foreach (SalesInvoice inv in context.SalesInvoices)
+                {
+                    if (inv.SalesInvoiceId == invoiceItemToCredit.SalesInvoiceId)
+                    {
+                        invoice = inv;
+                        break;
+                    }
+                }
+
+                if (invoice != null)
+                {
+                    // Check if credit note already exists for this invoice
+                    CreditNote existingCreditNote = null;
+                    foreach (CreditNote cn in context.CreditNotes)
+                    {
+                        if (cn.SalesInvoiceId == invoice.SalesInvoiceId)
+                        {
+                            existingCreditNote = cn;
+                            break;
+                        }
+                    }
+
+                    CreditNote creditNote;
+                    if (existingCreditNote == null)
+                    {
+                        // Create new credit note
+                        creditNote = new CreditNote
+                        {
+                            SalesInvoiceId = invoice.SalesInvoiceId,
+                            Date = DateOnly.FromDateTime(DateTime.Now),
+                            EmployeeId = 1,
+                            Price = 0 // Will be updated
+                        };
+                        context.CreditNotes.Add(creditNote);
+                        context.SaveChanges(); // Save to get the ID
+                    }
+                    else
+                    {
+                        creditNote = existingCreditNote;
+                    }
+
+                    // Calculate credit amount
+                    decimal unitPrice = orderItem.Price / orderItem.Quantity;
+                    decimal creditAmount = unitPrice * creditQuantity;
+
+                    // Add credit note item
+                    CreditNoteItem creditNoteItem = new CreditNoteItem
+                    {
+                        CreditNoteId = creditNote.CreditNoteId,
+                        InvoiceItemId = invoiceItemToCredit.SalesInvoiceItmeId,
+                        Quantity = creditQuantity,
+                        Price = creditAmount
+                    };
+                    context.CreditNoteItems.Add(creditNoteItem);
+
+                    // Update credit note total
+                    creditNote.Price += creditAmount;
+
+                    // Update invoice total
+                    invoice.Price -= creditAmount;
+                }
+
+                context.SaveChanges();
+
+                // Calculate new credited quantity for response
+                int newCreditedQuantity = currentCreditedQuantity + creditQuantity;
+
+                return Json(new
+                {
+                    success = true,
+                    message = $"Successfully credited {creditQuantity} items. Stock updated and credit note created.",
+                    creditedQuantity = newCreditedQuantity
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DEBUG: Exception in CreditInvoicedItem: {ex.Message}");
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+
+
+
 
     }
 }
+
