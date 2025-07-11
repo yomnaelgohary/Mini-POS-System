@@ -94,7 +94,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 897,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -107,6 +107,23 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AllOrders.cshtml",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
+              "RelativeDocumentMoniker": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
+              "RelativeToolTip": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAYwBQAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-11T14:03:55.399Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -132,19 +149,6 @@
               "ViewState": "AgIAAEABAAAAAAAAAAAAAEYBAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-11T12:55:58.145Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AllOrders.cshtml",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "RelativeDocumentMoniker": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "RelativeToolTip": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAYwBUAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-11T14:03:55.399Z",
               "EditorCaption": ""
             },
             {
@@ -276,10 +280,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-11T12:02:23.244Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
