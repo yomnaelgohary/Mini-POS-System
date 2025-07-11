@@ -1,5 +1,5 @@
 ﻿
-var selectedCustumer = null;
+var selectedCustomer = null;
 var selectedProduct = null;
 let orderProducts = [];
 
@@ -122,11 +122,12 @@ function addProductToOrder(qty) {
     }
     else {
         let product = {
+            id: selectedProduct.productId,
             description: selectedProduct.description,
             code: selectedProduct.productCode,
             price: parseFloat(selectedProduct.sellingPrice),
             quantity: qty,
-            total: parseFloat(selectedProduct.sellingPrice)
+           
 
         };
         orderProducts.push(product);
@@ -158,6 +159,51 @@ function showintable() {
         i++;
 
     }
+
+}
+function submitOrder() {
+   // var newOrderId = null;
+    if (selectedCustomer == null) {
+        alert("Please select a customer.");
+        return;
+}
+    else {
+        let CustomerId = selectedCustomer.costumerId;
+        $.post("/SalesOrder/CreateNewOrder", { CustomerId: CustomerId }, function (response) {
+            if (response.success) {
+                let newOrderId = response.orderId;
+                let data = {
+                    orderId: newOrderId,
+                    products: orderProducts
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/SalesOrder/AddItemsToOrder",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (result) {
+                        if (result.success) {
+                            orderProducts = [];
+                            showintable();
+                            selectedProduct = null;
+                            selectedCustomer = null;
+                            $("#selectedCustomerInfo").addClass("d-none").html("");
+                            $("#searchName").val("");
+                            $("#searchMobile").val("");
+                            $("#searchProduct").val("");
+                            $("#quantityInput").val(""); 
+                            $("#customerFoundAlert").hide();
+                            $("#customerNotFoundAlert").hide();
+                            $("#addCustomerResult").addClass("d-none").text("");
+                            let modal = new bootstrap.Modal(document.getElementById('orderSuccessModal'));
+                            modal.show();
+                        }
+                    }
+                })
+            }
+        });
+    }
+
 
 }
 

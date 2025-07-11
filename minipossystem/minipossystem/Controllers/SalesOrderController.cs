@@ -27,10 +27,7 @@ namespace minipossystem.Controllers
         {
             try
             {
-                // Step 1: Manually declare a variable to store the result
                 Costumer existingCustomer = null;
-
-                // Step 2: Check if customer already exists by searching the database
                 foreach (Costumer customer in context.Costumers)
                 {
                     if (customer.CostumerName == name && customer.CostumerContactInfo == mobile)
@@ -40,7 +37,6 @@ namespace minipossystem.Controllers
                     }
                 }
 
-                // Step 3: If found, return a JSON response saying "Customer already exists"
                 if (existingCustomer != null)
                 {
                     var errorResponse = new
@@ -51,19 +47,10 @@ namespace minipossystem.Controllers
 
                     return Json(errorResponse);
                 }
-
-                // Step 4: If not found, create a new Customer object
                 Costumer newCustomer = new Costumer();
                 newCustomer.CostumerName = name;
                 newCustomer.CostumerContactInfo = mobile;
-
-                // Step 5: Add to database
                 context.Costumers.Add(newCustomer);
-
-                // Step 6: Save changes to the database
-                context.SaveChanges();
-
-                // Step 7: Return success response
                 var successResponse = new
                 {
                     success = true
@@ -73,7 +60,6 @@ namespace minipossystem.Controllers
             }
             catch (Exception ex)
             {
-                // Step 8: If any error happens, return error message as JSON
                 var error = new
                 {
                     success = false,
@@ -147,8 +133,48 @@ namespace minipossystem.Controllers
 
             return Json(null);
         }
+        [HttpPost]
+
+        public JsonResult CreateNewOrder(int CustomerId)
+        {
+            SalesOrder newsalesorder = new SalesOrder();
+            newsalesorder.CostumerId = CustomerId;
+            newsalesorder.EmployeeId = 1;
+            newsalesorder.OrderDate = DateOnly.FromDateTime(DateTime.Today);
+            newsalesorder.Status = "Pending";
+            context.SalesOrders.Add(newsalesorder);
+            context.SaveChanges();
+            
+            return Json(new { 
+                success = true,
+                orderId=newsalesorder.SalesOrderId
+            });
+        }
 
 
+
+
+        [HttpPost]
+        public IActionResult AddItemsToOrder([FromBody] AddOrderItemsRequest request) {
+            var orderid = request.OrderId;
+            for (int i=0; i< request.Products.Count; i++)
+            {
+                SalesOrderItem newsalesorderitem = new SalesOrderItem();
+                newsalesorderitem.SalesOrderId = orderid;
+                var product = request.Products[i];
+                newsalesorderitem.ProductId = product.Id;
+                newsalesorderitem.Quantity = product.Quantity;
+                newsalesorderitem.Price = product.Price * product.Quantity;
+                context.SalesOrderItems.Add(newsalesorderitem);
+                context.SaveChanges();
+            }
+            return Json(new
+            {
+              success = true
+            });
+
+
+        }
 
 
     }
