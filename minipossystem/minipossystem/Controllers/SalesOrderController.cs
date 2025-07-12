@@ -439,24 +439,17 @@ namespace minipossystem.Controllers
         {
             try
             {
-                // Find the product
                 var product = context.Products.FirstOrDefault(p => p.ProductCode == productCode);
                 if (product == null)
                     return Json(new { success = false, message = "Product not found." });
 
-                // Find the related SalesOrderItem
                 var orderItem = context.SalesOrderItems
                     .FirstOrDefault(soi => soi.SalesOrderId == salesOrderId && soi.ProductId == product.ProductId);
 
                 if (orderItem == null)
                     return Json(new { success = false, message = "Order item not found." });
 
-                // Update the quantity (add back the credited quantity)
                 orderItem.Quantity += quantity;
-
-                // If needed, update the price or other fields as well (optional)
-                // orderItem.Price = ...;
-
                 context.SaveChanges();
 
                 return Json(new { success = true, message = "Item credited successfully." });
