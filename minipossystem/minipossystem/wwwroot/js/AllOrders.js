@@ -482,5 +482,8 @@ function loadPreviousInvoices(orderId) {
 }
 
 function previewInvoice(invoiceid) {
+    $.post("/SalesOrder/ViewInvoiceItems", { invoiceid: invoiceid }, function (response) {
+
+    });
     
 }

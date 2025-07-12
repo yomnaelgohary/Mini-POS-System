@@ -405,7 +405,22 @@ namespace minipossystem.Controllers
             return Json(resultList);
         }
 
+        [HttpGet]
+        public JsonResult ViewInvoiceItems(int invoiceid) {
+            var resultList = new List<object>();
+            var invoicesitems = context.SalesInvoiceItems.ToList();
+            foreach (var invoiceitem in invoicesitems) {
+                if (invoiceitem.SalesInvoiceId == invoiceid) {
+                    resultList.Add(new
+                    {
+                        productCode = invoiceitem.SalesOrderItem.Product.ProductCode,
+                        productDescription = invoiceitem.SalesOrderItem.Product.Description,
+                        invoicedquantity = 
+                    });
 
-
+                }
+            
+            }
+        }
     }
 }
