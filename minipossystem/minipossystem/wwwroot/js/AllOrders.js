@@ -91,10 +91,17 @@ function viewOrderDetails(orderId) {
     <td>${item.price}</td>
     <td>${item.total}</td>
     <td>
-<button class="btn btn-sm btn-success" onclick="openAddToInvoiceModal(${item.productId}, '${item.description}', ${item.price}, ${item.quantity})">
+<button class="btn btn-sm btn-success" onclick="openAddToInvoiceModal(
+    ${order.salesOrderId},
+    ${item.salesOrderItemId},
+    ${item.quantity},
+    ${item.productId},
+    '${item.description}',
+    ${item.price}
+)"
+>
     ➕ Add to Invoice
 </button>
-        <button class="btn btn-sm btn-primary" onclick="updateQuantity(${order.salesOrderId}, ${item.productId})">Update</button>
         <button class="btn btn-sm btn-danger" onclick="removeItem(${order.salesOrderId}, ${item.productId})">Delete</button>
     </td>
 </tr>
@@ -288,28 +295,85 @@ function confirmEditQuantity() {
 }
 
 
-function openAddToInvoiceModal(productId, description, price, maxQty) {
-    $("#invoiceProductId").val(productId);
-    $("#invoiceProductDesc").val(description);
-    $("#invoiceProductPrice").val(price);
+function openAddToInvoiceModal(orderid, itemid, maxQty, productId, description, price) {
+    $("#invoiceorderid").val(orderid);
+    $("#invoiceitemid").val(itemid);
     $("#invoiceMaxQty").val(maxQty);
+    $("#invoiceProductId").val(productId);
+    $("#invoiceProductDescription").val(description);
+    $("#invoiceProductPrice").val(price);
     $("#invoiceQuantityInput").val(1);
     $("#addToInvoiceModal").modal("show");
 }
 
+let toBeInvoicedItems = [];
 function confirmAddToInvoice() {
+    const orderId = parseInt($("#invoiceorderid").val());
+    const itemId = parseInt($("#invoiceitemid").val());
     const productId = parseInt($("#invoiceProductId").val());
-    const description = $("#invoiceProductDesc").val();
-    const price = parseFloat($("#invoiceProductPrice").val());
+    const description = $("#invoiceProductDescription").val();
+    const unitPrice = parseFloat($("#invoiceProductPrice").val());
+    const quantity = parseInt($("#invoiceQuantityInput").val());
     const maxQty = parseInt($("#invoiceMaxQty").val());
-    const qty = parseInt($("#invoiceQuantityInput").val());
 
-    if (isNaN(qty) || qty < 1 || qty > maxQty) {
+    if (isNaN(quantity) || quantity < 1 || quantity > maxQty) {
         alert("Invalid quantity.");
         return;
     }
 
-    console.log(`Add to Invoice: ${description} (x${qty})`);
-    // This is where we'll call addToInvoiceCart() in the next step
+    const total = quantity * unitPrice;
+
+    // Add to cart
+    invoiceCart.push({
+        orderId,
+        itemId,
+        productId,
+        description,
+        quantity,
+        unitPrice,
+        total
+    });
+
+    console.log("Item added to invoice cart:", invoiceCart);
+    renderInvoiceCart(); // Update table in modal
     $("#addToInvoiceModal").modal("hide");
 }
+
+function renderInvoiceCart() {
+    const modalTbody = $("#invoiceCartTable tbody");
+    const previewTbody = $("#invoicePreviewTable tbody");
+
+    modalTbody.empty();
+    previewTbody.empty();
+
+    if (invoiceCart.length === 0) {
+        modalTbody.append(`<tr><td colspan="5" class="text-muted text-center">No items added.</td></tr>`);
+        previewTbody.append(`<tr><td colspan="5" class="text-muted text-center">No items added.</td></tr>`);
+        return;
+    }
+
+    invoiceCart.forEach((item, index) => {
+        const row = `
+            <tr>
+                <td>${item.description}</td>
+                <td>${item.quantity}</td>
+                <td>${item.unitPrice.toFixed(2)}</td>
+                <td>${(item.quantity * item.unitPrice).toFixed(2)}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="removeFromInvoiceCart(${index})">🗑</button>
+                </td>
+            </tr>
+        `;
+
+        modalTbody.append(row);
+        previewTbody.append(row);
+    });
+}
+
+
+function removeFromInvoiceCart(index) {
+    invoiceCart.splice(index, 1);
+    renderInvoiceCart();
+}
+
+

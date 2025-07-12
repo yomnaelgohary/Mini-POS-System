@@ -7,8 +7,16 @@
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\wwwroot\\js\\allorders.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\salesorder\\allorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\views\\salesorder\\allorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\controllers\\salesordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\controllers\\salesordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\models\\salesorderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\models\\salesinvoiceitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\models\\salesinvoiceitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\salesorder\\allorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\views\\salesorder\\allorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\models\\purchaseorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -63,10 +67,6 @@
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\models\\salesorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\salesorder\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\views\\salesorder\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -106,7 +106,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 897,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -122,26 +122,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SalesOrderController.cs",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\SalesOrderController.cs",
-              "RelativeDocumentMoniker": "minipossystem\\Controllers\\SalesOrderController.cs",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\SalesOrderController.cs",
-              "RelativeToolTip": "minipossystem\\Controllers\\SalesOrderController.cs",
-              "ViewState": "AgIAAOcAAAAAAAAAAAAAANUAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T12:55:58.145Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "AllOrders.js",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\AllOrders.js",
               "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\AllOrders.js",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\AllOrders.js*",
               "RelativeToolTip": "minipossystem\\wwwroot\\js\\AllOrders.js*",
-              "ViewState": "AgIAAEcAAAAAAAAAAIAwwFkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGQBAAAAAAAAAAAjwHkBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-07-11T14:13:39.082Z",
               "EditorCaption": ""
@@ -149,6 +136,45 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "SalesOrderController.cs",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\SalesOrderController.cs",
+              "RelativeDocumentMoniker": "minipossystem\\Controllers\\SalesOrderController.cs",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\SalesOrderController.cs",
+              "RelativeToolTip": "minipossystem\\Controllers\\SalesOrderController.cs",
+              "ViewState": "AgIAACIBAAAAAAAAAAAAACwBAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-11T12:55:58.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AllOrders.cshtml",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
+              "RelativeDocumentMoniker": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
+              "RelativeToolTip": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-11T14:03:55.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "minipossystem\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "minipossystem\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAowBUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-11T08:43:02.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "SalesOrderItem.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\SalesOrderItem.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\SalesOrderItem.cs",
@@ -161,7 +187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "SalesInvoiceItem.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\SalesInvoiceItem.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\SalesInvoiceItem.cs",
@@ -174,20 +200,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AllOrders.cshtml",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "RelativeDocumentMoniker": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "RelativeToolTip": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "ViewState": "AgIAACgAAAAAAAAAAAAhwD4AAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-11T14:03:55.399Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "PurchaseOrder.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\PurchaseOrder.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\PurchaseOrder.cs",
@@ -200,7 +213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "InvoiceItemDto.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\InvoiceItemDto.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\InvoiceItemDto.cs",
@@ -213,7 +226,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "OrderProductDto.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\OrderProductDto.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\OrderProductDto.cs",
@@ -226,7 +239,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "SalesInvoice.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\SalesInvoice.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\SalesInvoice.cs",
@@ -239,7 +252,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Employee.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\Employee.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\Employee.cs",
@@ -252,7 +265,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "minipossystem\\Properties\\launchSettings.json",
@@ -265,7 +278,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "minipossystem",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\minipossystem.csproj",
               "RelativeDocumentMoniker": "minipossystem\\minipossystem.csproj",
@@ -276,7 +289,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "InvoiceRequest.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\InvoiceRequest.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\InvoiceRequest.cs",
@@ -288,7 +301,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "SalesOrder.js",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\SalesOrder.js",
               "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\SalesOrder.js",
@@ -300,7 +313,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "SalesOrder.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\SalesOrder.cs",
               "RelativeDocumentMoniker": "minipossystem\\Models\\SalesOrder.cs",
@@ -309,18 +322,6 @@
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-09T18:15:24.323Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "minipossystem\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "minipossystem\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAowBUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T08:43:02.566Z"
             },
             {
               "$type": "Document",

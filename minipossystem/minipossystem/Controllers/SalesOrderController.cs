@@ -295,60 +295,10 @@ namespace minipossystem.Controllers
         }
         [HttpPost]
         [HttpPost]
-        public JsonResult CreateInvoice([FromBody] InvoiceRequest request)
-        {
-            try
-            {
-                if (request.Items == null || request.Items.Count == 0)
-                {
-                    return Json(new { success = false, message = "No items provided for the invoice." });
-                }
+       // public JsonResult CreateInvoice([FromBody] InvoiceRequest request)
+        //{
 
-                decimal totalPrice = 0;
-
-                // Create invoice
-                SalesInvoice newInvoice = new SalesInvoice
-                {
-                    SalesOrderId = request.OrderId,
-                    InvoiveDate = DateOnly.FromDateTime(DateTime.Today),
-                    Price = 0 // Temporary, will be updated later
-                };
-
-                context.SalesInvoices.Add(newInvoice);
-                context.SaveChanges(); // Save to get the ID
-
-                foreach (var selectedItem in request.Items)
-                {
-                    var orderItem = context.SalesOrderItems.FirstOrDefault(x =>
-                        x.SalesOrderId == request.OrderId && x.ProductId == selectedItem.ProductId);
-
-                    if (orderItem == null)
-                    {
-                        return Json(new { success = false, message = $"OrderItem not found for ProductId {selectedItem.ProductId}" });
-                    }
-
-                    // Link order item to invoice
-                    SalesInvoiceItem invoiceItem = new SalesInvoiceItem
-                    {
-                        SalesInvoiceId = newInvoice.SalesInvoiceId,
-                        SalesOrderItemId = orderItem.SalesOrderItemId
-                    };
-
-                    context.SalesInvoiceItems.Add(invoiceItem);
-                    totalPrice += orderItem.Price;
-                }
-
-                newInvoice.Price = totalPrice;
-                context.SaveChanges();
-
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = "Error: " + ex.Message + " | " + ex.InnerException?.Message });
-            }
-        }
-
+        //}
         [HttpPost]
         public JsonResult UpdateQuantityForSalesOrderItem(int newQty, int orderId, int itemid)
         {
