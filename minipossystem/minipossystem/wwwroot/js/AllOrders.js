@@ -235,32 +235,42 @@ function submitInvoice() {
         return;
     }
 
+    const payload = {
+        orderId: currentOrderId,
+        items: invoiceCart.map(item => ({
+            itemId: item.itemId,
+            quantity: item.quantity,
+            unitPrice: item.unitPrice,
+            total: item.total
+        }))
+    };
+
     $.ajax({
-        url: "/SalesOrder/CreateInvoice", 
+        url: "/SalesOrder/CreateInvoice",
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify({
-            orderId: currentOrderId,
-            items: invoiceCart
-        }),
+        data: JSON.stringify(payload),
         success: function (res) {
             if (res.success) {
-                alert("Invoice created successfully!");
+                // Reset state
                 invoiceCart = [];
                 renderInvoiceCart();
                 $("#orderDetailsModal").modal("hide");
-                loadAllOrders(); // refresh orders
+
+                // Show preview
+                showInvoicePreview(res.invoice);
             } else {
                 alert(res.message || "Failed to create invoice.");
             }
         },
-        error: function (xhr, status, error) {
+        error: function (xhr) {
             console.error("Invoice error:", xhr.responseText);
             alert("Error creating invoice: " + xhr.responseText);
         }
-
     });
 }
+
+
 function openEditQuantityModal(orderId, productId, currentQty, itemid) {
     $("#editorderId").val(orderId);
     $("#edititemid").val(itemid);
@@ -335,7 +345,7 @@ function confirmAddToInvoice() {
     });
 
     console.log("Item added to invoice cart:", invoiceCart);
-    renderInvoiceCart(); // Update table in modal
+    renderInvoiceCart();
     $("#addToInvoiceModal").modal("hide");
 }
 
@@ -375,5 +385,46 @@ function removeFromInvoiceCart(index) {
     invoiceCart.splice(index, 1);
     renderInvoiceCart();
 }
+
+function showInvoicePreview(invoice) {
+    let html = `
+        <h5>Invoice #${invoice.invoiceId}</h5>
+        <p><strong>Order ID:</strong> ${invoice.orderId}</p>
+        <p><strong>Date:</strong> ${invoice.date}</p>
+        <p><strong>Total Price:</strong> ${invoice.total.toFixed(2)}</p>
+        <hr />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+    invoice.items.forEach(item => {
+        html += `
+            <tr>
+                <td>${item.description}</td>
+                <td>${item.quantity}</td>
+                <td>${item.price.toFixed(2)}</td>
+                <td>${item.total.toFixed(2)}</td>
+            </tr>`;
+    });
+
+    html += `
+            </tbody>
+        </table>
+        <div class="text-end">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+    `;
+
+    $("#invoiceSummaryModal .modal-body").html(html);
+    $("#invoiceSummaryModal").modal("show");
+}
+
 
 

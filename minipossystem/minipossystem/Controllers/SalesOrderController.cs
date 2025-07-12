@@ -294,11 +294,8 @@ namespace minipossystem.Controllers
             return Json(new { success = true });
         }
         [HttpPost]
-        [HttpPost]
-       // public JsonResult CreateInvoice([FromBody] InvoiceRequest request)
-        //{
-
-        //}
+       
+       
         [HttpPost]
         public JsonResult UpdateQuantityForSalesOrderItem(int newQty, int orderId, int itemid)
         {
@@ -320,6 +317,69 @@ namespace minipossystem.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+        [HttpPost]
+        public JsonResult CreateInvoice([FromBody] InvoiceRequest request)
+        {
+            try
+            {
+                // Step 1: Create the SalesInvoice
+                var invoice = new SalesInvoice
+                {
+                    SalesOrderId = request.OrderId,
+                    InvoiveDate = DateOnly.FromDateTime(DateTime.Today),
+                    Price = 0 // will update later
+                };
+
+                context.SalesInvoices.Add(invoice);
+                context.SaveChanges(); // To get the generated SalesInvoiceId
+
+                decimal totalPrice = 0;
+
+                // Step 2: Add SalesInvoiceItems
+                foreach (var item in request.Items)
+                {
+                    var invoiceItem = new SalesInvoiceItem
+                    {
+                        SalesInvoiceId = invoice.SalesInvoiceId,
+                        SalesOrderItemId = item.ItemId
+                    };
+
+                    context.SalesInvoiceItems.Add(invoiceItem);
+                    totalPrice += item.Total;
+                }
+
+                // Step 3: Update total price
+                invoice.Price = totalPrice;
+                context.SaveChanges();
+
+                // Step 4: Load invoice summary for preview
+                var preview = context.SalesInvoices
+                    .Where(i => i.SalesInvoiceId == invoice.SalesInvoiceId)
+                    .Select(i => new
+                    {
+                        invoiceId = i.SalesInvoiceId,
+                        orderId = i.SalesOrderId,
+                        date = i.InvoiveDate,
+                        total = i.Price,
+                        items = i.SalesInvoiceItems.Select(ii => new
+                        {
+                            description = ii.SalesOrderItem.Product.Description,
+                            quantity = ii.SalesOrderItem.Quantity,
+                            price = ii.SalesOrderItem.Price,
+                            total = ii.SalesOrderItem.Quantity * ii.SalesOrderItem.Price
+                        }).ToList()
+                    })
+                    .FirstOrDefault();
+
+                return Json(new { success = true, invoice = preview });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
 
 
 
