@@ -81,18 +81,19 @@ function viewOrderDetails(orderId) {
 <tr>
     <td>${item.productCode}</td>
     <td>${item.description}</td>
-    <td>
-        <input type="number" class="form-control form-control-sm" 
-            id="qty_${item.productId}" 
-            value="1" 
-            min="1" 
-            max="${item.quantity}"
-            style="width: 80px;" />
-    </td>
+   <td>
+    <span id="qty_display_${item.productId}">${item.quantity}</span>
+    <button class="btn btn-sm btn-outline-warning ms-2" onclick="openEditQuantityModal(${order.salesOrderId}, ${item.productId}, ${item.quantity},${item.salesOrderItemId} )">
+        Edit Quantity
+    </button>
+</td>
+
     <td>${item.price}</td>
     <td>${item.total}</td>
     <td>
-        <button class="btn btn-sm btn-success" onclick="addToInvoiceCart(${item.productId}, '${item.description}', ${item.price}, ${item.quantity})">➕ Add to Invoice</button>
+<button class="btn btn-sm btn-success" onclick="openAddToInvoiceModal(${item.productId}, '${item.description}', ${item.price}, ${item.quantity})">
+    ➕ Add to Invoice
+</button>
         <button class="btn btn-sm btn-primary" onclick="updateQuantity(${order.salesOrderId}, ${item.productId})">Update</button>
         <button class="btn btn-sm btn-danger" onclick="removeItem(${order.salesOrderId}, ${item.productId})">Delete</button>
     </td>
@@ -228,7 +229,7 @@ function submitInvoice() {
     }
 
     $.ajax({
-        url: "/SalesOrder/CreateInvoice", // Adjust to your backend route
+        url: "/SalesOrder/CreateInvoice", 
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
@@ -252,4 +253,63 @@ function submitInvoice() {
         }
 
     });
+}
+function openEditQuantityModal(orderId, productId, currentQty, itemid) {
+    $("#editorderId").val(orderId);
+    $("#edititemid").val(itemid);
+    $("#editProductId").val(productId);
+    $("#editQuantityInput").val(currentQty);
+    $("#editQuantityModal").modal("show");
+}
+
+function confirmEditQuantity() {
+    const newQty = parseInt($("#editQuantityInput").val());
+    const productId = parseInt($("#editProductId").val());
+    const orderId = parseInt($("#editorderId").val());
+    const itemid = parseInt($("#edititemid").val());
+
+    console.log("Saving new quantity:", newQty, "for product:", productId, orderId, itemid);
+
+    $.post("/SalesOrder/UpdateQuantityForSalesOrderItem",
+        {
+            newQty: newQty,
+            orderId: orderId,
+            itemid: itemid
+        },
+        function (response) {
+            if (response.success) {
+                $("#editQuantityModal").modal("hide");
+                viewOrderDetails(orderId);
+            } else {
+                alert(response.message || "Update failed.");
+            }
+        }
+    );
+}
+
+
+function openAddToInvoiceModal(productId, description, price, maxQty) {
+    $("#invoiceProductId").val(productId);
+    $("#invoiceProductDesc").val(description);
+    $("#invoiceProductPrice").val(price);
+    $("#invoiceMaxQty").val(maxQty);
+    $("#invoiceQuantityInput").val(1);
+    $("#addToInvoiceModal").modal("show");
+}
+
+function confirmAddToInvoice() {
+    const productId = parseInt($("#invoiceProductId").val());
+    const description = $("#invoiceProductDesc").val();
+    const price = parseFloat($("#invoiceProductPrice").val());
+    const maxQty = parseInt($("#invoiceMaxQty").val());
+    const qty = parseInt($("#invoiceQuantityInput").val());
+
+    if (isNaN(qty) || qty < 1 || qty > maxQty) {
+        alert("Invalid quantity.");
+        return;
+    }
+
+    console.log(`Add to Invoice: ${description} (x${qty})`);
+    // This is where we'll call addToInvoiceCart() in the next step
+    $("#addToInvoiceModal").modal("hide");
 }

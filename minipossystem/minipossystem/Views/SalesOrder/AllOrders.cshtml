@@ -41,3 +41,44 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Quantity Modal -->
+<div class="modal fade" id="editQuantityModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title">Edit Quantity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="number" id="editQuantityInput" class="form-control" min="1" />
+                <input type="hidden" id="editorderId" />
+                <input type="hidden" id="edititemid" />
+                <input type="hidden" id="editProductId" />
+
+                <button class="btn btn-primary mt-2 w-100" onclick="confirmEditQuantity()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add to Invoice Modal -->
+<div class="modal fade" id="addToInvoiceModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Add to Invoice</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="number" id="invoiceQuantityInput" class="form-control" min="1" />
+                <input type="hidden" id="invoiceProductId" />
+                <input type="hidden" id="invoiceProductDesc" />
+                <input type="hidden" id="invoiceProductPrice" />
+                <input type="hidden" id="invoiceMaxQty" />
+                <button class="btn btn-success mt-2 w-100" onclick="confirmAddToInvoice()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -241,6 +241,7 @@ namespace minipossystem.Controllers
 
                 items.Add(new
                 {
+                    SalesOrderItemId = item.SalesOrderItemId,
                     ProductId = item.ProductId,
                     Description = description,
                     ProductCode = code,
@@ -263,21 +264,21 @@ namespace minipossystem.Controllers
            
             return Json(new { success = true, data = orderData });
         }
-        [HttpPost]
-        public JsonResult UpdateItemQuantity(int orderId, int productId, int newQuantity)
-        {
-            var item = context.SalesOrderItems
-                .FirstOrDefault(i => i.SalesOrderId == orderId && i.ProductId == productId);
+       // [HttpPost]
+        //public JsonResult UpdateItemQuantity(int orderId, int productId, int newQuantity)
+        //{
+        //    var item = context.SalesOrderItems
+        //        .FirstOrDefault(i => i.SalesOrderId == orderId && i.ProductId == productId);
 
-            if (item == null)
-                return Json(new { success = false, message = "Item not found" });
+        //    if (item == null)
+        //        return Json(new { success = false, message = "Item not found" });
 
-            item.Quantity = newQuantity;
-            item.Price = (item.Price / item.Quantity) * newQuantity; // assuming total is saved in `Price`
-            context.SaveChanges();
+        //    item.Quantity = newQuantity;
+        //    item.Price = (item.Price / item.Quantity) * newQuantity; // assuming total is saved in `Price`
+        //    context.SaveChanges();
 
-            return Json(new { success = true });
-        }
+        //    return Json(new { success = true });
+        //}
         [HttpPost]
         public JsonResult RemoveOrderItem(int orderId, int productId)
         {
@@ -348,6 +349,27 @@ namespace minipossystem.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult UpdateQuantityForSalesOrderItem(int newQty, int orderId, int itemid)
+        {
+            try
+            {
+                var item = context.SalesOrderItems.FirstOrDefault(i => i.SalesOrderItemId == itemid && i.SalesOrderId == orderId);
+
+                if (item == null)
+                    return Json(new { success = false, message = "SalesOrderItem not found." });
+
+                item.Quantity = newQty;
+                context.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // Return the full exception message
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
 
 
 
