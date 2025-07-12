@@ -482,8 +482,59 @@ function loadPreviousInvoices(orderId) {
 }
 
 function previewInvoice(invoiceid) {
-    $.post("/SalesOrder/ViewInvoiceItems", { invoiceid: invoiceid }, function (response) {
+    $.get("/SalesOrder/ViewInvoiceItems?invoiceid=" + invoiceid, function (items) {
+        let html = `
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product Code</th>
+                    <th>Description</th>
+                    <th>Invoiced Qty</th>
+                    <th>Total Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>`;
 
+        items.forEach(item => {
+            html += `
+            <tr>
+                <td>${item.productCode}</td>
+                <td>${item.productDescription}</td>
+                <td>${item.invoicedquantity}</td>
+                <td>${item.itemsprice.toFixed(2)}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning" onclick="openCreditModal('${item.productCode}', ${item.invoicedquantity})">Credit</button>
+                </td>
+            </tr>`;
+        });
+
+        html += `</tbody></table>`;
+
+        $("#invoiceDetailsBody").html(html);
+        $("#invoiceDetailsModal").modal("show");
     });
-    
+}
+
+function openCreditModal(productCode, maxQty) {
+    $("#creditProductCode").val(productCode);
+    $("#creditQuantityInput").attr("max", maxQty).val(1);
+    $("#creditModal").modal("show");
+}
+function confirmCredit() {
+    const productCode = $("#creditProductCode").val();
+    const quantity = parseInt($("#creditQuantityInput").val());
+
+    if (isNaN(quantity) || quantity < 1) {
+        alert("Enter a valid quantity.");
+        return;
+    }
+
+    console.log(`Requesting credit for product ${productCode}, quantity: ${quantity}`);
+
+    // You can now send a POST to your backend to actually process the credit:
+    // $.post("/SalesOrder/CreditItem", { productCode, quantity }, function(response) { ... });
+
+    $("#creditModal").modal("hide");
+    alert("Credit submitted (not yet saved to DB).");
 }

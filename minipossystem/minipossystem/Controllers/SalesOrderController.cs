@@ -340,7 +340,8 @@ namespace minipossystem.Controllers
                     var invoiceItem = new SalesInvoiceItem
                     {
                         SalesInvoiceId = invoice.SalesInvoiceId,
-                        SalesOrderItemId = item.ItemId
+                        SalesOrderItemId = item.ItemId,
+                        InvoivedQuantity =item.Quantity
                     };
 
                     context.SalesInvoiceItems.Add(invoiceItem);
@@ -406,21 +407,28 @@ namespace minipossystem.Controllers
         }
 
         [HttpGet]
-        public JsonResult ViewInvoiceItems(int invoiceid) {
+        public JsonResult ViewInvoiceItems(int invoiceid)
+        {
             var resultList = new List<object>();
-            var invoicesitems = context.SalesInvoiceItems.ToList();
-            foreach (var invoiceitem in invoicesitems) {
-                if (invoiceitem.SalesInvoiceId == invoiceid) {
-                    resultList.Add(new
-                    {
-                        productCode = invoiceitem.SalesOrderItem.Product.ProductCode,
-                        productDescription = invoiceitem.SalesOrderItem.Product.Description,
-                        invoicedquantity = 
-                    });
 
-                }
-            
+            var invoiceItems = context.SalesInvoiceItems
+                .Include(ii => ii.SalesOrderItem)
+                .ThenInclude(soi => soi.Product)
+                .Where(ii => ii.SalesInvoiceId == invoiceid)
+                .ToList();
+
+            foreach (var invoiceitem in invoiceItems)
+            {
+                resultList.Add(new
+                {
+                    productCode = invoiceitem.SalesOrderItem.Product.ProductCode,
+                    productDescription = invoiceitem.SalesOrderItem.Product.Description,
+                    invoicedquantity = invoiceitem.InvoivedQuantity,
+                    itemsprice = invoiceitem.InvoivedQuantity * invoiceitem.SalesOrderItem.Price
+                });
             }
+
+            return Json(resultList);
         }
     }
 }
