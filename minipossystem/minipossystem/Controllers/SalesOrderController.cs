@@ -145,10 +145,11 @@ namespace minipossystem.Controllers
             newsalesorder.Status = "Pending";
             context.SalesOrders.Add(newsalesorder);
             context.SaveChanges();
-            
-            return Json(new { 
+
+            return Json(new
+            {
                 success = true,
-                orderId=newsalesorder.SalesOrderId
+                orderId = newsalesorder.SalesOrderId
             });
         }
 
@@ -156,9 +157,10 @@ namespace minipossystem.Controllers
 
 
         [HttpPost]
-        public IActionResult AddItemsToOrder([FromBody] AddOrderItemsRequest request) {
+        public IActionResult AddItemsToOrder([FromBody] AddOrderItemsRequest request)
+        {
             var orderid = request.OrderId;
-            for (int i=0; i< request.Products.Count; i++)
+            for (int i = 0; i < request.Products.Count; i++)
             {
                 SalesOrderItem newsalesorderitem = new SalesOrderItem();
                 newsalesorderitem.SalesOrderId = orderid;
@@ -171,7 +173,7 @@ namespace minipossystem.Controllers
             }
             return Json(new
             {
-              success = true
+                success = true
             });
 
 
@@ -251,7 +253,7 @@ namespace minipossystem.Controllers
                 });
             }
 
-            
+
             var orderData = new
             {
                 SalesOrderId = order.SalesOrderId,
@@ -261,10 +263,10 @@ namespace minipossystem.Controllers
                 Items = items
             };
 
-           
+
             return Json(new { success = true, data = orderData });
         }
-       // [HttpPost]
+        // [HttpPost]
         //public JsonResult UpdateItemQuantity(int orderId, int productId, int newQuantity)
         //{
         //    var item = context.SalesOrderItems
@@ -294,8 +296,8 @@ namespace minipossystem.Controllers
             return Json(new { success = true });
         }
         [HttpPost]
-       
-       
+
+
         [HttpPost]
         public JsonResult UpdateQuantityForSalesOrderItem(int newQty, int orderId, int itemid)
         {
@@ -322,16 +324,16 @@ namespace minipossystem.Controllers
         {
             try
             {
-                
+
                 var invoice = new SalesInvoice
                 {
                     SalesOrderId = request.OrderId,
                     InvoiveDate = DateOnly.FromDateTime(DateTime.Today),
-                    Price = 0 
+                    Price = 0
                 };
 
                 context.SalesInvoices.Add(invoice);
-                context.SaveChanges(); 
+                context.SaveChanges();
 
                 decimal totalPrice = 0;
 
@@ -341,14 +343,14 @@ namespace minipossystem.Controllers
                     {
                         SalesInvoiceId = invoice.SalesInvoiceId,
                         SalesOrderItemId = item.ItemId,
-                        InvoivedQuantity =item.Quantity
+                        InvoivedQuantity = item.Quantity
                     };
 
                     context.SalesInvoiceItems.Add(invoiceItem);
                     totalPrice += item.Total;
                     SalesOrderItem salesorderitemtoupdate = context.SalesOrderItems.FirstOrDefault(i => i.SalesOrderItemId == invoiceItem.SalesOrderItemId && i.SalesOrderId == invoice.SalesOrderId);
                     salesorderitemtoupdate.Quantity -= item.Quantity;
-                    
+
 
                 }
 
@@ -393,8 +395,10 @@ namespace minipossystem.Controllers
         {
             var resultList = new List<object>();
             var invoices = context.SalesInvoices.ToList();
-            foreach (var invoice in invoices) {
-                if (invoice.SalesOrderId == orderid) {
+            foreach (var invoice in invoices)
+            {
+                if (invoice.SalesOrderId == orderid)
+                {
                     resultList.Add(new
                     {
                         salesInvoiceId = invoice.SalesInvoiceId,
@@ -430,5 +434,39 @@ namespace minipossystem.Controllers
 
             return Json(resultList);
         }
+        [HttpPost]
+        public JsonResult CreditItem(string productCode, int quantity, int salesOrderId)
+        {
+            try
+            {
+                // Find the product
+                var product = context.Products.FirstOrDefault(p => p.ProductCode == productCode);
+                if (product == null)
+                    return Json(new { success = false, message = "Product not found." });
+
+                // Find the related SalesOrderItem
+                var orderItem = context.SalesOrderItems
+                    .FirstOrDefault(soi => soi.SalesOrderId == salesOrderId && soi.ProductId == product.ProductId);
+
+                if (orderItem == null)
+                    return Json(new { success = false, message = "Order item not found." });
+
+                // Update the quantity (add back the credited quantity)
+                orderItem.Quantity += quantity;
+
+                // If needed, update the price or other fields as well (optional)
+                // orderItem.Price = ...;
+
+                context.SaveChanges();
+
+                return Json(new { success = true, message = "Item credited successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+
+        }
+
     }
 }

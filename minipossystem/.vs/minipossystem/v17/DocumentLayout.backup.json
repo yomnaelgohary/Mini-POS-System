@@ -106,7 +106,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 897,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -126,28 +126,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SalesOrderController.cs",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\SalesOrderController.cs",
-              "RelativeDocumentMoniker": "minipossystem\\Controllers\\SalesOrderController.cs",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\SalesOrderController.cs*",
-              "RelativeToolTip": "minipossystem\\Controllers\\SalesOrderController.cs*",
-              "ViewState": "AgIAAJYBAAAAAAAAAAAAAKgBAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T12:55:58.145Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "AllOrders.js",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\AllOrders.js",
               "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\AllOrders.js",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\AllOrders.js",
               "RelativeToolTip": "minipossystem\\wwwroot\\js\\AllOrders.js",
-              "ViewState": "AgIAAOEBAAAAAAAAAAAAAOMBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAgCAAAAAAAAAAAAABcCAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-07-11T14:13:39.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SalesOrderController.cs",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\SalesOrderController.cs",
+              "RelativeDocumentMoniker": "minipossystem\\Controllers\\SalesOrderController.cs",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\SalesOrderController.cs*",
+              "RelativeToolTip": "minipossystem\\Controllers\\SalesOrderController.cs*",
+              "ViewState": "AgIAAK4BAAAAAAAAAAAcwM4BAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-11T12:55:58.145Z",
               "EditorCaption": ""
             },
             {
@@ -158,7 +158,7 @@
               "RelativeDocumentMoniker": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
               "RelativeToolTip": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAHMAAAAAAAAAAIAwwIIAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-07-11T14:03:55.399Z",
               "EditorCaption": ""

@@ -504,7 +504,7 @@ function previewInvoice(invoiceid) {
                 <td>${item.invoicedquantity}</td>
                 <td>${item.itemsprice.toFixed(2)}</td>
                 <td>
-                    <button class="btn btn-sm btn-warning" onclick="openCreditModal('${item.productCode}', ${item.invoicedquantity})">Credit</button>
+<button class="btn btn-sm btn-warning" onclick="openCreditModal('${item.productCode}', ${item.invoicedquantity}, ${currentOrderId})">Credit</button>
                 </td>
             </tr>`;
         });
@@ -516,13 +516,16 @@ function previewInvoice(invoiceid) {
     });
 }
 
-function openCreditModal(productCode, maxQty) {
+function openCreditModal(productCode, maxQty, salesOrderId) {
     $("#creditProductCode").val(productCode);
+    $("#creditSalesOrderId").val(salesOrderId);
     $("#creditQuantityInput").attr("max", maxQty).val(1);
     $("#creditModal").modal("show");
 }
+
 function confirmCredit() {
     const productCode = $("#creditProductCode").val();
+    const salesOrderId = $("#creditSalesOrderId").val();
     const quantity = parseInt($("#creditQuantityInput").val());
 
     if (isNaN(quantity) || quantity < 1) {
@@ -530,11 +533,15 @@ function confirmCredit() {
         return;
     }
 
-    console.log(`Requesting credit for product ${productCode}, quantity: ${quantity}`);
-
-    // You can now send a POST to your backend to actually process the credit:
-    // $.post("/SalesOrder/CreditItem", { productCode, quantity }, function(response) { ... });
-
-    $("#creditModal").modal("hide");
-    alert("Credit submitted (not yet saved to DB).");
+    $.post("/SalesOrder/CreditItem", { productCode, quantity, salesOrderId }, function (response) {
+        if (response.success) {
+            alert("Credit applied successfully.");
+            $("#creditModal").modal("hide");
+            viewOrderDetails(salesOrderId); // Refresh the order
+        } else {
+            alert(response.message || "Failed to credit item.");
+        }
+    });
 }
+
+
