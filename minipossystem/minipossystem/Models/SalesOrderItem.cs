@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace minipossystem.Models;
 
@@ -14,6 +15,9 @@ public partial class SalesOrderItem
     public int Quantity { get; set; }
 
     public decimal Price { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public decimal Total { get; set; }
+
 
     public virtual Product Product { get; set; } = null!;
 

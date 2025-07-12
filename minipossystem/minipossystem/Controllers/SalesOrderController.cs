@@ -322,20 +322,19 @@ namespace minipossystem.Controllers
         {
             try
             {
-                // Step 1: Create the SalesInvoice
+                
                 var invoice = new SalesInvoice
                 {
                     SalesOrderId = request.OrderId,
                     InvoiveDate = DateOnly.FromDateTime(DateTime.Today),
-                    Price = 0 // will update later
+                    Price = 0 
                 };
 
                 context.SalesInvoices.Add(invoice);
-                context.SaveChanges(); // To get the generated SalesInvoiceId
+                context.SaveChanges(); 
 
                 decimal totalPrice = 0;
 
-                // Step 2: Add SalesInvoiceItems
                 foreach (var item in request.Items)
                 {
                     var invoiceItem = new SalesInvoiceItem
@@ -346,13 +345,19 @@ namespace minipossystem.Controllers
 
                     context.SalesInvoiceItems.Add(invoiceItem);
                     totalPrice += item.Total;
+                    SalesOrderItem salesorderitemtoupdate = context.SalesOrderItems.FirstOrDefault(i => i.SalesOrderItemId == invoiceItem.SalesOrderItemId && i.SalesOrderId == invoice.SalesOrderId);
+                    salesorderitemtoupdate.Quantity -= item.Quantity;
+                    
+
                 }
 
-                // Step 3: Update total price
                 invoice.Price = totalPrice;
                 context.SaveChanges();
 
-                // Step 4: Load invoice summary for preview
+
+
+
+
                 var preview = context.SalesInvoices
                     .Where(i => i.SalesInvoiceId == invoice.SalesInvoiceId)
                     .Select(i => new
