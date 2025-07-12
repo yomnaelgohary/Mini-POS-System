@@ -53,6 +53,8 @@ function viewOrderDetails(orderId) {
             if (response.success) {
                 const order = response.data;
                 currentOrderId = order.salesOrderId;
+                loadPreviousInvoices(order.salesOrderId);
+
                 invoiceCart = [];
 
                 let html = `
@@ -128,8 +130,19 @@ function viewOrderDetails(orderId) {
 <button class="btn btn-primary mt-2" onclick="submitInvoice()">🧾 Create Invoice</button>
 `;
 
+                html += `
+<hr>
+<h5>Previous Invoices</h5>
+<div id="invoiceHistorySection">
+    <p class="text-muted">Loading invoices...</p>
+</div>
+`;
+
                 $("#orderDetailsModal .modal-body").html(html);
                 renderInvoiceCart();
+
+
+
                 $("#orderDetailsModal").modal("show");
             } else {
                 alert("Order not found.");
@@ -427,4 +440,47 @@ function showInvoicePreview(invoice) {
 }
 
 
+function loadPreviousInvoices(orderId) {
+    $.get(`/SalesOrder/GetInvoicesForOrder?orderId=${orderId}`, function (invoices) {
+        const container = $("#invoiceHistorySection");
+        container.empty();
 
+        if (!invoices || invoices.length === 0) {
+            container.html(`<p class="text-muted">No invoices found for this order.</p>`);
+            return;
+        }
+
+        let html = `
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        invoices.forEach(inv => {
+            html += `
+                <tr>
+                    <td>${inv.salesInvoiceId}</td>
+                    <td>${inv.invoiveDate}</td>
+                    <td>${inv.price.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="previewInvoice(${inv.salesInvoiceId})">View</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table>`;
+        container.html(html);
+    });
+}
+
+function previewInvoice(invoiceid) {
+    
+}

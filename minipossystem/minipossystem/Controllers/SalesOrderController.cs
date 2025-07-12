@@ -386,9 +386,24 @@ namespace minipossystem.Controllers
 
 
 
+        [HttpGet]
 
-
-
+        public JsonResult GetInvoicesForOrder(int orderid)
+        {
+            var resultList = new List<object>();
+            var invoices = context.SalesInvoices.ToList();
+            foreach (var invoice in invoices) {
+                if (invoice.SalesOrderId == orderid) {
+                    resultList.Add(new
+                    {
+                        salesInvoiceId = invoice.SalesInvoiceId,
+                        invoiveDate = invoice.InvoiveDate.ToString("yyyy-MM-dd"),
+                        price = invoice.Price
+                    });
+                }
+            }
+            return Json(resultList);
+        }
 
 
 
