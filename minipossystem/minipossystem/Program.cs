@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using minipossystem.Models; // 👈 Your context namespace
+using minipossystem.Models; // 👈 Make sure this matches your actual namespace
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MiniPosSystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MiniPosSystemConnection")));
-
 
 builder.Services.AddSession(options =>
 {
@@ -18,6 +17,7 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -26,13 +26,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-builder.Services.AddSession();
 
 app.UseRouting();
 
-app.UseSession();     
-app.UseAuthorization();
+app.UseSession();
 
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
