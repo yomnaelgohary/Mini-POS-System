@@ -460,6 +460,19 @@ namespace minipossystem.Controllers
             }
 
         }
+        public IActionResult TestRoles()
+        {
+            var roles = context.RoleAccesses.ToList();
+            return Json(roles);
+        }
+        [HttpGet]
+        [Route("RoleAccess/GetAll")]
+        public IActionResult GetAllRoles()
+        {
+            var roles = context.RoleAccesses.ToList();
+            return Ok(roles); // returns as JSON
+        }
+
 
     }
 }
