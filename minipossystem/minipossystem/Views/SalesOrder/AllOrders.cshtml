@@ -109,24 +109,49 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="invoiceDetailsModalLabel">Invoice Details</h5>
+                <button class="btn btn-danger btn-sm" onclick="enableInvoiceCreditMode()">Credit Invoice</button>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body" id="invoiceDetailsBody">
-                <!-- content will be injected here -->
+                <!-- Only the dynamic invoice items table will go here -->
             </div>
+
+            <!-- Move this OUTSIDE of #invoiceDetailsBody -->
+            <div id="creditCartSection" style="display: none;" class="px-3 pb-3">
+                <hr />
+                <h5>To Be Credited</h5>
+                <table class="table table-bordered" id="creditCartTable">
+                    <thead>
+                        <tr>
+                            <th>Product Code</th>
+                            <th>Qty to Credit</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- JS will populate this -->
+                    </tbody>
+                </table>
+
+                <button class="btn btn-success w-100 mt-2" onclick="submitInvoiceCredit()">✅ Confirm Credit</button>
+            </div>
+
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="creditModal" tabindex="-1" aria-labelledby="creditModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="creditModalLabel">Credit Item</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="creditProductCode">
                 <input type="hidden" id="creditSalesOrderId">
+                <input type="hidden" id="creditMaxQty">
 
                 <div class="mb-3">
                     <label for="creditQuantityInput" class="form-label">Quantity to credit</label>
@@ -135,8 +160,9 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" onclick="confirmCredit()">Confirm</button>
+                <button class="btn btn-primary" onclick="addItemToCreditCart()">➕ Add</button>
             </div>
         </div>
     </div>
 </div>
+

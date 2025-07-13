@@ -482,6 +482,8 @@ function loadPreviousInvoices(orderId) {
 }
 
 function previewInvoice(invoiceid) {
+    currentOrderId = invoiceid;
+
     $.get("/SalesOrder/ViewInvoiceItems?invoiceid=" + invoiceid, function (items) {
         let html = `
         <table class="table table-bordered">
@@ -491,7 +493,7 @@ function previewInvoice(invoiceid) {
                     <th>Description</th>
                     <th>Invoiced Qty</th>
                     <th>Total Price</th>
-                    <th>Action</th>
+                    ${creditMode ? '<th>Credit Qty</th>' : '<th>Action</th>'}
                 </tr>
             </thead>
             <tbody>`;
@@ -502,25 +504,125 @@ function previewInvoice(invoiceid) {
                 <td>${item.productCode}</td>
                 <td>${item.productDescription}</td>
                 <td>${item.invoicedquantity}</td>
-                <td>${item.itemsprice.toFixed(2)}</td>
-                <td>
-<button class="btn btn-sm btn-warning" onclick="openCreditModal('${item.productCode}', ${item.invoicedquantity}, ${currentOrderId})">Credit</button>
-                </td>
-            </tr>`;
+                <td>${item.itemsprice.toFixed(2)}</td>`;
+
+            if (creditMode) {
+                html += `
+                    <td>
+                        <input type="number" min="0" max="${item.invoicedquantity}" 
+                            class="form-control form-control-sm credit-input" 
+                            data-product-code="${item.productCode}" 
+                            data-max="${item.invoicedquantity}" 
+                            value="0" />
+                    </td>`;
+            } else {
+                html += `
+                    <td>
+                        <button class="btn btn-sm btn-warning" 
+                            onclick="openCreditModal('${item.productCode}', ${item.invoicedquantity}, ${invoiceid})">
+                            Credit
+                        </button>
+                    </td>`;
+            }
+
+            html += `</tr>`;
         });
 
         html += `</tbody></table>`;
 
+        if (creditMode) {
+            html += `
+                <button class="btn btn-success w-100 mt-2" onclick="confirmInvoiceCredit()">
+                    ✅ Confirm Credit
+                </button>`;
+        }
+
         $("#invoiceDetailsBody").html(html);
+
+        if (creditMode) {
+            // 💡 Important: also render the cart in credit mode
+            renderCreditCart();
+        }
+
         $("#invoiceDetailsModal").modal("show");
     });
 }
 
+let creditCart = [];
+
 function openCreditModal(productCode, maxQty, salesOrderId) {
     $("#creditProductCode").val(productCode);
     $("#creditSalesOrderId").val(salesOrderId);
+    $("#creditMaxQty").val(maxQty);
     $("#creditQuantityInput").attr("max", maxQty).val(1);
     $("#creditModal").modal("show");
+}
+function addItemToCreditCart() {
+    const productCode = $("#creditProductCode").val();
+    const salesOrderId = $("#creditSalesOrderId").val();
+    const maxQty = parseInt($("#creditMaxQty").val());
+    const quantity = parseInt($("#creditQuantityInput").val());
+
+    if (isNaN(quantity) || quantity < 1 || quantity > maxQty) {
+        alert("Enter a valid quantity.");
+        return;
+    }
+
+    creditCart.push({ productCode, quantity });
+
+    renderCreditCart(); // Updates the "To Be Credited" section
+    $("#creditModal").modal("hide");
+}
+function renderCreditCart() {
+    const tbody = $("#creditCartTable tbody");
+    tbody.empty();
+
+    if (creditCart.length === 0) {
+        tbody.append(`<tr><td colspan="3" class="text-muted text-center">No items added.</td></tr>`);
+        return;
+    }
+
+    creditCart.forEach((item, index) => {
+        tbody.append(`
+            <tr>
+                <td>${item.productCode}</td>
+                <td>${item.quantity}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger" onclick="removeFromCreditCart(${index})">🗑</button>
+                </td>
+            </tr>
+        `);
+    });
+}
+
+function removeFromCreditCart(index) {
+    creditCart.splice(index, 1);
+    renderCreditCart();
+}
+function submitInvoiceCredit() {
+    if (creditCart.length === 0) {
+        alert("No items to credit.");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/SalesOrder/CreditInvoiceItems",
+        contentType: "application/json",
+        data: JSON.stringify({
+            salesOrderId: currentOrderId,
+            items: creditCart
+        }),
+        success: function (response) {
+            alert("Credit processed.");
+            creditCart = [];
+            renderCreditCart();
+            $("#invoiceDetailsModal").modal("hide");
+        },
+        error: function () {
+            alert("Error processing credit.");
+        }
+    });
 }
 
 function confirmCredit() {
@@ -540,6 +642,136 @@ function confirmCredit() {
             viewOrderDetails(salesOrderId); // Refresh the order
         } else {
             alert(response.message || "Failed to credit item.");
+        }
+    });
+}
+
+
+let creditMode = false;
+//let currentOrderId = null;
+let creditList = [];
+
+function enableInvoiceCreditMode() {
+    creditMode = true;
+    creditCart = [];
+    alert("Credit mode enabled. Enter quantities and click Confirm.");
+    $("#creditCartSection").show(); // 👈 show the section
+}
+function resetCreditMode() {
+    creditMode = false;
+    creditCart = [];
+    $("#creditCartSection").hide(); // 👈 hide again
+}
+
+
+function previewInvoice(invoiceid) {
+    currentOrderId = invoiceid;
+
+    $.get("/SalesOrder/ViewInvoiceItems?invoiceid=" + invoiceid, function (items) {
+        let html = `
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product Code</th>
+                    <th>Description</th>
+                    <th>Invoiced Qty</th>
+                    <th>Total Price</th>
+                    ${creditMode ? '<th>Credit Qty</th>' : '<th>Action</th>'}
+                </tr>
+            </thead>
+            <tbody>`;
+
+        items.forEach(item => {
+            html += `
+            <tr>
+                <td>${item.productCode}</td>
+                <td>${item.productDescription}</td>
+                <td>${item.invoicedquantity}</td>
+                <td>${item.itemsprice.toFixed(2)}</td>`;
+
+            if (creditMode) {
+                html += `
+                    <td>
+                        <input type="number" min="0" max="${item.invoicedquantity}" 
+                            class="form-control form-control-sm credit-input" 
+                            data-product-code="${item.productCode}" 
+                            data-max="${item.invoicedquantity}" 
+                            value="0" />
+                    </td>`;
+            } else {
+                html += `
+                    <td>
+                        <button class="btn btn-sm btn-warning" 
+                            onclick="openCreditModal('${item.productCode}', ${item.invoicedquantity}, ${invoiceid})">
+                            Credit
+                        </button>
+                    </td>`;
+            }
+
+            html += `</tr>`;
+        });
+
+        html += `</tbody></table>`;
+
+        if (creditMode) {
+            html += `
+                <button class="btn btn-success w-100" onclick="confirmInvoiceCredit()">
+                    Confirm Credit
+                </button>`;
+        }
+
+        // Inject the invoice table into the modal
+        $("#invoiceDetailsBody").html(html);
+
+        // Show or hide the credit cart section
+        if (creditMode) {
+            renderCreditCart();
+            $("#creditCartSection").show();
+        } else {
+            $("#creditCartSection").hide();
+        }
+
+        $("#invoiceDetailsModal").modal("show");
+    });
+}
+
+
+function confirmInvoiceCredit() {
+    creditList = [];
+
+    $(".credit-input").each(function () {
+        const qty = parseInt($(this).val());
+        const max = parseInt($(this).data("max"));
+        const productCode = $(this).data("product-code");
+
+        if (!isNaN(qty) && qty > 0 && qty <= max) {
+            creditList.push({
+                productCode: productCode,
+                quantity: qty
+            });
+        }
+    });
+
+    if (creditList.length === 0) {
+        alert("Please enter at least one item to credit.");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/SalesOrder/CreditInvoiceItems",
+        contentType: "application/json",
+        data: JSON.stringify({
+            salesOrderId: currentOrderId,
+            items: creditList
+        }),
+        success: function (response) {
+            alert("Credit successful.");
+            creditMode = false;
+            $("#invoiceDetailsModal").modal("hide");
+        },
+        error: function () {
+            alert("Error while processing credit.");
         }
     });
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using minipossystem.Models;
-using Microsoft.AspNetCore.Http; // Needed for session
-using System.Linq;
+using Microsoft.AspNetCore.Http; 
 
 namespace minipossystem.Controllers
 {
@@ -11,7 +10,7 @@ namespace minipossystem.Controllers
 
         public LoginController(MiniPosSystemContext context)
         {
-            _context = context; // ✅ Assign to _context
+            _context = context; 
         }
 
         [HttpGet]
@@ -30,7 +29,7 @@ namespace minipossystem.Controllers
                 HttpContext.Session.SetInt32("EmployeeId", employee.EmployeeId);
                 HttpContext.Session.SetString("EmployeeRole", employee.EmployeeRole);
 
-                // ✅ Redirect based on role
+                // 
                 switch (employee.EmployeeRole)
                 {
                     case "SalesExecutive":
