@@ -26,13 +26,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+builder.Services.AddSession();
 
 app.UseRouting();
 
-
-app.UseSession();
-
+app.UseSession();     
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
