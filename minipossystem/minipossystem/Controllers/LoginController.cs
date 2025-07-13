@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using minipossystem.Models;
-using System;
+using Microsoft.AspNetCore.Http; // Needed for session
+using System.Linq;
 
 namespace minipossystem.Controllers
 {
@@ -10,7 +11,7 @@ namespace minipossystem.Controllers
 
         public LoginController(MiniPosSystemContext context)
         {
-            _context = context;
+            _context = context; // ✅ Assign to _context
         }
 
         [HttpGet]
@@ -20,37 +21,34 @@ namespace minipossystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(int employeeId)
+        public IActionResult Login(int loginId)
         {
-            var employee = _context.Employees.FirstOrDefault(e => e.EmployeeId == employeeId);
+            var employee = _context.Employees.FirstOrDefault(e => e.EmployeeId == loginId); // ✅ Use _context
 
-            if (employee == null)
+            if (employee != null)
             {
-                ViewBag.Error = "Employee not found.";
-                return View("Index");
+                HttpContext.Session.SetInt32("EmployeeId", employee.EmployeeId);
+                HttpContext.Session.SetString("EmployeeRole", employee.EmployeeRole);
+
+                // ✅ Redirect based on role
+                switch (employee.EmployeeRole)
+                {
+                    case "SalesExecutive":
+                        return RedirectToAction("Create", "SalesOrder");
+
+                    case "ProcurementOfficer":
+                        return RedirectToAction("Index", "PurchaseOrder");
+
+                    case "WarehouseController":
+                        return RedirectToAction("Index", "Warehouse");
+
+                    default:
+                        return RedirectToAction("Index", "Home");
+                }
             }
 
-            var roleAccess = _context.RoleAccesses.FirstOrDefault(r => r.RoleName == employee.EmployeeRole);
-            if (roleAccess == null)
-            {
-                ViewBag.Error = "Role not configured in RoleAccess.";
-                return View("Index");
-            }
-
-           
-            HttpContext.Session.SetString("EmployeeId", employee.EmployeeId.ToString());
-            HttpContext.Session.SetString("EmployeeRole", employee.EmployeeRole);
-            HttpContext.Session.SetString("CanViewSalesOrders", roleAccess.CanViewSalesOrders.ToString());
-            HttpContext.Session.SetString("CanCreateInvoice", roleAccess.CanCreateInvoice.ToString());
-            HttpContext.Session.SetString("CanCreditInvoice", roleAccess.CanCreditInvoice.ToString());
-            HttpContext.Session.SetString("CanCreatePurchaseOrder", roleAccess.CanCreatePurchaseOrder.ToString());
-            HttpContext.Session.SetString("CanReceivePurchaseOrderInvoice", roleAccess.CanReceivePurchaseOrderInvoice.ToString());
-            HttpContext.Session.SetString("CanCreditPurchaseOrderInvoice", roleAccess.CanCreditPurchaseOrderInvoice.ToString());
-            HttpContext.Session.SetString("CanReciveProductstoWH", roleAccess.CanReciveProductstoWH.ToString());
-            HttpContext.Session.SetString("CanSupplyProductsFromWH", roleAccess.CanSupplyProductsFromWH.ToString());
-
-            return RedirectToAction("Index", "Home");
+            ModelState.AddModelError("", "Invalid Employee ID");
+            return View("Index");
         }
     }
-
 }

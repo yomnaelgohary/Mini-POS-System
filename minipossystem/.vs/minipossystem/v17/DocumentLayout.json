@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -134,7 +134,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 897,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -155,25 +155,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\Employee.cs",
-              "RelativeDocumentMoniker": "minipossystem\\Models\\Employee.cs",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\Employee.cs",
-              "RelativeToolTip": "minipossystem\\Models\\Employee.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAQwAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T20:10:12.199Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Program.cs",
               "RelativeDocumentMoniker": "minipossystem\\Program.cs",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Program.cs*",
-              "RelativeToolTip": "minipossystem\\Program.cs*",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Program.cs",
+              "RelativeToolTip": "minipossystem\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-13T08:01:59.563Z",
               "EditorCaption": ""
@@ -184,24 +171,37 @@
               "Title": "LoginController.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "minipossystem\\Controllers\\LoginController.cs",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\LoginController.cs*",
-              "RelativeToolTip": "minipossystem\\Controllers\\LoginController.cs*",
-              "ViewState": "AgIAABQAAAAAAAAAAAAcwCcAAAALAAAAAAAAAA==",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "minipossystem\\Controllers\\LoginController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAcwCIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-13T07:54:26.699Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Login\\Index.cshtml",
               "RelativeDocumentMoniker": "minipossystem\\Views\\Login\\Index.cshtml",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Login\\Index.cshtml",
               "RelativeToolTip": "minipossystem\\Views\\Login\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-07-13T07:53:45.606Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\Employee.cs",
+              "RelativeDocumentMoniker": "minipossystem\\Models\\Employee.cs",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Models\\Employee.cs",
+              "RelativeToolTip": "minipossystem\\Models\\Employee.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAQwAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T20:10:12.199Z",
               "EditorCaption": ""
             },
             {
