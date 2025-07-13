@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<form asp-controller="Login" asp-action="Login" method="post">
+    <div class="form-group">
+        <label>Employee ID</label>
+        <input type="number" name="employeeId" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Login</button>
+</form>
+
+@if (ViewBag.Error != null)
+{
+        <div class="text-danger mt-2">@ViewBag.Error</div>
+}
