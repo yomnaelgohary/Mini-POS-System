@@ -61,3 +61,16 @@ VALUES (
     0, 0, 0, 
     1, 1
 );
+Select *
+From RoleAccess;
+
+INSERT INTO Employees (EmployeeRole, EmployeeContactInfo, BranchId)
+VALUES 
+('SalesExecutive', 'sales1@guc.edu.eg', 1),
+('SalesExecutive', 'sales2@guc.edu.eg', 1),
+('ProcurementOfficer', 'proc1@guc.edu.eg', 1),
+('WarehouseController', 'wh1@guc.edu.eg', 1);
+
+
+Select *
+From Employees 
