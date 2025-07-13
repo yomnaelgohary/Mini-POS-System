@@ -1,9 +1,10 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using minipossystem.Models; // 👈 Your context namespace
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<MiniPosSystemContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MiniPosSystemConnection")));
 
 
 builder.Services.AddSession(options =>
@@ -12,6 +13,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -25,6 +28,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 
 app.UseSession();
 
