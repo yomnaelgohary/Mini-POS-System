@@ -414,10 +414,10 @@ namespace minipossystem.Controllers
         public JsonResult ViewInvoiceItems(int invoiceid)
         {
             var resultList = new List<object>();
-
             var invoiceItems = context.SalesInvoiceItems
                 .Include(ii => ii.SalesOrderItem)
                 .ThenInclude(soi => soi.Product)
+                .Include(ii => ii.SalesInvoice) 
                 .Where(ii => ii.SalesInvoiceId == invoiceid)
                 .ToList();
 
@@ -425,10 +425,12 @@ namespace minipossystem.Controllers
             {
                 resultList.Add(new
                 {
+                    salesOrderId = invoiceitem.SalesInvoice.SalesOrderId, 
                     productCode = invoiceitem.SalesOrderItem.Product.ProductCode,
                     productDescription = invoiceitem.SalesOrderItem.Product.Description,
                     invoicedquantity = invoiceitem.InvoivedQuantity,
-                    itemsprice = invoiceitem.InvoivedQuantity * invoiceitem.SalesOrderItem.Price
+                    itemsprice = invoiceitem.InvoivedQuantity * invoiceitem.SalesOrderItem.Price,
+                    salesOrderItemId = invoiceitem.SalesOrderItemId 
                 });
             }
 
@@ -472,6 +474,102 @@ namespace minipossystem.Controllers
             var roles = context.RoleAccesses.ToList();
             return Ok(roles); // returns as JSON
         }
+        [HttpPost]
+        [HttpPost]
+        [HttpPost]
+        public IActionResult CreditInvoiceItems([FromBody] InvoiceRequest request)
+        {
+            if (request == null || request.Items == null || !request.Items.Any())
+                return BadRequest(new { success = false, message = "No items to credit." });
+
+            try
+            {
+                using (var db = new MiniPosSystemContext())
+                {
+                    // ✅ Check if the SalesOrder exists
+                    var orderExists = db.SalesOrders.Any(o => o.SalesOrderId == request.OrderId);
+                    if (!orderExists)
+                    {
+                        return BadRequest(new
+                        {
+                            success = false,
+                            message = $"SalesOrder with ID {request.OrderId} does not exist."
+                        });
+                    }
+
+                    // 1. Create a new credit invoice
+                    var creditInvoice = new SalesInvoice
+                    {
+                        SalesOrderId = request.OrderId,
+                        InvoiveDate = DateOnly.FromDateTime(DateTime.Now),
+
+                        Price = 0, // will be calculated
+                        IsCredit = true
+                    };
+                    db.SalesInvoices.Add(creditInvoice);
+                    db.SaveChanges(); // generates SalesInvoiceId
+
+                    decimal totalCredit = 0;
+
+                    // 2. Add invoice items
+                    foreach (var item in request.Items)
+                    {
+                        var orderItem = db.SalesOrderItems.FirstOrDefault(i => i.SalesOrderItemId == item.ItemId);
+                        if (orderItem == null)
+                        {
+                            return BadRequest(new
+                            {
+                                success = false,
+                                message = $"SalesOrderItem with ID {item.ItemId} not found."
+                            });
+                        }
+
+                        // Calculate total for logging and save as negative
+                        decimal itemTotal = item.UnitPrice * item.Quantity;
+                        totalCredit += itemTotal;
+
+                        db.SalesInvoiceItems.Add(new SalesInvoiceItem
+                        {
+                            SalesInvoiceId = creditInvoice.SalesInvoiceId,
+                            SalesOrderItemId = item.ItemId,
+                            InvoivedQuantity = item.Quantity 
+                        });
+                    }
+
+                    // 3. Save total credit (negative amount)
+                    creditInvoice.Price = totalCredit;
+                    db.SaveChanges();
+
+                    return Ok(new
+                    {
+                        success = true,
+                        invoiceId = creditInvoice.SalesInvoiceId
+                    });
+                }
+            }
+            catch (DbUpdateException dbEx)
+            {
+                var inner = dbEx.InnerException?.Message ?? dbEx.Message;
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Database error",
+                    details = inner
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Unhandled error",
+                    details = ex.Message
+                });
+            }
+        }
+
+
+
 
 
     }

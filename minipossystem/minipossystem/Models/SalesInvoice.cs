@@ -12,6 +12,7 @@ public partial class SalesInvoice
     public DateOnly InvoiveDate { get; set; }
 
     public decimal Price { get; set; }
+    public bool IsCredit { get; set; } 
 
     public virtual ICollection<CreditNote> CreditNotes { get; set; } = new List<CreditNote>();
 

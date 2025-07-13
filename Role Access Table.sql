@@ -74,3 +74,7 @@ VALUES
 
 Select *
 From Employees 
+
+
+Select *
+From Costumer

@@ -1,16 +1,16 @@
 ﻿@model List<minipossystem.Models.SalesOrder>
-
 @{
     ViewBag.Title = "All Sales Orders";
 }
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/AllOrders.js"></script>
+
 <div class="container mt-4">
     <h1 class="mb-4">All Sales Orders</h1>
-
     <table class="table table-bordered" id="ordersTable">
         <thead class="table-light">
             <tr>
@@ -26,7 +26,6 @@
         </tbody>
     </table>
 </div>
-
 
 <div class="modal fade" id="orderDetailsModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -55,7 +54,6 @@
                 <input type="hidden" id="editorderId" />
                 <input type="hidden" id="edititemid" />
                 <input type="hidden" id="editProductId" />
-
                 <button class="btn btn-primary mt-2 w-100" onclick="confirmEditQuantity()">Save</button>
             </div>
         </div>
@@ -77,15 +75,12 @@
                 <input type="hidden" id="invoiceProductDescription" />
                 <input type="hidden" id="invoiceProductPrice" />
                 <input type="hidden" id="invoiceMaxQty" />
-
                 <div class="mb-2">
                     <label for="invoiceQuantityInput" class="form-label">Quantity</label>
                     <input type="number" id="invoiceQuantityInput" class="form-control" min="1" />
                 </div>
-
                 <button class="btn btn-success mt-2 w-100" onclick="confirmAddToInvoice()">Add</button>
             </div>
-
         </div>
     </div>
 </div>
@@ -109,22 +104,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="invoiceDetailsModalLabel">Invoice Details</h5>
-                <button class="btn btn-danger btn-sm" onclick="enableInvoiceCreditMode()">Credit Invoice</button>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
             <div class="modal-body" id="invoiceDetailsBody">
                 <!-- Only the dynamic invoice items table will go here -->
             </div>
-
-            <!-- Move this OUTSIDE of #invoiceDetailsBody -->
+            <!-- Credit Cart Section -->
             <div id="creditCartSection" style="display: none;" class="px-3 pb-3">
                 <hr />
-                <h5>To Be Credited</h5>
+                <h5>To Be Credited Items</h5>
                 <table class="table table-bordered" id="creditCartTable">
                     <thead>
                         <tr>
                             <th>Product Code</th>
+                            <th>Description</th>
                             <th>Qty to Credit</th>
                             <th>Action</th>
                         </tr>
@@ -133,10 +126,11 @@
                         <!-- JS will populate this -->
                     </tbody>
                 </table>
-
-                <button class="btn btn-success w-100 mt-2" onclick="submitInvoiceCredit()">✅ Confirm Credit</button>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success flex-fill" onclick="submitInvoiceCredit()"> Confirm/Submit Credit Invoice</button>
+                    <button class="btn btn-secondary" onclick="resetCreditMode()">Cancel</button>
+                </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -147,12 +141,14 @@
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="creditModalLabel">Credit Item</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+           </div>
             <div class="modal-body">
                 <input type="hidden" id="creditProductCode">
                 <input type="hidden" id="creditSalesOrderId">
                 <input type="hidden" id="creditMaxQty">
-
+                <div class="mb-3">
+                    <p><strong>Product:</strong> <span id="creditProductDescription"></span></p>
+                </div>
                 <div class="mb-3">
                     <label for="creditQuantityInput" class="form-label">Quantity to credit</label>
                     <input type="number" class="form-control" id="creditQuantityInput" min="1">
@@ -160,9 +156,8 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" onclick="addItemToCreditCart()">➕ Add</button>
+                <button class="btn btn-primary" onclick="addItemToCreditCart()">Save</button>
             </div>
         </div>
     </div>
 </div>
-
