@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "Monthly Sales Chart";
+}
+
+<div class="container mt-5">
+    <h2>Monthly Sales Chart</h2>
+
+    <form id="dateForm" class="row g-3">
+        <div class="col-md-4">
+            <label>From Date:</label>
+            <input type="date" id="fromDate" class="form-control" required />
+        </div>
+        <div class="col-md-4">
+            <label>To Date:</label>
+            <input type="date" id="toDate" class="form-control" required />
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Load Chart</button>
+        </div>
+    </form>
+
+    <canvas id="salesChart" class="mt-4" width="400" height="150"></canvas>
+
+    <div id="detailsContainer" class="mt-4"></div>
+
+
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch(`/Reports/GetMonthlySalesJson?fromDate=2025-01-01&toDate=2025-12-31`)
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.map(x => x.salesMonth);
+                    const values = data.map(x => x.totalSales);
+
+                    const ctx = document.getElementById('salesChart').getContext('2d');
+                    const chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Total Sales',
+                                data: values,
+                                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                            }]
+                        },
+                        options: {
+                            onClick: function (evt, elements) {
+                                if (elements.length > 0) {
+                                    const index = elements[0].index;
+                                    const selectedMonth = labels[index] + "-01"; // Convert '2025-04' to full date
+                                    loadMonthDetails(selectedMonth);
+                                }
+                            }
+                        }
+                    });
+                });
+
+            function loadMonthDetails(monthDate) {
+                fetch(`/Reports/GetMonthDetailsJson?date=${monthDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const container = document.getElementById("detailsContainer");
+                        container.innerHTML = `
+                            <h4>Details for ${monthDate}</h4>
+                            <table class="table table-bordered table-striped">
+                                <thead><tr><th>Item ID</th><th>Total Price</th></tr></thead>
+                                <tbody>
+                                    ${data.map(row => `
+                                        <tr>
+                                            <td>${row.salesOrderItemID}</td>
+                                            <td>${row.price}</td>
+                                        </tr>`).join("")}
+                                </tbody>
+                            </table>
+                        `;
+                    });
+            }
+        });
+
+    </script>
+}
