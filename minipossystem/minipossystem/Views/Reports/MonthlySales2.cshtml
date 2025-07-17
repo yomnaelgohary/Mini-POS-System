@@ -29,15 +29,19 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        let salesChartInstance;
+        let detailChartInstance;
+
         document.addEventListener("DOMContentLoaded", function () {
+            const ctx = document.getElementById('salesChart').getContext('2d');
+
             fetch(`/Reports/GetMonthlySalesJson?fromDate=2025-01-01&toDate=2025-12-31`)
                 .then(response => response.json())
                 .then(data => {
                     const labels = data.map(x => x.salesMonth);
                     const values = data.map(x => x.totalSales);
 
-                    const ctx = document.getElementById('salesChart').getContext('2d');
-                    const chart = new Chart(ctx, {
+                    salesChartInstance = new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: labels,
@@ -51,35 +55,65 @@
                             onClick: function (evt, elements) {
                                 if (elements.length > 0) {
                                     const index = elements[0].index;
-                                    const selectedMonth = labels[index] + "-01"; // Convert '2025-04' to full date
-                                    loadMonthDetails(selectedMonth);
+                                    const selectedMonth = labels[index] + "-01";
+                                    animateDrillDown(selectedMonth);
                                 }
                             }
                         }
                     });
                 });
 
-            function loadMonthDetails(monthDate) {
+            function animateDrillDown(monthDate) {
+                const chartContainer = document.getElementById('salesChart');
+                chartContainer.classList.add('fade'); // Add Bootstrap fade effect
+                setTimeout(() => {
+                    loadMonthChart(monthDate);
+                }, 300);
+            }
+
+            function loadMonthChart(monthDate) {
                 fetch(`/Reports/GetMonthDetailsJson?date=${monthDate}`)
                     .then(response => response.json())
                     .then(data => {
-                        const container = document.getElementById("detailsContainer");
-                        container.innerHTML = `
-                            <h4>Details for ${monthDate}</h4>
-                            <table class="table table-bordered table-striped">
-                                <thead><tr><th>Item ID</th><th>Total Price</th></tr></thead>
-                                <tbody>
-                                    ${data.map(row => `
-                                        <tr>
-                                            <td>${row.salesOrderItemID}</td>
-                                            <td>${row.price}</td>
-                                        </tr>`).join("")}
-                                </tbody>
-                            </table>
-                        `;
+                        const itemLabels = data.map(x => `Item ${x.salesOrderItemID}`);
+                        const itemPrices = data.map(x => x.price);
+
+                        // Destroy previous chart instance if exists
+                        if (salesChartInstance) {
+                            salesChartInstance.destroy();
+                            salesChartInstance = null;
+                        }
+                        if (detailChartInstance) {
+                            detailChartInstance.destroy();
+                        }
+
+                        const ctx = document.getElementById('salesChart').getContext('2d');
+                        detailChartInstance = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: itemLabels,
+                                datasets: [{
+                                    label: `Sales Breakdown for ${monthDate}`,
+                                    data: itemPrices,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: `Sales Details for ${monthDate}`
+                                    }
+                                }
+                            }
+                        });
+
+                        document.getElementById('salesChart').classList.remove('fade'); // Fade back in
                     });
             }
         });
-
     </script>
+}
+
 }
