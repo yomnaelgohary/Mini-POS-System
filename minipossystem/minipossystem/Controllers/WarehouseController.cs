@@ -85,6 +85,17 @@ namespace minipossystem.Controllers
 
             return Json(items);
         }
+        [HttpGet]
+        public IActionResult GetWarehousesForBranch(int branchId)
+        {
+            var warehouses = _context.Warehouses
+                .Where(w => w.BranchId == branchId)
+                .Select(w => new { w.WarehouseId, w.WarehouseName })
+                .ToList();
+
+            return Json(warehouses);
+        }
+
 
 
 

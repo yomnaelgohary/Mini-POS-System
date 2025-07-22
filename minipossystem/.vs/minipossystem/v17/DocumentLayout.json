@@ -206,7 +206,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 897,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -226,28 +226,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Warehouses.js",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\Warehouses.js",
-              "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\Warehouses.js",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\Warehouses.js",
-              "RelativeToolTip": "minipossystem\\wwwroot\\js\\Warehouses.js",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAswCIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-22T09:05:09.532Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "WarehouseController.cs",
               "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\WarehouseController.cs",
               "RelativeDocumentMoniker": "minipossystem\\Controllers\\WarehouseController.cs",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Controllers\\WarehouseController.cs",
               "RelativeToolTip": "minipossystem\\Controllers\\WarehouseController.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAAAFYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-22T07:43:14.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Warehouses.js",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\Warehouses.js",
+              "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\Warehouses.js",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\Warehouses.js",
+              "RelativeToolTip": "minipossystem\\wwwroot\\js\\Warehouses.js",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAtwE8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-22T09:05:09.532Z",
               "EditorCaption": ""
             },
             {
@@ -258,7 +258,7 @@
               "RelativeDocumentMoniker": "minipossystem\\Views\\Warehouse\\Index.cshtml",
               "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Warehouse\\Index.cshtml",
               "RelativeToolTip": "minipossystem\\Views\\Warehouse\\Index.cshtml",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAmwHQAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAIwJAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-07-22T07:37:09.486Z",
               "EditorCaption": ""

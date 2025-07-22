@@ -1,10 +1,14 @@
 ﻿@model List<minipossystem.Models.Warehouse>
 @{
     ViewBag.Title = "Warehouses in Branch";
+    int? branchId = Context.Session.GetInt32("BranchId"); // ✅ get BranchId from session
 }
 <script src="~/js/Warehouses.js"></script>
 
 <h2 class="mb-4">Warehouses in Your Branch</h2>
+
+<!-- ✅ Hidden field to pass branch ID to JavaScript -->
+<input type="hidden" id="hiddenBranchId" value="@branchId" />
 
 <table class="table table-bordered table-hover">
     <thead class="table-dark">
@@ -51,7 +55,7 @@
                 <th>Order Date</th>
                 <th>Total</th>
                 <th>Status</th>
-                <th>Actions</th> <!-- ✅ New column for button -->
+                <th>Actions</th> <!-- ✅ Added actions -->
             </tr>
         </thead>
         <tbody id="invoiceTableBody">
@@ -121,6 +125,19 @@
                         <!-- JavaScript will populate this -->
                     </tbody>
                 </table>
+
+                
+                <div class="mt-4">
+                    <label for="warehouseSelectForPopup" class="form-label">Select Warehouse:</label>
+                    <select id="warehouseSelectForPopup" class="form-select">
+                        <option value="">-- Select a Warehouse --</option>
+                        <!-- JS will populate based on Branch ID -->
+                    </select>
+                </div>
+
+                <div class="mt-3">
+                    <button id="btnAddToWarehouse" class="btn btn-success w-100">Add to Warehouse</button>
+                </div>
             </div>
         </div>
     </div>

@@ -42,33 +42,61 @@
 
 function viewInvoiceDetails(invoiceId) {
     $.ajax({
-        url: `/Warehouse/GetInvoiceItems?invoiceId=${invoiceId}`,
-        method: "GET",
+        url: '/Warehouse/GetInvoiceItems?invoiceId=' + invoiceId,
+        method: 'GET',
         success: function (items) {
-            const tbody = $("#invoiceItemsBody");
+            const tbody = $('#invoiceItemsBody');
             tbody.empty();
 
             if (!items || items.length === 0) {
                 tbody.append("<tr><td colspan='4' class='text-center'>No items found for this invoice.</td></tr>");
-            } else {
-                items.forEach(item => {
-                    tbody.append(`
-                        <tr>
-                            <td>${item.product}</td>
-                            <td>${item.quantity}</td>
-                            <td>${item.unitPrice}</td>
-                            <td>${item.total}</td>
-                        </tr>
-                    `);
-                });
+                return;
             }
 
-            // Show the modal
-            $("#invoiceDetailsModal").modal("show");
+            items.forEach(item => {
+                tbody.append(`
+                    <tr>
+                        <td>${item.productName}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.unitPrice}</td>
+                        <td>${item.total}</td>
+                    </tr>
+                `);
+            });
+
+            // ✅ Load warehouses and show modal
+            loadWarehousesForPopup();
+            $('#invoiceDetailsModal').modal('show');
         },
         error: function () {
-            alert("Failed to load invoice details.");
+            alert("Failed to load invoice items.");
         }
     });
 }
 
+
+function loadWarehousesForPopup() {
+    const branchId = $('#hiddenBranchId').val();  // ✔ matches HTML
+
+    if (!branchId) {
+        console.error("Branch ID not found in session.");
+        return;
+    }
+
+    $.ajax({
+        url: `/Warehouse/GetWarehousesForBranch?branchId=${branchId}`,
+        method: 'GET',
+        success: function (warehouses) {
+            const dropdown = $('#warehouseSelectForPopup');
+            dropdown.empty();
+            dropdown.append(`<option value="">-- Select a Warehouse --</option>`);
+
+            warehouses.forEach(w => {
+                dropdown.append(`<option value="${w.warehouseId}">${w.warehouseName}</option>`);
+            });
+        },
+        error: function () {
+            alert("Error loading warehouses.");
+        }
+    });
+}
