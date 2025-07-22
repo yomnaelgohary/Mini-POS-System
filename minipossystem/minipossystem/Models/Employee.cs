@@ -12,6 +12,7 @@ public partial class Employee
     public string EmployeeContactInfo { get; set; } = null!;
 
     public int BranchId { get; set; }
+    public string Password { get; set; } = null!;
 
     public virtual Branch Branch { get; set; } = null!;
 

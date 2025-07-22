@@ -1,0 +1,27 @@
+﻿@model List<minipossystem.Models.Warehouse>
+
+@{
+    ViewBag.Title = "Warehouse List";
+}
+
+<h2>Warehouses in Branch</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Warehouse ID</th>
+            <th>Name</th>
+            <th>Branch ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var warehouse in Model)
+        {
+            <tr>
+                <td>@warehouse.WarehouseId</td>
+                <td>@warehouse.WarehouseName</td>
+                <td>@warehouse.BranchId</td>
+            </tr>
+        }
+    </tbody>
+</table>

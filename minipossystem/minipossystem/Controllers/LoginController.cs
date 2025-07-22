@@ -22,14 +22,14 @@ namespace minipossystem.Controllers
         [HttpPost]
         public IActionResult Login(int loginId)
         {
-            var employee = _context.Employees.FirstOrDefault(e => e.EmployeeId == loginId); // ✅ Use _context
+            var employee = _context.Employees.FirstOrDefault(e => e.EmployeeId == loginId); 
 
             if (employee != null)
             {
                 HttpContext.Session.SetInt32("EmployeeId", employee.EmployeeId);
                 HttpContext.Session.SetString("EmployeeRole", employee.EmployeeRole);
+                HttpContext.Session.SetInt32("BranchId", employee.BranchId);
 
-                // 
                 switch (employee.EmployeeRole)
                 {
                     case "SalesExecutive":
