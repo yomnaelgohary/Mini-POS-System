@@ -134,10 +134,42 @@
                         <!-- JS will populate based on Branch ID -->
                     </select>
                 </div>
+                <!-- Section: To Be Added -->
+                <h5>🛒 Items to Add to Warehouse</h5>
+                <table class="table">
+                    <thead>
+                        <tr><th>Product</th><th>Quantity</th><th></th></tr>
+                    </thead>
+                    <tbody id="toBeAddedBody"></tbody>
+                </table>
 
                 <div class="mt-3">
                     <button id="btnAddToWarehouse" class="btn btn-success w-100">Add to Warehouse</button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Quantity Input Modal -->
+<div class="modal fade" id="quantityModal" tabindex="-1" role="dialog" aria-labelledby="quantityModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="quantityModalLabel">Enter Quantity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalProductName"></p>
+                <input type="number" class="form-control" id="modalQuantityInput" placeholder="Enter quantity" min="1">
+                <input type="hidden" id="modalItemId">
+                <input type="hidden" id="modalProductMaxQty">
+                <input type="hidden" id="modalProductNameHidden">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="confirmQuantity()">OK</button>
             </div>
         </div>
     </div>
