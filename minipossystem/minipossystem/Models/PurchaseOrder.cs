@@ -16,6 +16,9 @@ public partial class PurchaseOrder
     public DateOnly? Date { get; set; }
 
     public string? Status { get; set; }
+    public int BranchId { get; set; }
+
+    public virtual Branch Branch { get; set; } = null!;
 
     public virtual Employee Employee { get; set; } = null!;
 
