@@ -1,13 +1,13 @@
 ﻿@model List<minipossystem.Models.Warehouse>
-
 @{
-    ViewBag.Title = "Warehouse List";
+    ViewBag.Title = "Warehouses in Branch";
 }
+<script src="~/js/Warehouses.js"></script>
 
-<h2>Warehouses in Branch</h2>
+<h2 class="mb-4">Warehouses in Your Branch</h2>
 
-<table class="table table-striped">
-    <thead>
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
         <tr>
             <th>Warehouse ID</th>
             <th>Name</th>
@@ -25,3 +25,103 @@
         }
     </tbody>
 </table>
+
+<hr />
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h4>Select Invoice Type</h4>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-primary" id="btnPurchase" onclick="loadPurchaseInvoices()">Purchase Invoices</button>
+            <button type="button" class="btn btn-outline-success" id="btnSales" onclick="loadSalesInvoices()">Sales Invoices</button>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ INVOICE SECTION -->
+<div id="invoiceSection" style="display: none;">
+    <h4 class="mb-3" id="invoiceHeader">Invoices</h4>
+    <table class="table table-sm table-striped" id="invoiceTable">
+        <thead>
+            <tr>
+                <th>Invoice ID</th>
+                <th>Purchase Order ID</th>
+                <th>Invoice Price</th>
+                <th>Invoice Date</th>
+                <th>Order Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Actions</th> <!-- ✅ New column for button -->
+            </tr>
+        </thead>
+        <tbody id="invoiceTableBody">
+            <!-- JavaScript will populate this -->
+        </tbody>
+    </table>
+</div>
+
+<!-- ✅ MODAL: Warehouse Action -->
+<div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="actionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="warehouseActionForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="actionModalLabel">Select Warehouse Action</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="selectedInvoiceId" name="InvoiceId" />
+
+                    <div class="mb-3">
+                        <label for="warehouseSelect" class="form-label">Choose Warehouse</label>
+                        <select class="form-select" id="warehouseSelect" name="WarehouseId" required>
+                            @foreach (var warehouse in Model)
+                            {
+                                <option value="@warehouse.WarehouseId">@warehouse.WarehouseName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Action</label>
+                        <select class="form-select" name="ActionType" required>
+                            <option value="Receive">Receive Products</option>
+                            <option value="Release">Release Products</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ MODAL: Invoice Details -->
+<div class="modal fade" id="invoiceDetailsModal" tabindex="-1" aria-labelledby="invoiceDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Invoice Items</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoiceItemsBody">
+                        <!-- JavaScript will populate this -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
