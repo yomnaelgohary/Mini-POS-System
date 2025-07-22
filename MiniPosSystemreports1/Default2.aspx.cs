@@ -14,7 +14,7 @@ public partial class _Default2 : System.Web.UI.Page
     {
         ReportViewer1.ProcessingMode = ProcessingMode.Remote;
         ReportViewer1.ServerReport.ReportServerUrl = new Uri("http://localhost/ReportServer");
-        ReportViewer1.ServerReport.ReportPath = "/reports/MonthlySalesReport"; // Replace with actual path
+        ReportViewer1.ServerReport.ReportPath = "/reports/MonthlySalesReport"; 
 
         ReportParameter[] parameters = new ReportParameter[]
         {

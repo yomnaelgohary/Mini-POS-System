@@ -1,0 +1,2 @@
+select po.PurchaseOrderID, po.VendorID, po.EmployeeID, po.Price,po.Date, poi.ProductID, poi.Quantity, 
+from  PurchaseOrder po left join PurchaseOrderItem poi on po.PurchaseOrderID = poi.PurchaseOrderID left join PurchaseOrderInvoice pi on pi.PurchaseOrderID=poi.PurchaseOrderID left join PurchaseOrderInvoiceItem  pii on pi.PurchaseOrderInvoiceID= pii.PurchaseOrderInvoiceID
