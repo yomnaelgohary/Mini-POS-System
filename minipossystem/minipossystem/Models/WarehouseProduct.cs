@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace minipossystem.Models;
 
@@ -12,7 +13,11 @@ public partial class WarehouseProduct
 
     public int ProductId { get; set; }
 
-    public int Quantity { get; set; }
+    public int TotalQuantity { get; set; }
+    public int ReservedQuantity { get; set; }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public int UnreservedQuantity { get; set; }
 
     public decimal Price { get; set; }
 
