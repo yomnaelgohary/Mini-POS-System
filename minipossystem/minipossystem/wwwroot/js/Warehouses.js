@@ -56,7 +56,7 @@ function viewInvoiceDetails(invoiceId) {
             items.forEach(item => {
                 tbody.append(`
                     <tr>
-                        <td>${item.productName}</td>
+                        <td>${item.product}</td>
                         <td>${item.quantity}</td>
                         <td>${item.unitPrice}</td>
                         <td>${item.total}</td>
