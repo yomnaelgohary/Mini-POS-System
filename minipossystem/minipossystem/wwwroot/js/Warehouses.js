@@ -111,47 +111,55 @@ function loadWarehousesForPopup() {
 
 function addToWarehouseList(itemId, productName, maxQty) {
     const qtyInput = $(`#qtyInput_${itemId}`);
-    const qty = parseInt(qtyInput.val());
+    const newQty = parseInt(qtyInput.val());
 
-    if (!qty || qty <= 0) {
+    if (!newQty || newQty <= 0) {
         alert("Enter a valid quantity.");
         return;
     }
 
-    if (qty > maxQty) {
-        alert(`Cannot add more than available quantity (${maxQty}).`);
-        return;
+    const existingItem = toBeAddedList.find(x => x.itemId === itemId);
+
+    if (existingItem) {
+        const updatedQty = existingItem.quantity + newQty;
+
+        if (updatedQty > maxQty) {
+            alert(`Total quantity exceeds available stock (${maxQty}).`);
+            return;
+        }
+
+        existingItem.quantity = updatedQty;
+
+        $(`#toBeAddedRow_${itemId} td:nth-child(2)`).text(updatedQty);
+    } else {
+        if (newQty > maxQty) {
+            alert(`Cannot add more than available quantity (${maxQty}).`);
+            return;
+        }
+
+        toBeAddedList.push({
+            itemId,
+            productName,
+            quantity: newQty
+        });
+
+        $('#toBeAddedBody').append(`
+            <tr id="toBeAddedRow_${itemId}">
+                <td>${productName}</td>
+                <td>${newQty}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger" onclick="removeFromWarehouseList(${itemId})">
+                        ❌ Remove
+                    </button>
+                </td>
+            </tr>
+        `);
     }
 
-    // Avoid duplicate items
-    if (toBeAddedList.find(x => x.itemId === itemId)) {
-        alert("Item already added.");
-        return;
-    }
-
-    // Add to temp list
-    toBeAddedList.push({
-        itemId,
-        productName,
-        quantity: qty
-    });
-
-    // Update UI
-    const table = $('#toBeAddedBody');
-    table.append(`
-        <tr id="toBeAddedRow_${itemId}">
-            <td>${productName}</td>
-            <td>${qty}</td>
-            <td>
-                <button class="btn btn-sm btn-danger" onclick="removeFromWarehouseList(${itemId})">
-                    ❌ Remove
-                </button>
-            </td>
-        </tr>
-    `);
-
-    qtyInput.val(''); // Clear input
+    // Clear input field
+    qtyInput.val('');
 }
+
 
 function removeFromWarehouseList(itemId) {
     toBeAddedList = toBeAddedList.filter(x => x.itemId !== itemId);

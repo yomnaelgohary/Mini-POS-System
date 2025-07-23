@@ -41,3 +41,7 @@ from PurchaseOrderInvoice
 select*
 from PurchaseOrderInvoiceItem p
 where p.PurchaseOrderInvoiceID =40
+
+ALTER TABLE Products
+ADD POPrice DECIMAL(18, 2),  
+    AvrgCost DECIMAL(18, 2); 

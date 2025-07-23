@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\My project\\Mini-POS-System\\minipossystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\wwwroot\\js\\warehouses.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\wwwroot\\js\\warehouses.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\views\\warehouse\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\views\\warehouse\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\wwwroot\\js\\warehouses.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|solutionrelative:minipossystem\\wwwroot\\js\\warehouses.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D70CAD31-F2C1-4DC5-8857-5BD7F536B3A7}|minipossystem\\minipossystem.csproj|d:\\my project\\mini-pos-system\\minipossystem\\minipossystem\\controllers\\warehousecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -227,27 +227,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Warehouse\\Index.cshtml",
-              "RelativeDocumentMoniker": "minipossystem\\Views\\Warehouse\\Index.cshtml",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Warehouse\\Index.cshtml*",
-              "RelativeToolTip": "minipossystem\\Views\\Warehouse\\Index.cshtml*",
-              "ViewState": "AgIAAI8AAAAAAAAAAAAIwLAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-22T07:37:09.486Z",
+              "Title": "Warehouses.js",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\Warehouses.js",
+              "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\Warehouses.js",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\Warehouses.js",
+              "RelativeToolTip": "minipossystem\\wwwroot\\js\\Warehouses.js",
+              "ViewState": "AgIAAGkAAAAAAAAAAAA5wIMAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-22T09:05:09.532Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Warehouses.js",
-              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\Warehouses.js",
-              "RelativeDocumentMoniker": "minipossystem\\wwwroot\\js\\Warehouses.js",
-              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\wwwroot\\js\\Warehouses.js*",
-              "RelativeToolTip": "minipossystem\\wwwroot\\js\\Warehouses.js*",
-              "ViewState": "AgIAALEAAAAAAAAAAAAIwNIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-22T09:05:09.532Z",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Warehouse\\Index.cshtml",
+              "RelativeDocumentMoniker": "minipossystem\\Views\\Warehouse\\Index.cshtml",
+              "ToolTip": "D:\\My project\\Mini-POS-System\\minipossystem\\minipossystem\\Views\\Warehouse\\Index.cshtml*",
+              "RelativeToolTip": "minipossystem\\Views\\Warehouse\\Index.cshtml*",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAowJMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-22T07:37:09.486Z",
               "EditorCaption": ""
             },
             {
@@ -260,8 +260,7 @@
               "RelativeToolTip": "minipossystem\\Controllers\\WarehouseController.cs",
               "ViewState": "AgIAAD0AAAAAAAAAAAAAAE4AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T07:43:14.243Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-22T07:43:14.243Z"
             },
             {
               "$type": "Document",
@@ -273,8 +272,7 @@
               "RelativeToolTip": "minipossystem\\Models\\PurchaseOrderInvoice.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAYwAcAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T08:05:00.338Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-22T08:05:00.338Z"
             },
             {
               "$type": "Document",
@@ -286,8 +284,7 @@
               "RelativeToolTip": "minipossystem\\Controllers\\SalesOrderController.cs",
               "ViewState": "AgIAAH8BAAAAAAAAAAAAAIsBAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T12:55:58.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T12:55:58.145Z"
             },
             {
               "$type": "Document",
@@ -299,8 +296,7 @@
               "RelativeToolTip": "minipossystem\\Models\\PurchaseOrderInvoiceItem.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAQwBIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T10:06:37.706Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-22T10:06:37.706Z"
             },
             {
               "$type": "Document",
@@ -312,8 +308,7 @@
               "RelativeToolTip": "minipossystem\\wwwroot\\js\\AllOrders.js",
               "ViewState": "AgIAAAUAAAAAAAAAAAAowA0AAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-11T14:13:39.082Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T14:13:39.082Z"
             },
             {
               "$type": "Document",
@@ -325,8 +320,7 @@
               "RelativeToolTip": "minipossystem\\wwwroot\\js\\PurchaseOrder.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-13T13:31:58.165Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T13:31:58.165Z"
             },
             {
               "$type": "Document",
@@ -338,8 +332,7 @@
               "RelativeToolTip": "minipossystem\\wwwroot\\js\\SalesOrder.js",
               "ViewState": "AgIAACAAAAAAAAAAAAAUwDsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-09T20:27:01.178Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T20:27:01.178Z"
             },
             {
               "$type": "Document",
@@ -351,8 +344,7 @@
               "RelativeToolTip": "minipossystem\\wwwroot\\js\\site.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-22T08:56:05.503Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-22T08:56:05.503Z"
             },
             {
               "$type": "Document",
@@ -364,8 +356,7 @@
               "RelativeToolTip": "minipossystem\\Views\\SalesOrder\\AllOrders.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-11T14:03:55.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T14:03:55.399Z"
             },
             {
               "$type": "Document",
@@ -377,8 +368,7 @@
               "RelativeToolTip": "minipossystem\\Views\\Login\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-13T07:53:45.606Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T07:53:45.606Z"
             },
             {
               "$type": "Document",
@@ -390,8 +380,7 @@
               "RelativeToolTip": "minipossystem\\Models\\Branch.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T08:10:15.878Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-22T08:10:15.878Z"
             },
             {
               "$type": "Document",
@@ -403,8 +392,7 @@
               "RelativeToolTip": "minipossystem\\Models\\PurchaseOrder.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAkwBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T22:25:44.1Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T22:25:44.1Z"
             },
             {
               "$type": "Document",
@@ -416,8 +404,7 @@
               "RelativeToolTip": "minipossystem\\Controllers\\LoginController.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAAACkAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-13T07:54:26.699Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T07:54:26.699Z"
             },
             {
               "$type": "Document",
@@ -429,8 +416,7 @@
               "RelativeToolTip": "minipossystem\\Models\\Employee.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAkwAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T20:10:12.199Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T20:10:12.199Z"
             },
             {
               "$type": "Document",
@@ -442,8 +428,7 @@
               "RelativeToolTip": "minipossystem\\Models\\WarehouseProduct.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T06:35:43.704Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-22T06:35:43.704Z"
             },
             {
               "$type": "Document",
@@ -455,8 +440,7 @@
               "RelativeToolTip": "minipossystem\\Models\\SalesOrder.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T18:15:24.323Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T18:15:24.323Z"
             },
             {
               "$type": "Document",
@@ -468,8 +452,7 @@
               "RelativeToolTip": "minipossystem\\Models\\Costumer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T08:23:56.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T08:23:56.143Z"
             },
             {
               "$type": "Document",
@@ -481,8 +464,7 @@
               "RelativeToolTip": "minipossystem\\Models\\SalesInvoiceItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T21:29:31.546Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T21:29:31.546Z"
             },
             {
               "$type": "Document",
@@ -494,8 +476,7 @@
               "RelativeToolTip": "minipossystem\\Models\\SalesInvoice.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T07:40:52.23Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-10T07:40:52.23Z"
             },
             {
               "$type": "Document",
@@ -507,8 +488,7 @@
               "RelativeToolTip": "minipossystem\\Models\\Product.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T17:36:11.655Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T17:36:11.655Z"
             },
             {
               "$type": "Document",
@@ -520,8 +500,7 @@
               "RelativeToolTip": "minipossystem\\Models\\SalesOrderItem.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAkwB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T20:09:25.31Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T20:09:25.31Z"
             },
             {
               "$type": "Document",
@@ -533,8 +512,7 @@
               "RelativeToolTip": "minipossystem\\Views\\Reports\\MonthlySales2.cshtml",
               "ViewState": "AgIAAFwAAAAAAAAAAAAjwG8AAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-16T11:55:04.899Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T11:55:04.899Z"
             },
             {
               "$type": "Document",
@@ -546,8 +524,7 @@
               "RelativeToolTip": "minipossystem\\Models\\MonthlySalesDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T11:20:44.251Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T11:20:44.251Z"
             },
             {
               "$type": "Document",
@@ -559,8 +536,7 @@
               "RelativeToolTip": "minipossystem\\Controllers\\ReportsContoller.cs",
               "ViewState": "AgIAAFgAAAAAAAAAAAAYwHMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T07:09:31.273Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T07:09:31.273Z"
             },
             {
               "$type": "Document",
@@ -572,8 +548,7 @@
               "RelativeToolTip": "minipossystem\\Models\\MonthDetailDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T11:21:30.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T11:21:30.519Z"
             },
             {
               "$type": "Document",
@@ -585,8 +560,7 @@
               "RelativeToolTip": "minipossystem\\Models\\Warehouse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T10:07:40.621Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T10:07:40.621Z"
             },
             {
               "$type": "Document",
@@ -598,8 +572,7 @@
               "RelativeToolTip": "minipossystem\\Views\\Reports\\MonthlySales.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-16T08:47:35.176Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:47:35.176Z"
             },
             {
               "$type": "Document",
@@ -611,8 +584,7 @@
               "RelativeToolTip": "minipossystem\\Views\\Reports\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-16T07:16:24.287Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T07:16:24.287Z"
             },
             {
               "$type": "Document",
@@ -624,8 +596,7 @@
               "RelativeToolTip": "minipossystem\\Helpers\\MonthSalesOrder.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T07:08:39.676Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T07:08:39.676Z"
             },
             {
               "$type": "Document",
@@ -637,8 +608,7 @@
               "RelativeToolTip": "minipossystem\\Controllers\\PurchaseController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-13T13:36:00.952Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T13:36:00.952Z"
             },
             {
               "$type": "Document",
@@ -650,8 +620,7 @@
               "RelativeToolTip": "minipossystem\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-13T08:13:46.239Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T08:13:46.239Z"
             },
             {
               "$type": "Document",
@@ -663,8 +632,7 @@
               "RelativeToolTip": "minipossystem\\Models\\InvoiceRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T18:14:48.723Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T18:14:48.723Z"
             },
             {
               "$type": "Document",
@@ -676,8 +644,7 @@
               "RelativeToolTip": "minipossystem\\Models\\InvoiceItemDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T18:15:18.89Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T18:15:18.89Z"
             },
             {
               "$type": "Document",
@@ -689,8 +656,7 @@
               "RelativeToolTip": "minipossystem\\Views\\SalesOrder\\Create.cshtml",
               "ViewState": "AgIAAP4AAAAAAAAAAAAhwBMBAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-08T07:20:33.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-08T07:20:33.695Z"
             },
             {
               "$type": "Document",
@@ -702,8 +668,7 @@
               "RelativeToolTip": "minipossystem\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-13T08:01:59.563Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T08:01:59.563Z"
             },
             {
               "$type": "Document",
@@ -715,8 +680,7 @@
               "RelativeToolTip": "minipossystem\\Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-09T07:27:09.666Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T07:27:09.666Z"
             },
             {
               "$type": "Document",
@@ -728,8 +692,7 @@
               "RelativeToolTip": "minipossystem\\Models\\MiniPosSystemContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-13T07:09:01.278Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T07:09:01.278Z"
             },
             {
               "$type": "Document",
@@ -741,8 +704,7 @@
               "RelativeToolTip": "minipossystem\\Models\\RoleAccess.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-13T07:11:40.748Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T07:11:40.748Z"
             },
             {
               "$type": "Document",
@@ -754,8 +716,7 @@
               "RelativeToolTip": "minipossystem\\Models\\CreditNoteItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T22:42:40.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T22:42:40.102Z"
             },
             {
               "$type": "Document",
@@ -767,8 +728,7 @@
               "RelativeToolTip": "minipossystem\\Models\\CreditNote.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAowAUAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T21:09:39.406Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T21:09:39.406Z"
             },
             {
               "$type": "Document",
@@ -780,8 +740,7 @@
               "RelativeToolTip": "minipossystem\\Models\\PurchaseOrderItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-13T07:12:25.165Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T07:12:25.165Z"
             },
             {
               "$type": "Document",
@@ -793,8 +752,7 @@
               "RelativeToolTip": "minipossystem\\Models\\OrderProductDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T12:02:23.244Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T12:02:23.244Z"
             },
             {
               "$type": "Document",
@@ -806,8 +764,7 @@
               "RelativeToolTip": "minipossystem\\Models\\AddOrderItemsRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T11:55:25.651Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T11:55:25.651Z"
             },
             {
               "$type": "Document",
@@ -819,8 +776,7 @@
               "RelativeToolTip": "minipossystem\\Controllers\\HomeController.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAowBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T08:43:02.566Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T08:43:02.566Z"
             },
             {
               "$type": "Document",
@@ -832,8 +788,7 @@
               "RelativeToolTip": "minipossystem\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAMAAAAAAAAAAAAiwBIAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-11T18:52:07.095Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-11T18:52:07.095Z"
             },
             {
               "$type": "Document",
@@ -856,8 +811,7 @@
               "RelativeToolTip": "minipossystem\\Models\\SalesOrderWarehouse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T17:33:23.847Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-09T17:33:23.847Z"
             }
           ]
         }

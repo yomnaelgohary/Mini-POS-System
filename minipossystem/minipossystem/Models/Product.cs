@@ -12,7 +12,9 @@ public partial class Product
     public decimal SellingPrice { get; set; }
 
     public string? ProductCode { get; set; }
-
+    public decimal? POPrice { get; set; }      
+    public int? Quantity { get; set; }         
+    public int? POQuantity { get; set; }       
     public virtual ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; } = new List<PurchaseOrderItem>();
 
     public virtual ICollection<SalesOrderItem> SalesOrderItems { get; set; } = new List<SalesOrderItem>();
