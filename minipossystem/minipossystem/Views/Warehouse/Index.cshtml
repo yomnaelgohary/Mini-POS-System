@@ -3,65 +3,585 @@
     ViewBag.Title = "Warehouses in Branch";
     int? branchId = Context.Session.GetInt32("BranchId"); // ✅ get BranchId from session
 }
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/Warehouses.js"></script>
 
-<h2 class="mb-4">Warehouses in Your Branch</h2>
+<style>
+    :root {
+        --cashetrip-primary: #0f172a;
+        --cashetrip-primary-light: #1e293b;
+        --cashetrip-secondary: #334155;
+        --cashetrip-accent: #475569;
+        --cashetrip-light: #e2e8f0;
+        --cashetrip-lighter: #f1f5f9;
+        --cashetrip-success: #059669;
+        --cashetrip-danger: #dc2626;
+        --cashetrip-warning: #d97706;
+        --cashetrip-info: #0284c7;
+    }
 
-<!-- ✅ Hidden field to pass branch ID to JavaScript -->
-<input type="hidden" id="hiddenBranchId" value="@branchId" />
+    body {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
 
-<table class="table table-bordered table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th>Warehouse ID</th>
-            <th>Name</th>
-            <th>Branch ID</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var warehouse in Model)
-        {
-            <tr>
-                <td>@warehouse.WarehouseId</td>
-                <td>@warehouse.WarehouseName</td>
-                <td>@warehouse.BranchId</td>
-            </tr>
+    .page-header {
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+        color: white;
+        padding: 2rem 0;
+        margin: -1.5rem -15px 2rem -15px;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%);
+        background-size: 60px 60px;
+    }
+
+    .page-header .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .page-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .page-header h2 i {
+        margin-right: 1rem;
+        font-size: 2rem;
+        opacity: 0.9;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .enhanced-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border: none;
+        margin-bottom: 2rem;
+        overflow: hidden;
+    }
+
+    .card-header-enhanced {
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+        color: white;
+        padding: 1.5rem;
+        border: none;
+        position: relative;
+    }
+
+    .card-header-enhanced::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%);
+        background-size: 30px 30px;
+    }
+
+    .card-header-enhanced * {
+        position: relative;
+        z-index: 2;
+    }
+
+    .card-header-enhanced h4 {
+        margin: 0;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+    .card-header-enhanced h4 i {
+        margin-right: 0.75rem;
+        font-size: 1.3rem;
+    }
+
+    .enhanced-table-container {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: none;
+        margin-bottom: 2rem;
+    }
+
+    .table {
+        margin-bottom: 0;
+        border: none;
+    }
+
+    .table thead th {
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+        color: white;
+        border: none;
+        font-weight: 600;
+        padding: 1.2rem 1rem;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .table tbody td {
+        padding: 1rem;
+        border-color: #e2e8f0;
+        vertical-align: middle;
+        font-size: 0.95rem;
+    }
+
+    .table tbody tr {
+        transition: all 0.3s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: var(--cashetrip-lighter);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Enhanced Button Styling */
+    .btn {
+        border-radius: 12px;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        position: relative;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn i {
+        margin-right: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #020617 0%, var(--cashetrip-primary-light) 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.4);
+        color: white;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, var(--cashetrip-success) 0%, #047857 100%);
+        box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        color: white;
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+        color: white;
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, var(--cashetrip-warning) 0%, #b45309 100%);
+        box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+        color: white;
+    }
+
+    .btn-warning:hover {
+        background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(217, 119, 6, 0.4);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, var(--cashetrip-secondary) 0%, var(--cashetrip-accent) 100%);
+        box-shadow: 0 4px 15px rgba(51, 65, 85, 0.3);
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, var(--cashetrip-accent) 0%, #374151 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(51, 65, 85, 0.4);
+        color: white;
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, var(--cashetrip-danger) 0%, #b91c1c 100%);
+        box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+        color: white;
+    }
+
+    .btn-outline-primary {
+        border: 2px solid var(--cashetrip-primary);
+        color: var(--cashetrip-primary);
+        background: transparent;
+    }
+
+    .btn-outline-primary:hover {
+        background: var(--cashetrip-primary);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-outline-success {
+        border: 2px solid var(--cashetrip-success);
+        color: var(--cashetrip-success);
+        background: transparent;
+    }
+
+    .btn-outline-success:hover {
+        background: var(--cashetrip-success);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-sm {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        border-radius: 8px;
+    }
+
+    .btn-group .btn {
+        border-radius: 0;
+    }
+
+    .btn-group .btn:first-child {
+        border-radius: 12px 0 0 12px;
+    }
+
+    .btn-group .btn:last-child {
+        border-radius: 0 12px 12px 0;
+    }
+
+    /* Enhanced Modal Styling */
+    .modal-content {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+    }
+
+    .modal-header {
+        border-radius: 20px 20px 0 0;
+        padding: 1.5rem 2rem;
+        border-bottom: none;
+        position: relative;
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+        color: white;
+    }
+
+    .modal-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%);
+        background-size: 30px 30px;
+    }
+
+    .modal-header * {
+        position: relative;
+        z-index: 2;
+    }
+
+    .modal-body {
+        padding: 2rem;
+        background: #fafbfc;
+    }
+
+    .modal-footer {
+        padding: 1.5rem 2rem;
+        border-top: 1px solid #e2e8f0;
+        background: white;
+    }
+
+    .modal-title {
+        font-weight: 700;
+        font-size: 1.3rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-title i {
+        margin-right: 0.75rem;
+        font-size: 1.2rem;
+    }
+
+    .btn-close {
+        background-size: 1.2em;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    .btn-close:hover {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    /* Form Controls */
+    .form-control, .form-select {
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 0.8rem 1.2rem;
+        transition: all 0.3s ease;
+        background: white;
+        font-size: 0.95rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--cashetrip-secondary);
+        box-shadow: 0 0 0 0.2rem rgba(51, 65, 85, 0.25);
+        background: white;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--cashetrip-primary);
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    /* Status Badges */
+    .badge {
+        border-radius: 8px;
+        padding: 0.5rem 0.8rem;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Section Headers */
+    .section-header {
+        background: linear-gradient(135deg, var(--cashetrip-lighter) 0%, #e2e8f0 100%);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid var(--cashetrip-primary);
+    }
+
+    .section-header h4 {
+        margin: 0;
+        color: var(--cashetrip-primary);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+    .section-header h4 i {
+        margin-right: 0.75rem;
+        font-size: 1.3rem;
+    }
+
+    /* Invoice Section Styling */
+    #invoiceSection {
+        margin-top: 2rem;
+    }
+
+    #invoiceSection h4 {
+        color: var(--cashetrip-primary);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    #invoiceSection h4 i {
+        margin-right: 0.75rem;
+        font-size: 1.2rem;
+    }
+
+    /* Table Enhancements */
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(241, 245, 249, 0.5);
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: var(--cashetrip-lighter) !important;
+    }
+
+    /* Loading Animation */
+    .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+ 
+        .btn-group {
+            flex-direction: column;
         }
-    </tbody>
-</table>
+        
+        .btn-group .btn {
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-dialog {
+            margin: 1rem;
+        }
+    }
+</style>
 
-<hr />
-
-<div class="row mb-4">
-    <div class="col-md-6">
-        <h4>Select Invoice Type</h4>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-outline-primary" id="btnPurchase" onclick="loadPurchaseInvoices()">Purchase Invoices</button>
-            <button type="button" class="btn btn-outline-success" id="btnSales" onclick="loadSalesInvoices()">Sales Invoices</button>
-        </div>
+<div class="page-header">
+    <div class="container">
+        <h2>
+            <i class="fas fa-warehouse"></i>
+            Warehouses in Your Branch
+        </h2>
+        <p>Manage warehouse operations and inventory tracking</p>
     </div>
 </div>
 
-<!-- ✅ INVOICE SECTION -->
-<div id="invoiceSection" style="display: none;">
-    <h4 class="mb-3" id="invoiceHeader">Invoices</h4>
-    <table class="table table-sm table-striped" id="invoiceTable">
-        <thead>
-            <tr>
-                <th>Invoice ID</th>
-                <th>Purchase Order ID</th>
-                <th>Invoice Price</th>
-                <th>Invoice Date</th>
-                <th>Order Date</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Actions</th> <!-- ✅ Added actions -->
-            </tr>
-        </thead>
-        <tbody id="invoiceTableBody">
-            <!-- JavaScript will populate this -->
-        </tbody>
-    </table>
+<div class="container mt-4">
+    <!-- ✅ Hidden field to pass branch ID to JavaScript -->
+    <input type="hidden" id="hiddenBranchId" value="@branchId" />
+
+    <!-- Warehouses Table -->
+    <div class="enhanced-table-container">
+        <div class="card-header-enhanced">
+            <h4>
+                <i class="fas fa-building"></i>
+                Available Warehouses
+            </h4>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><i class="fas fa-hashtag me-2"></i>Warehouse ID</th>
+                    <th><i class="fas fa-tag me-2"></i>Name</th>
+                    <th><i class="fas fa-code-branch me-2"></i>Branch ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var warehouse in Model)
+                {
+                    <tr>
+                        <td><span class="badge bg-primary">#@warehouse.WarehouseId</span></td>
+                        <td class="fw-semibold">@warehouse.WarehouseName</td>
+                        <td><span class="badge bg-secondary">@warehouse.BranchId</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Invoice Type Selection -->
+    <div class="section-header">
+        <h4>
+            <i class="fas fa-file-invoice"></i>
+            Select Invoice Type
+        </h4>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="btn-group w-100" role="group">
+                <button type="button" class="btn btn-outline-primary" id="btnPurchase" onclick="loadPurchaseInvoices()">
+                    <i class="fas fa-shopping-cart"></i>
+                    Purchase Invoices
+                </button>
+                <button type="button" class="btn btn-outline-success" id="btnSales" onclick="loadSalesInvoices()">
+                    <i class="fas fa-cash-register"></i>
+                    Sales Invoices
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ INVOICE SECTION -->
+    <div id="invoiceSection" style="display: none;">
+        <div class="enhanced-table-container">
+            <div class="card-header-enhanced">
+                <h4 id="invoiceHeader">
+                    <i class="fas fa-receipt"></i>
+                    Invoices
+                </h4>
+            </div>
+            <table class="table table-sm table-striped" id="invoiceTable">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-hashtag me-1"></i>Invoice ID</th>
+                        <th><i class="fas fa-shopping-bag me-1"></i>Purchase Order ID</th>
+                        <th><i class="fas fa-dollar-sign me-1"></i>Invoice Price</th>
+                        <th><i class="fas fa-calendar me-1"></i>Invoice Date</th>
+                        <th><i class="fas fa-calendar-alt me-1"></i>Order Date</th>
+                        <th><i class="fas fa-calculator me-1"></i>Total</th>
+                        <th><i class="fas fa-info-circle me-1"></i>Status</th>
+                        <th><i class="fas fa-cogs me-1"></i>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceTableBody">
+                    <!-- JavaScript will populate this -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <!-- ✅ MODAL: Warehouse Action -->
@@ -70,13 +590,15 @@
         <div class="modal-content">
             <form id="warehouseActionForm">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="actionModalLabel">Select Warehouse Action</h5>
+                    <h5 class="modal-title" id="actionModalLabel">
+                        <i class="fas fa-tasks"></i>
+                        Select Warehouse Action
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="selectedInvoiceId" name="InvoiceId" />
-
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="warehouseSelect" class="form-label">Choose Warehouse</label>
                         <select class="form-select" id="warehouseSelect" name="WarehouseId" required>
                             @foreach (var warehouse in Model)
@@ -85,18 +607,29 @@
                             }
                         </select>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Action</label>
+                    <div class="mb-4">
+                        <label class="form-label">Action Type</label>
                         <select class="form-select" name="ActionType" required>
-                            <option value="Receive">Receive Products</option>
-                            <option value="Release">Release Products</option>
+                            <option value="Receive">
+                                <i class="fas fa-download"></i>
+                                Receive Products
+                            </option>
+                            <option value="Release">
+                                <i class="fas fa-upload"></i>
+                                Release Products
+                            </option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Confirm</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check"></i>
+                        Confirm Action
+                    </button>
                 </div>
             </form>
         </div>
@@ -105,71 +638,133 @@
 
 <!-- ✅ MODAL: Invoice Details -->
 <div class="modal fade" id="invoiceDetailsModal" tabindex="-1" aria-labelledby="invoiceDetailsLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Invoice Items</h5>
+                <h5 class="modal-title">
+                    <i class="fas fa-list-alt"></i>
+                    Invoice Items
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody id="invoiceItemsBody">
-                        <!-- JavaScript will populate this -->
-                    </tbody>
-                </table>
-
-                
-                <div class="mt-4">
-                    <label for="warehouseSelectForPopup" class="form-label">Select Warehouse:</label>
-                    <select id="warehouseSelectForPopup" class="form-select">
-                        <option value="">-- Select a Warehouse --</option>
-                        <!-- JS will populate based on Branch ID -->
-                    </select>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6 class="fw-bold text-primary mb-3">
+                            <i class="fas fa-boxes me-2"></i>
+                            Available Items
+                        </h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th><i class="fas fa-tag me-1"></i>Product</th>
+                                        <th><i class="fas fa-sort-numeric-up me-1"></i>Quantity</th>
+                                        <th><i class="fas fa-dollar-sign me-1"></i>Unit Price</th>
+                                        <th><i class="fas fa-calculator me-1"></i>Total</th>
+                                        <th><i class="fas fa-plus me-1"></i>Add</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoiceItemsBody">
+                                    <!-- JavaScript will populate this -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="enhanced-card">
+                            <div class="card-header-enhanced">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-warehouse"></i>
+                                    Warehouse Selection
+                                </h6>
+                            </div>
+                            <div class="p-3">
+                                <label for="warehouseSelectForPopup" class="form-label">Select Warehouse:</label>
+                                <select id="warehouseSelectForPopup" class="form-select">
+                                    <option value="">-- Select a Warehouse --</option>
+                                    <!-- JS will populate based on Branch ID -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Section: To Be Added -->
-                <h5>🛒 Items to Add to Warehouse</h5>
-                <table class="table">
-                    <thead>
-                        <tr><th>Product</th><th>Quantity</th><th></th></tr>
-                    </thead>
-                    <tbody id="toBeAddedBody"></tbody>
-                </table>
 
-                <div class="mt-3">
-                    <button id="btnAddToWarehouse" class="btn btn-success w-100" onclick="submitToWarehouse()">Add to Warehouse</button>
+                <hr class="my-4" />
+
+                <!-- Section: To Be Added -->
+                <div class="enhanced-card">
+                    <div class="card-header-enhanced">
+                        <h6 class="mb-0">
+                            <i class="fas fa-shopping-cart"></i>
+                            Items to Add to Warehouse
+                        </h6>
+                    </div>
+                    <div class="p-3">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-tag me-1"></i>Product</th>
+                                        <th><i class="fas fa-sort-numeric-up me-1"></i>Quantity</th>
+                                        <th><i class="fas fa-cogs me-1"></i>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="toBeAddedBody">
+                                    <!-- JavaScript will populate this -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-3">
+                            <button id="btnAddToWarehouse" class="btn btn-success w-100 btn-lg" onclick="submitToWarehouse()">
+                                <i class="fas fa-plus-circle me-2"></i>
+                                Add to Warehouse
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Quantity Input Modal -->
 <div class="modal fade" id="quantityModal" tabindex="-1" role="dialog" aria-labelledby="quantityModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="quantityModalLabel">Enter Quantity</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="quantityModalLabel">
+                    <i class="fas fa-sort-numeric-up"></i>
+                    Enter Quantity
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p id="modalProductName"></p>
-                <input type="number" class="form-control" id="modalQuantityInput" placeholder="Enter quantity" min="1">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Product Information</label>
+                    <div class="p-3 bg-light rounded-3">
+                        <p id="modalProductName" class="mb-0 fw-semibold text-dark"></p>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="modalQuantityInput" class="form-label">Quantity to Add</label>
+                    <input type="number" class="form-control" id="modalQuantityInput" placeholder="Enter quantity" min="1">
+                </div>
                 <input type="hidden" id="modalItemId">
                 <input type="hidden" id="modalProductMaxQty">
                 <input type="hidden" id="modalProductNameHidden">
+                <input type="hidden" id="modalProductId" />
+                <input type="hidden" id="modalUnitPrice" />
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="confirmQuantity()">OK</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary" onclick="confirmQuantity()">
+                    <i class="fas fa-check"></i>
+                    Confirm Quantity
+                </button>
             </div>
         </div>
     </div>

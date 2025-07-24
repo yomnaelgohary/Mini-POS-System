@@ -79,7 +79,8 @@ namespace minipossystem.Controllers
                     Product = i.PurchaseOrderItem.Product.Description,
                     Quantity = i.Quantity,
                     UnitPrice = i.Price,
-                    Total = i.Quantity * i.Price
+                    Total = i.Quantity * i.Price,
+                    ProductId =i.PurchaseOrderItem.ProductId
                 })
                 .ToList();
 
@@ -95,6 +96,59 @@ namespace minipossystem.Controllers
 
             return Json(warehouses);
         }
+        [HttpPost]
+        [HttpPost]
+        [HttpPost]
+        public IActionResult AddToWarehouse([FromBody] WarehouseAddRequest request)
+        {
+            if (request == null || request.Items == null || request.Items.Count == 0)
+            {
+                return BadRequest("Invalid payload.");
+            }
+
+            foreach (var item in request.Items)
+            {
+                if (item == null || item.ProductId <= 0 || item.Quantity <= 0)
+                    continue;
+
+                var product = _context.Products.FirstOrDefault(p => p.ProductId == item.ProductId);
+                if (product == null) continue;
+
+                int oldQty = product.Quantity ?? 0;
+                decimal oldCost = product.AvrgCost ?? 0m;
+                int newQty = item.Quantity;
+                decimal unitPrice = item.UnitPrice;
+
+                int totalQty = oldQty + newQty;
+                decimal newAvgCost = totalQty == 0 ? 0 : ((oldQty * oldCost) + (newQty * unitPrice)) / totalQty;
+
+               // product.POPrice = unitPrice;
+                product.AvrgCost = newAvgCost;
+                product.Quantity = totalQty;
+                //product.POQuantity = newQty;
+
+                var wp = _context.WarehouseProducts
+                    .FirstOrDefault(w => w.ProductId == item.ProductId && w.WarehouseId == request.WarehouseId);
+
+                if (wp == null)
+                {
+                    _context.WarehouseProducts.Add(new WarehouseProduct
+                    {
+                        ProductId = item.ProductId,
+                        WarehouseId = request.WarehouseId,
+                        TotalQuantity = newQty
+                    });
+                }
+                else
+                {
+                    wp.TotalQuantity += newQty;
+                }
+            }
+
+            _context.SaveChanges();
+            return Ok();
+        }
+
 
 
 

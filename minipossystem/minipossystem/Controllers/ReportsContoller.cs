@@ -22,33 +22,33 @@ namespace minipossystem.Controllers
             return View(); // Looks for Views/Reports/MonthlySales2.cshtml
         }
 
-        //public IActionResult Index(string date = null)
-        //{
-        //    if (string.IsNullOrWhiteSpace(date))
-        //        date = DateTime.Today.ToString("yyyy-MM-dd");
+        public IActionResult Index(string date = null)
+        {
+            if (string.IsNullOrWhiteSpace(date))
+                date = DateTime.Today.ToString("yyyy-MM-dd");
 
-        //    string webFormsUrl = $"http://localhost:53906/Default.aspx?date={date}";
+            string webFormsUrl = $"http://localhost:53906/Default.aspx?date={date}";
 
-        //    ViewBag.WebFormsUrl = webFormsUrl;
-        //    ViewBag.Date = date;
+            ViewBag.WebFormsUrl = webFormsUrl;
+            ViewBag.Date = date;
 
-        //    return View();
-        //}
-        //public IActionResult MonthlySales(string fromDate = null, string toDate = null)
-        //{
-        //    if (string.IsNullOrWhiteSpace(fromDate))
-        //        fromDate = DateTime.Today.AddDays(-30).ToString("yyyy-MM-dd");
-        //    if (string.IsNullOrWhiteSpace(toDate))
-        //        toDate = DateTime.Today.ToString("yyyy-MM-dd");
+            return View();
+        }
+        public IActionResult MonthlySales(string fromDate = null, string toDate = null)
+        {
+            if (string.IsNullOrWhiteSpace(fromDate))
+                fromDate = DateTime.Today.AddDays(-30).ToString("yyyy-MM-dd");
+            if (string.IsNullOrWhiteSpace(toDate))
+                toDate = DateTime.Today.ToString("yyyy-MM-dd");
 
-        //    string webFormsUrl = $"http://localhost:53906/Default2.aspx?FromDate={fromDate}&ToDate={toDate}";
+            string webFormsUrl = $"http://localhost:53906/Default2.aspx?FromDate={fromDate}&ToDate={toDate}";
 
-        //    ViewBag.WebFormsUrl = webFormsUrl;
-        //    ViewBag.FromDate = fromDate;
-        //    ViewBag.ToDate = toDate;
+            ViewBag.WebFormsUrl = webFormsUrl;
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
 
-        //    return View();
-        //}
+            return View();
+        }
         public List<MonthlySalesDTO> GetMonthlySales(DateTime fromDate, DateTime toDate)
         {
             var results = new List<MonthlySalesDTO>();

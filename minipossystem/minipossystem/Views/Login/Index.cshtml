@@ -1,19 +1,472 @@
 ﻿@{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Login - CasheTrip";
+    Layout = null; // This removes the shared layout for full-screen login
 }
 
-<h2>Login</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<form asp-action="Login" method="post" class="mt-3">
-    <div class="mb-3">
-        <label for="loginId" class="form-label">Employee ID</label>
-        <input type="number" class="form-control" id="loginId" name="loginId" required />
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .login-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        /* Left Side - Brand Section (Darker Blue) */
+        .brand-section {
+            flex: 1;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 100%);
+            position: relative;
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .brand-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
+            background-size: 80px 80px;
+            background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
+        }
+
+        .brand-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-icon i {
+            font-size: 28px;
+            color: #e2e8f0;
+        }
+
+        .logo-text h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f1f5f9;
+        }
+
+        .logo-text p {
+            font-size: 16px;
+            opacity: 0.8;
+            font-weight: 400;
+            color: #cbd5e1;
+        }
+
+        .welcome-text {
+            margin-bottom: 50px;
+        }
+
+        .welcome-text h2 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            color: #f8fafc;
+        }
+
+        .welcome-text p {
+            font-size: 20px;
+            opacity: 0.85;
+            line-height: 1.6;
+            max-width: 520px;
+            color: #e2e8f0;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 60px;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 18px;
+            opacity: 0.9;
+            color: #e2e8f0;
+        }
+
+        .features-list li i {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        /* Right Side - Login Form */
+        .login-section {
+            width: 550px;
+            height: 100vh;
+            background: white;
+            padding: 100px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .user-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 40px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.3);
+        }
+
+        .user-avatar i {
+            font-size: 36px;
+            color: white;
+        }
+
+        .login-header h3 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .login-header p {
+            font-size: 18px;
+            color: #475569;
+        }
+
+        .login-form {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 18px 24px;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 16px;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+            color: #1e293b;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #334155;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(51, 65, 85, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            accent-color: #334155;
+        }
+
+        .remember-me label {
+            font-size: 16px;
+            color: #475569;
+            margin-bottom: 0;
+            font-weight: 400;
+        }
+
+        .forgot-password {
+            color: #334155;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            color: #0f172a;
+        }
+
+        .btn-signin {
+            width: 100%;
+            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3);
+        }
+
+        .btn-signin:hover {
+            background: linear-gradient(135deg, #020617 0%, #1e293b 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.4);
+        }
+
+        .support-text {
+            text-align: center;
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        .support-text a {
+            color: #334155;
+            text-decoration: none;
+        }
+
+        .support-text a:hover {
+            color: #0f172a;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .error-message i {
+            margin-right: 10px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Left Side - Brand Section -->
+        <div class="brand-section">
+            <div class="brand-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>CacheTrip</h1>
+                        <p>Navigate Commerce. Simplify Work.</p>
+                    </div>
+                </div>
+
+                <div class="welcome-text">
+                    <h2>Welcome to Your<br>Point of Sale Workspace</h2>
+                    <p>
+                        Access your sales tools, manage inventory, track vendors and customers—all in one powerful, intuitive place.
+                        Everything you need to streamline operations and boost performance.
+                    </p>
+                </div>
+
+                <ul class="features-list">
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        Manage vendors, customers & branches with ease
+                    </li>
+                    <li>
+                        <i class="fas fa-users"></i>
+                        Real-time stock updates across warehouses
+                    </li>
+                    <li>
+                        <i class="fas fa-bolt"></i>
+                        Generate insights, invoices & reports instantly
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="login-section">
+            <div class="login-header">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Employee Login</h3>
+                <p>Sign in to access your workspace</p>
+            </div>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Invalid Employee ID or Password. Please try again.
+                </div>
+            }
+
+            <form asp-action="Login" method="post" class="login-form">
+                <div class="form-group">
+                    <label for="loginId">Employee ID</label>
+                    <input type="number" 
+                           class="form-control" 
+                           id="loginId" 
+                           name="loginId" 
+                           placeholder="Enter your employee ID"
+                           required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" 
+                               class="form-control" 
+                               id="password" 
+                               name="password" 
+                               placeholder="Enter your password"
+                               required />
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-signin">Sign In</button>
+            </form>
+
+            <p class="support-text">
+                Need help? Contact IT Support: <a href="mailto:support@cashetrip.com">support@cashetrip.com</a>
+            </p>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
-
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="text-danger mt-2">Invalid Employee ID. Try again.</div>
-    }
-</form>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
+</body>
+</html>

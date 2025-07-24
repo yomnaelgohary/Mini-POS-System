@@ -5,34 +5,549 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/AllOrders.js"></script>
 
-<div class="container mt-4">
-    <h1 class="mb-4">All Sales Orders</h1>
-    <table class="table table-bordered" id="ordersTable">
-        <thead class="table-light">
-            <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Item Count</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- JS will populate this -->
-        </tbody>
-    </table>
+<style>
+    :root {
+        --cashetrip-primary: #0f172a;
+        --cashetrip-primary-light: #1e293b;
+        --cashetrip-secondary: #334155;
+        --cashetrip-accent: #475569;
+        --cashetrip-light: #e2e8f0;
+        --cashetrip-lighter: #f1f5f9;
+        --cashetrip-success: #059669;
+        --cashetrip-danger: #dc2626;
+        --cashetrip-warning: #d97706;
+        --cashetrip-info: #0284c7;
+    }
+
+    body {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 0.85rem;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+        color: white;
+        padding: 1rem 0;
+        margin: -1rem -15px 1rem -15px;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%);
+        background-size: 40px 40px;
+    }
+
+    .page-header .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .page-header h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .page-header h1 i {
+        margin-right: 0.75rem;
+        font-size: 1.5rem;
+        opacity: 0.9;
+    }
+
+    .page-header p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .enhanced-table-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.1), 0 3px 5px -2px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: none;
+        max-height: 75vh;
+        overflow-y: auto;
+    }
+
+    .table {
+        margin-bottom: 0;
+        border: none;
+        font-size: 0.8rem;
+    }
+
+    .table thead th {
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+        color: white;
+        border: none;
+        font-weight: 600;
+        padding: 0.8rem 0.6rem;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .table tbody td {
+        padding: 0.6rem 0.6rem;
+        border-color: #e2e8f0;
+        vertical-align: middle;
+        font-size: 0.8rem;
+    }
+
+    .table tbody tr {
+        transition: all 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: var(--cashetrip-lighter);
+        transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Enhanced Modal Styling - Compact */
+    .modal-content {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        border-radius: 15px 15px 0 0;
+        padding: 1rem 1.5rem;
+        border-bottom: none;
+        position: relative;
+    }
+
+    .modal-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%);
+        background-size: 20px 20px;
+    }
+
+    .modal-header * {
+        position: relative;
+        z-index: 2;
+    }
+
+    .modal-header.bg-primary {
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%) !important;
+    }
+
+    .modal-header.bg-warning {
+        background: linear-gradient(135deg, var(--cashetrip-warning) 0%, #b45309 100%) !important;
+        color: white !important;
+    }
+
+    .modal-header.bg-success {
+        background: linear-gradient(135deg, var(--cashetrip-success) 0%, #047857 100%) !important;
+    }
+
+    .modal-header.bg-info {
+        background: linear-gradient(135deg, var(--cashetrip-info) 0%, #0369a1 100%) !important;
+    }
+
+    .modal-body {
+        padding: 1.2rem;
+        background: #fafbfc;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .modal-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #e2e8f0;
+        background: white;
+    }
+
+    .modal-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-title i {
+        margin-right: 0.5rem;
+        font-size: 1rem;
+    }
+
+    /* Enhanced Button Styling - Compact */
+    .btn {
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        position: relative;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        font-size: 0.75rem;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn i {
+        margin-right: 0.4rem;
+        font-size: 0.75rem;
+    }
+
+    /* CasheTrip Primary Button */
+    .btn-primary,
+    .btn-cashetrip-primary {
+        background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.3);
+        color: white;
+    }
+
+    .btn-primary:hover,
+    .btn-cashetrip-primary:hover {
+        background: linear-gradient(135deg, #020617 0%, var(--cashetrip-primary-light) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.4);
+        color: white;
+    }
+
+    /* CasheTrip Success Button */
+    .btn-success,
+    .btn-cashetrip-success {
+        background: linear-gradient(135deg, var(--cashetrip-success) 0%, #047857 100%);
+        box-shadow: 0 3px 12px rgba(5, 150, 105, 0.3);
+        color: white;
+    }
+
+    .btn-success:hover,
+    .btn-cashetrip-success:hover {
+        background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        color: white;
+    }
+
+    /* CasheTrip Warning Button */
+    .btn-warning,
+    .btn-cashetrip-warning {
+        background: linear-gradient(135deg, var(--cashetrip-warning) 0%, #b45309 100%);
+        box-shadow: 0 3px 12px rgba(217, 119, 6, 0.3);
+        color: white;
+    }
+
+    .btn-warning:hover,
+    .btn-cashetrip-warning:hover {
+        background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+        color: white;
+    }
+
+    /* CasheTrip Secondary Button */
+    .btn-secondary,
+    .btn-cashetrip-secondary {
+        background: linear-gradient(135deg, var(--cashetrip-secondary) 0%, var(--cashetrip-accent) 100%);
+        box-shadow: 0 3px 12px rgba(51, 65, 85, 0.3);
+        color: white;
+    }
+
+    .btn-secondary:hover,
+    .btn-cashetrip-secondary:hover {
+        background: linear-gradient(135deg, var(--cashetrip-accent) 0%, #374151 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(51, 65, 85, 0.4);
+        color: white;
+    }
+
+    /* CasheTrip Info Button */
+    .btn-info,
+    .btn-cashetrip-info {
+        background: linear-gradient(135deg, var(--cashetrip-info) 0%, #0369a1 100%);
+        box-shadow: 0 3px 12px rgba(2, 132, 199, 0.3);
+        color: white;
+    }
+
+    .btn-info:hover,
+    .btn-cashetrip-info:hover {
+        background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+        color: white;
+    }
+
+    /* CasheTrip Danger Button */
+    .btn-danger,
+    .btn-cashetrip-danger {
+        background: linear-gradient(135deg, var(--cashetrip-danger) 0%, #b91c1c 100%);
+        box-shadow: 0 3px 12px rgba(220, 38, 38, 0.3);
+        color: white;
+    }
+
+    .btn-danger:hover,
+    .btn-cashetrip-danger:hover {
+        background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+        color: white;
+    }
+
+    /* Button Sizes */
+    .btn-sm {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.7rem;
+        border-radius: 6px;
+    }
+
+    .btn-lg {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.85rem;
+        border-radius: 10px;
+    }
+
+    /* Full Width Buttons */
+    .btn.w-100 {
+        padding: 0.7rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    /* Button Groups */
+    .btn-group .btn {
+        border-radius: 0;
+    }
+
+    .btn-group .btn:first-child {
+        border-radius: 8px 0 0 8px;
+    }
+
+    .btn-group .btn:last-child {
+        border-radius: 0 8px 8px 0;
+    }
+
+    /* Form Controls - Compact */
+    .form-control {
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 0.5rem 0.8rem;
+        transition: all 0.3s ease;
+        background: white;
+        font-size: 0.8rem;
+    }
+
+    .form-control:focus {
+        border-color: var(--cashetrip-secondary);
+        box-shadow: 0 0 0 0.15rem rgba(51, 65, 85, 0.25);
+        background: white;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--cashetrip-primary);
+        margin-bottom: 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    /* Status Badges - Compact */
+    .badge {
+        border-radius: 6px;
+        padding: 0.3rem 0.6rem;
+        font-weight: 600;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    /* Close Button Enhancement */
+    .btn-close {
+        background-size: 1em;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+    }
+
+    .btn-close:hover {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    .btn-close-white {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    /* Loading Animation */
+    .loading-spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+
+
+    /* Button Loading State */
+    .btn:disabled {
+        opacity: 0.7;
+        transform: none !important;
+        cursor: not-allowed;
+    }
+
+    .btn:disabled::before {
+        display: none;
+    }
+
+    /* Flex Button Layouts */
+    .d-flex .btn {
+        flex: 1;
+    }
+
+    .d-flex .btn + .btn {
+        margin-left: 0.5rem;
+    }
+
+    /* Button Icon Enhancements */
+    .btn i {
+        transition: transform 0.3s ease;
+    }
+
+    .btn:hover i {
+        transform: scale(1.1);
+    }
+
+    /* Special Button Effects */
+    .btn-pulse {
+        animation: pulse 2s infinite;
+    }
+
+  
+
+    /* Compact spacing for modals */
+    .modal-dialog {
+        margin: 1rem;
+    }
+
+    .modal-xl {
+        max-width: 95%;
+    }
+
+    .modal-lg {
+        max-width: 80%;
+    }
+
+    .modal-sm {
+        max-width: 400px;
+    }
+
+    /* Table in modals - more compact */
+    .modal-body .table {
+        font-size: 0.75rem;
+    }
+
+    .modal-body .table th,
+    .modal-body .table td {
+        padding: 0.4rem;
+    }
+
+    /* Credit section compact */
+    #creditCartSection {
+        padding: 0.8rem !important;
+    }
+
+    #creditCartSection .table {
+        font-size: 0.75rem;
+    }
+
+    #creditCartSection .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    
+</style>
+
+<div class="page-header">
+    <div class="container">
+        <h1>
+            <i class="fas fa-clipboard-list"></i>
+            All Sales Orders
+        </h1>
+        <p>Manage and track all your sales orders in one place</p>
+    </div>
 </div>
 
+<div class="container mt-3">
+    <div class="enhanced-table-container">
+        <table class="table table-hover" id="ordersTable">
+            <thead>
+                <tr>
+                    <th><i class="fas fa-hashtag me-1"></i>Order ID</th>
+                    <th><i class="fas fa-user me-1"></i>Customer</th>
+                    <th><i class="fas fa-calendar me-1"></i>Date</th>
+                    <th><i class="fas fa-info-circle me-1"></i>Status</th>
+                    <th><i class="fas fa-boxes me-1"></i>Item Count</th>
+                    <th><i class="fas fa-cogs me-1"></i>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JS will populate this -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Order Details Modal -->
 <div class="modal fade" id="orderDetailsModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Order Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title">
+                    <i class="fas fa-file-invoice"></i>
+                    Order Details
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <!-- Order details will be inserted here dynamically -->
@@ -46,15 +561,30 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title">Edit Quantity</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title">
+                    <i class="fas fa-edit"></i>
+                    Edit Quantity
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <input type="number" id="editQuantityInput" class="form-control" min="1" />
+                <div class="mb-3">
+                    <label for="editQuantityInput" class="form-label">New Quantity</label>
+                    <input type="number" id="editQuantityInput" class="form-control" min="1" placeholder="Enter new quantity" />
+                </div>
                 <input type="hidden" id="editorderId" />
                 <input type="hidden" id="edititemid" />
                 <input type="hidden" id="editProductId" />
-                <button class="btn btn-primary mt-2 w-100" onclick="confirmEditQuantity()">Save</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button class="btn btn-warning btn-pulse" onclick="confirmEditQuantity()">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                </button>
             </div>
         </div>
     </div>
@@ -65,8 +595,11 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title">Add to Invoice</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Add to Invoice
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="invoiceorderid" />
@@ -75,22 +608,35 @@
                 <input type="hidden" id="invoiceProductDescription" />
                 <input type="hidden" id="invoiceProductPrice" />
                 <input type="hidden" id="invoiceMaxQty" />
-                <div class="mb-2">
-                    <label for="invoiceQuantityInput" class="form-label">Quantity</label>
-                    <input type="number" id="invoiceQuantityInput" class="form-control" min="1" />
+                <div class="mb-3">
+                    <label for="invoiceQuantityInput" class="form-label">Quantity to Invoice</label>
+                    <input type="number" id="invoiceQuantityInput" class="form-control" min="1" placeholder="Enter quantity" />
                 </div>
-                <button class="btn btn-success mt-2 w-100" onclick="confirmAddToInvoice()">Add</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button class="btn btn-success btn-pulse" onclick="confirmAddToInvoice()">
+                    <i class="fas fa-plus"></i>
+                    Add to Invoice
+                </button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Invoice Summary Modal -->
 <div class="modal fade" id="invoiceSummaryModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title">Invoice Summary</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    Invoice Summary
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <!-- JS will insert summary here -->
@@ -99,64 +645,96 @@
     </div>
 </div>
 
+<!-- Invoice Details Modal -->
 <div class="modal fade" id="invoiceDetailsModal" tabindex="-1" aria-labelledby="invoiceDetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="invoiceDetailsModalLabel">Invoice Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="invoiceDetailsModalLabel">
+                    <i class="fas fa-receipt"></i>
+                    Invoice Details
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="invoiceDetailsBody">
                 <!-- Only the dynamic invoice items table will go here -->
             </div>
             <!-- Credit Cart Section -->
             <div id="creditCartSection" style="display: none;" class="px-3 pb-3">
-                <hr />
-                <h5>To Be Credited Items</h5>
-                <table class="table table-bordered" id="creditCartTable">
-                    <thead>
-                        <tr>
-                            <th>Product Code</th>
-                            <th>Description</th>
-                            <th>Qty to Credit</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- JS will populate this -->
-                    </tbody>
-                </table>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-success flex-fill" onclick="submitInvoiceCredit()"> Confirm/Submit Credit Invoice</button>
-                    <button class="btn btn-secondary" onclick="resetCreditMode()">Cancel</button>
+                <hr class="my-3" />
+                <div class="d-flex align-items-center mb-2">
+                    <h6 class="fw-bold text-warning mb-0">
+                        <i class="fas fa-undo me-2"></i>
+                        Items to be Credited
+                    </h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm" id="creditCartTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th><i class="fas fa-barcode me-1"></i>Product Code</th>
+                                <th><i class="fas fa-tag me-1"></i>Description</th>
+                                <th><i class="fas fa-sort-numeric-up me-1"></i>Qty to Credit</th>
+                                <th><i class="fas fa-cogs me-1"></i>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-success flex-fill" onclick="submitInvoiceCredit()">
+                        <i class="fas fa-check-circle"></i>
+                        Confirm Credit Invoice
+                    </button>
+                    <button class="btn btn-secondary" onclick="resetCreditMode()">
+                        <i class="fas fa-times"></i>
+                        Cancel Credit
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Credit Modal -->
 <div class="modal fade" id="creditModal" tabindex="-1" aria-labelledby="creditModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="creditModalLabel">Credit Item</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-           </div>
+                <h5 class="modal-title" id="creditModalLabel">
+                    <i class="fas fa-undo"></i>
+                    Credit Item
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
             <div class="modal-body">
                 <input type="hidden" id="creditProductCode">
                 <input type="hidden" id="creditSalesOrderId">
                 <input type="hidden" id="creditMaxQty">
+                
                 <div class="mb-3">
-                    <p><strong>Product:</strong> <span id="creditProductDescription"></span></p>
+                    <label class="form-label">Product Information</label>
+                    <div class="p-2 bg-light rounded">
+                        <p id="creditProductDescription" class="mb-0 fw-semibold text-dark"></p>
+                    </div>
                 </div>
+                
                 <div class="mb-3">
-                    <label for="creditQuantityInput" class="form-label">Quantity to credit</label>
-                    <input type="number" class="form-control" id="creditQuantityInput" min="1">
+                    <label for="creditQuantityInput" class="form-label">Quantity to Credit</label>
+                    <input type="number" class="form-control" id="creditQuantityInput" min="1" placeholder="Enter credit quantity">
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" onclick="addItemToCreditCart()">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button class="btn btn-warning btn-pulse" onclick="addItemToCreditCart()">
+                    <i class="fas fa-save"></i>
+                    Add to Credit Cart
+                </button>
             </div>
         </div>
     </div>

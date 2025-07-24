@@ -3,16 +3,320 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - minipossystem</title>
+    <title>@ViewData["Title"] - CasheTrip</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/minipossystem.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --cashetrip-primary: #0f172a;
+            --cashetrip-primary-light: #1e293b;
+            --cashetrip-secondary: #334155;
+            --cashetrip-accent: #475569;
+            --cashetrip-light: #e2e8f0;
+            --cashetrip-lighter: #f1f5f9;
+            --cashetrip-text: #0f172a;
+            --cashetrip-text-light: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            color: var(--cashetrip-text);
+        }
+
+        /* Custom Navbar Styling */
+        .navbar-cashetrip {
+            background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-primary-light) 50%, var(--cashetrip-secondary) 100%) !important;
+            border: none !important;
+            box-shadow: 0 8px 25px -5px rgba(15, 23, 42, 0.3), 0 4px 6px -2px rgba(15, 23, 42, 0.05) !important;
+            padding: 1.2rem 0;
+            position: relative;
+        }
+
+            .navbar-cashetrip::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%);
+                background-size: 40px 40px;
+                pointer-events: none;
+            }
+
+        .navbar-brand {
+            font-weight: 700 !important;
+            font-size: 1.6rem !important;
+            color: #f8fafc !important;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+            .navbar-brand:hover {
+                color: var(--cashetrip-light) !important;
+                transform: translateY(-1px);
+                transition: all 0.3s ease;
+            }
+
+            .navbar-brand i {
+                margin-right: 12px;
+                font-size: 1.4rem;
+                color: #cbd5e1;
+            }
+
+        .navbar-nav .nav-link {
+            color: rgba(248, 250, 252, 0.9) !important;
+            font-weight: 500 !important;
+            padding: 0.6rem 1.2rem !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #f8fafc !important;
+                background-color: rgba(255, 255, 255, 0.1);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .navbar-nav .nav-link i {
+                opacity: 0.8;
+            }
+
+        .navbar-toggler {
+            border-color: rgba(248, 250, 252, 0.3) !important;
+            position: relative;
+            z-index: 2;
+        }
+
+            .navbar-toggler:focus {
+                box-shadow: 0 0 0 0.2rem rgba(248, 250, 252, 0.25);
+            }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28248, 250, 252, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+        }
+
+        main {
+            min-height: calc(100vh - 220px);
+            padding: 2.5rem 0;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-primary-light) 100%) !important;
+            color: #e2e8f0 !important;
+            border-top: none !important;
+            padding: 2.5rem 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+            .footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%);
+                background-size: 30px 30px;
+                pointer-events: none;
+            }
+
+            .footer .container {
+                position: relative;
+                z-index: 2;
+            }
+
+            .footer a {
+                color: var(--cashetrip-light) !important;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+
+                .footer a:hover {
+                    color: #f8fafc !important;
+                    text-decoration: underline;
+                }
+
+        /* Custom Button Styles */
+        .btn-cashetrip {
+            background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.6rem 1.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3);
+        }
+
+            .btn-cashetrip:hover {
+                background: linear-gradient(135deg, #020617 0%, var(--cashetrip-primary-light) 100%);
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(15, 23, 42, 0.4);
+            }
+
+        .btn-outline-cashetrip {
+            background: transparent;
+            border: 2px solid var(--cashetrip-secondary);
+            color: var(--cashetrip-secondary);
+            font-weight: 600;
+            padding: 0.5rem 1.6rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-cashetrip:hover {
+                background: var(--cashetrip-secondary);
+                border-color: var(--cashetrip-secondary);
+                color: white;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 15px rgba(51, 65, 85, 0.3);
+            }
+
+        /* Card Styling */
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+            .card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--cashetrip-lighter) 0%, var(--cashetrip-light) 100%);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+            font-weight: 600;
+            color: var(--cashetrip-primary);
+            border-radius: 16px 16px 0 0 !important;
+            padding: 1.2rem 1.5rem;
+        }
+
+        /* Form Styling */
+        .form-control {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 0.7rem 1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+            .form-control:focus {
+                border-color: var(--cashetrip-secondary);
+                box-shadow: 0 0 0 0.2rem rgba(51, 65, 85, 0.25);
+                background: white;
+            }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--cashetrip-primary);
+            margin-bottom: 0.6rem;
+        }
+
+        /* Alert Styling */
+        .alert-primary {
+            background: linear-gradient(135deg, var(--cashetrip-lighter) 0%, var(--cashetrip-light) 100%);
+            border: 1px solid var(--cashetrip-secondary);
+            color: var(--cashetrip-primary);
+            border-radius: 12px;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 1px solid #22c55e;
+            color: #15803d;
+            border-radius: 12px;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 1px solid #ef4444;
+            color: #dc2626;
+            border-radius: 12px;
+        }
+
+        /* Table Styling */
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: var(--cashetrip-lighter);
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, var(--cashetrip-primary) 0%, var(--cashetrip-secondary) 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 1rem;
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            border-color: #e2e8f0;
+        }
+
+        /* Badge Styling */
+        .badge {
+            border-radius: 8px;
+            padding: 0.4rem 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge-cashetrip {
+            background: var(--cashetrip-secondary);
+            color: white;
+        }
+
+        /* Breadcrumb Styling */
+        .breadcrumb {
+            background: var(--cashetrip-lighter);
+            border-radius: 10px;
+            padding: 0.8rem 1.2rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--cashetrip-secondary);
+            text-decoration: none;
+        }
+
+            .breadcrumb-item a:hover {
+                color: var(--cashetrip-primary);
+                text-decoration: underline;
+            }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-cashetrip mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">minipossystem</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-route"></i>
+                    CasheTrip
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,10 +324,36 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i>Dashboard
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="fas fa-shield-alt me-1"></i>Privacy
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Reports" asp-action="Index">
+                                <i class="fas fa-chart-bar me-1"></i>Reports
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Index">
+                                <i class="fas fa-box me-1"></i>Products
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Profile">
+                                <i class="fas fa-user me-1"></i>Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -36,11 +366,28 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container">
-            &copy; 2025 - minipossystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">
+                        <i class="fas fa-route me-2"></i>
+                        &copy; 2025 - CasheTrip - Navigate Through Knowledge
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                        <i class="fas fa-shield-alt me-1"></i>Privacy Policy
+                    </a>
+                    <span class="mx-2">|</span>
+                    <a href="mailto:support@cashetrip.com">
+                        <i class="fas fa-envelope me-1"></i>Support
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

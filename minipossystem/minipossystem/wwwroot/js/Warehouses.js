@@ -26,11 +26,12 @@ function loadPurchaseInvoices() {
                         <td>${item.orderDate}</td>
                         <td>${item.total}</td>
                         <td>${item.status}</td>
-                        <td>
-                            <button class="btn btn-sm btn-info" onclick="viewInvoiceDetails(${item.invoiceId})">
-                                View Details
-                            </button>
-                        </td>
+                       <td>
+  <button class="btn btn-sm btn-primary" onclick="viewInvoiceDetails(${item.invoiceId})">
+    📄 View Details
+  </button>
+</td>
+
                     </tr>
                 `);
             });
@@ -65,10 +66,11 @@ function viewInvoiceDetails(invoiceId) {
             <td>${item.unitPrice}</td>
             <td>${item.total}</td>
             <td>
-                <button class="btn btn-sm btn-success" onclick="openQuantityModal(${item.itemId}, '${item.product}', ${item.quantity})">
-                    ➕ Add
-                </button>
-            </td>
+    <button class="btn btn-sm btn-success" onclick="openQuantityModal(${item.itemId}, '${item.product}', ${item.quantity}, ${item.productId}, ${item.unitPrice})">
+      ➕ Add
+    </button>
+  </td>
+
         </tr>
     `);
             });
@@ -165,19 +167,24 @@ function removeFromWarehouseList(itemId) {
     toBeAddedList = toBeAddedList.filter(x => x.itemId !== itemId);
     $(`#toBeAddedRow_${itemId}`).remove();
 }
-function openQuantityModal(itemId, productName, maxQty) {
+function openQuantityModal(itemId, productName, maxQty, productId, unitPrice) {
     $('#modalItemId').val(itemId);
+    $('#modalProductId').val(productId);
+    $('#modalUnitPrice').val(unitPrice);
     $('#modalProductName').text(`Product: ${productName}`);
     $('#modalProductNameHidden').val(productName);
     $('#modalProductMaxQty').val(maxQty);
     $('#modalQuantityInput').val('');
     $('#quantityModal').modal('show');
 }
+
 function confirmQuantity() {
     const itemId = parseInt($('#modalItemId').val());
     const qty = parseInt($('#modalQuantityInput').val());
     const maxQty = parseInt($('#modalProductMaxQty').val());
     const productName = $('#modalProductNameHidden').val();
+    const productId = parseInt($('#modalProductId').val());
+    const unitPrice = parseFloat($('#modalUnitPrice').val());
 
     if (!qty || qty <= 0) {
         alert("Enter a valid quantity.");
@@ -189,16 +196,16 @@ function confirmQuantity() {
         return;
     }
 
-    
     if (toBeAddedList.find(x => x.itemId === itemId)) {
         alert("Item already added.");
         return;
     }
 
-    // Add to list
     toBeAddedList.push({
-        itemId,
-        productName,
+        itemId: itemId,
+        productId: productId,
+        unitPrice: unitPrice,
+        productName: productName,
         quantity: qty
     });
 
@@ -216,4 +223,48 @@ function confirmQuantity() {
 
     $('#quantityModal').modal('hide');
 }
+function submitToWarehouse() {
+    const warehouseId = $('#warehouseSelectForPopup').val();
+
+    if (!warehouseId) {
+        alert("Please select a warehouse.");
+        return;
+    }
+
+    if (toBeAddedList.length === 0) {
+        alert("No items selected.");
+        return;
+    }
+
+    const items = toBeAddedList.map(item => ({
+        productId: item.productId,
+        unitPrice: item.unitPrice,
+        quantity: item.quantity
+    }));
+
+    const payload = {
+        warehouseId: parseInt(warehouseId),
+        items: items
+    };
+
+    console.log("Submitting payload:", payload); // ✅ for debugging
+
+    $.ajax({
+        url: '/Warehouse/AddToWarehouse',
+        method: 'POST', // ✅ FIXED HERE
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function (response) {
+            alert("Items successfully added to warehouse.");
+            $('#invoiceDetailsModal').modal('hide');
+            toBeAddedList = [];
+            $('#toBeAddedBody').empty();
+        },
+        error: function (err) {
+            alert("Error submitting items to warehouse.");
+            console.error(err);
+        }
+    });
+}
+
  
